@@ -10,12 +10,12 @@ namespace Scores.Database
         {
         }
 
-        DbSet<City> Cities { get; set; }
-        DbSet<Club> Clubs { get; set; }
-        DbSet<Country> Countries { get; set; }
-        DbSet<Event> Events { get; set; }
-        DbSet<Match> Matches { get; set; }
-        DbSet<Player> Players { get; set; }
-        DbSet<Venue> Venues { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Club> Clubs { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Venue> Venues { get; set; }
     }
 }

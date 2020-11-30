@@ -29,6 +29,8 @@ namespace Scores.UI
                 {
                     // options
                 });
+
+            services.AddApplicationServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

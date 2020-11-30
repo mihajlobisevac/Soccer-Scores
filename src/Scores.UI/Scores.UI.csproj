@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Scores.Application\Scores.Application.csproj" />
     <ProjectReference Include="..\Scores.Database\Scores.Database.csproj" />
   </ItemGroup>
 
