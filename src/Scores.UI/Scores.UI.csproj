@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Scores.Database\Scores.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ValidationContexts\" />
-  </ItemGroup>
-
 </Project>

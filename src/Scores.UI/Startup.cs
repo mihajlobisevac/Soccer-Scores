@@ -23,6 +23,12 @@ namespace Scores.UI
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRazorPages();
+
+            services.AddMvc()
+                .AddRazorPagesOptions(options => 
+                {
+                    // options
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
