@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scores.Domain.Models;
+using System;
 
 namespace Scores.Database
 {
@@ -9,6 +10,9 @@ namespace Scores.Database
             : base(options)
         {
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder.LogTo(Console.WriteLine);
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Club> Clubs { get; set; }

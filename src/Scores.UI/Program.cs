@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Scores.Application;
+using Scores.Application.Countries;
 using Scores.Database;
 
 namespace Scores.UI
@@ -27,8 +29,12 @@ namespace Scores.UI
 
                     if (!context.Countries.Any())
                     {
-                        //get all countries from public api
-                        context.Countries.AddRange();
+                        ApiHelper.InitializeClient();
+
+                        var countries = GetCountriesFromRESTCountries.Do().GetAwaiter().GetResult();
+
+                        context.Countries.AddRange(countries);
+                        context.SaveChanges();
                     }
                 }
             }

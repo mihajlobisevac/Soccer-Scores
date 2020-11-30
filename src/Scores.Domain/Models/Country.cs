@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scores.Domain.Models
@@ -9,15 +10,14 @@ namespace Scores.Domain.Models
 
         [Required]
         [MinLength(3)]
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(150)")]
         public string Name { get; set; }
 
-        [Required]
-        [Column(TypeName = "varchar(3)")]
+        [Column(TypeName = "varchar(50)")]
+        [JsonProperty("alpha3Code")]
         public string NameCode { get; set; }
 
-        [Required]
-        [Column(TypeName = "varchar(80)")]
+        [Column(TypeName = "varchar(150)")]
         public string Flag { get; set; }
     }
 }
