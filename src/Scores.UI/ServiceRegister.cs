@@ -1,4 +1,6 @@
 ﻿using Scores.Application;
+using Scores.Database;
+using Scores.Domain.Infrastructure;
 using System.Linq;
 using System.Reflection;
 
@@ -19,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 @this.AddTransient(service);
             }
 
-            //@this.AddTransient<IOrderManager, OrderManager>();
+            @this.AddTransient<ICityManager, CityManager>();
 
             return @this;
         }

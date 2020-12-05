@@ -24,11 +24,7 @@ namespace Scores.UI
 
             services.AddRazorPages();
 
-            services.AddMvc()
-                .AddRazorPagesOptions(options => 
-                {
-                    // options
-                });
+            services.AddMvc();
 
             services.AddApplicationServices();
         }
@@ -55,6 +51,7 @@ namespace Scores.UI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
