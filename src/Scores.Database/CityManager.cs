@@ -22,10 +22,26 @@ namespace Scores.Database
             return context.SaveChangesAsync();
         }
 
-        public TResult GetCityById<TResult>(int id, Func<City, TResult> selector) =>
-             context.Cities
+        public Task<int> DeleteCity(int id)
+        {
+            var city = context.Cities.FirstOrDefault(x => x.Id == id);
+
+            context.Cities.Remove(city);
+
+            return context.SaveChangesAsync();
+        }
+
+        public Task<int> UpdateCity(City city)
+        {
+            context.Cities.Update(city);
+
+            return context.SaveChangesAsync();
+        }
+
+        public TResult GetCityById<TResult>(int id, Func<City, TResult> selector) 
+            => context.Cities
                 .Where(x => x.Id == id)
                 .Select(selector)
-                .FirstOrDefault();
+                .FirstOrDefault();        
     }
 }

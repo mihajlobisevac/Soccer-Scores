@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Scores.Application;
-using Scores.Application.Countries;
+using Scores.Application.CountriesAdmin;
 using Scores.Database;
 
 namespace Scores.UI

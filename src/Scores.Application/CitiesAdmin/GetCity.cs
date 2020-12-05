@@ -1,7 +1,4 @@
 ﻿using Scores.Domain.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Scores.Application.CitiesAdmin
 {
@@ -15,15 +12,15 @@ namespace Scores.Application.CitiesAdmin
             this.cityManager = cityManager;
         }
 
-        public class CityViewModel
+        public class Response
         {
             public int Id { get; set; }
             public string Name { get; set; }
             public int CountryId { get; set; }
         }
 
-        public CityViewModel Do(int id) =>
-            cityManager.GetCityById(id, x => new CityViewModel
+        public Response Do(int id) =>
+            cityManager.GetCityById(id, x => new Response
             {
                 Id = x.Id,
                 Name = x.Name,

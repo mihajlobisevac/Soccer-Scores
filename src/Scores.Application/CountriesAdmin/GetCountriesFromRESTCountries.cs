@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scores.Application.Countries
+namespace Scores.Application.CountriesAdmin
 {
     public static class GetCountriesFromRESTCountries
     {
