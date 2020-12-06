@@ -22,6 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             @this.AddTransient<ICityManager, CityManager>();
+            @this.AddTransient<ICountryManager, CountryManager>();
 
             return @this;
         }

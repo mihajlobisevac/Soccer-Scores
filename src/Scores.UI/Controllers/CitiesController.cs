@@ -25,6 +25,6 @@ namespace Scores.UI.Controllers
         // PUT: cities/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity([FromBody] UpdateCity.Request request, [FromServices] UpdateCity updateCity)
-            => Ok(await updateCity.Do(request));        
+            => Ok(await updateCity.Do(request));
     }
 }

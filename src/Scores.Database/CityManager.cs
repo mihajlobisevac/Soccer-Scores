@@ -38,10 +38,10 @@ namespace Scores.Database
             return context.SaveChangesAsync();
         }
 
-        public TResult GetCityById<TResult>(int id, Func<City, TResult> selector) 
+        public TResult GetCityById<TResult>(int id, Func<City, TResult> selector)
             => context.Cities
                 .Where(x => x.Id == id)
                 .Select(selector)
-                .FirstOrDefault();        
+                .FirstOrDefault();
     }
 }
