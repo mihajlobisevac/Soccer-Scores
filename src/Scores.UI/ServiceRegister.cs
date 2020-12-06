@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             @this.AddTransient<IVenueManager, VenueManager>();
             @this.AddTransient<IClubManager, ClubManager>();
             @this.AddTransient<IMatchManager, MatchManager>();
+            @this.AddTransient<IPlayerManager, PlayerManager>();
 
             return @this;
         }

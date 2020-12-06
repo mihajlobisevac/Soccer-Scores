@@ -31,8 +31,11 @@ namespace Scores.Domain.Models
         [Column(TypeName = "varchar(10)")]
         public string Foot { get; set; }
 
+        public int ClubId { get; set; }
         public Club Club { get; set; }
-        public Country Country { get; set; }
-        public City City { get; set; }
+        public int NationalityId { get; set; }
+        public Country Nationality { get; set; }
+        public int PoBId { get; set; }
+        public City PoB { get; set; }
     }
 }
