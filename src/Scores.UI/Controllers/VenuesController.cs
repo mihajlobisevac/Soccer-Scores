@@ -16,11 +16,6 @@ namespace Scores.UI.Controllers
         public async Task<IActionResult> CreateVenue([FromBody] CreateVenue.Request request, [FromServices] CreateVenue createVenue)
             => Ok(await createVenue.Do(request));
 
-        // DELETE: venues/delete/1
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteVenue(int id, [FromServices] DeleteVenue deleteVenue)
-            => Ok(await deleteVenue.Do(id));
-
         // PUT: venues/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateVenue([FromBody] UpdateVenue.Request request, [FromServices] UpdateVenue updateVenue)

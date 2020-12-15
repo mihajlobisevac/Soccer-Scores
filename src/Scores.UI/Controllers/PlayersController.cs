@@ -17,11 +17,6 @@ namespace Scores.UI.Controllers
         public async Task<IActionResult> CreatePlayer([FromBody] CreatePlayer.Request request, [FromServices] CreatePlayer createPlayer)
             => Ok(await createPlayer.Do(request));
 
-        // DELETE: players/delete/1
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeletePlayer(int id, [FromServices] DeletePlayer deletePlayer)
-            => Ok(await deletePlayer.Do(id));
-
         // PUT: players/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdatePlayer([FromBody] UpdatePlayer.Request request, [FromServices] UpdatePlayer updatePlayer)

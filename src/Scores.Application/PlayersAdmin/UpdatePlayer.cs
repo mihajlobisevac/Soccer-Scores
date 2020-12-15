@@ -61,8 +61,8 @@ namespace Scores.Application.PlayersAdmin
             player.ShirtNumber = request.ShirtNumber;
             player.Foot = request.Foot;
             player.ClubId = request.ClubId;
-            player.NationalityId = request.NationalityId;
-            player.PoBId = request.PoBId;
+            player.NationalityCountryId = request.NationalityId;
+            player.PoBCityId = request.PoBId;
 
             await playerManager.UpdatePlayer(player);
 

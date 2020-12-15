@@ -17,11 +17,6 @@ namespace Scores.UI.Controllers
         public async Task<IActionResult> CreateClub([FromBody] CreateClub.Request request, [FromServices] CreateClub createClub)
             => Ok(await createClub.Do(request));
 
-        // DELETE: clubs/delete/1
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteClub(int id, [FromServices] DeleteClub deleteClub)
-            => Ok(await deleteClub.Do(id));
-
         // PUT: clubs/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateClub([FromBody] UpdateClub.Request request, [FromServices] UpdateClub updateClub)

@@ -17,11 +17,6 @@ namespace Scores.UI.Controllers
         public async Task<IActionResult> CreateMatch([FromBody] CreateMatch.Request request, [FromServices] CreateMatch createMatch)
             => Ok(await createMatch.Do(request));
 
-        // DELETE: matches/delete/1
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteMatch(int id, [FromServices] DeleteMatch deleteMatch)
-            => Ok(await deleteMatch.Do(id));
-
         // PUT: matches/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity([FromBody] UpdateMatch.Request request, [FromServices] UpdateMatch updateMatch)

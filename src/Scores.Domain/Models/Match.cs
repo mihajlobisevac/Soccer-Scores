@@ -7,9 +7,9 @@ namespace Scores.Domain.Models
         public int Id { get; set; }
         public DateTime KickOff { get; set; }
 
+        public bool Deactivated { get; set; }
+
         public int HomeTeamId { get; set; }
-        public Club HomeTeam { get; set; }
         public int AwayTeamId { get; set; }
-        public Club AwayTeam { get; set; }
     }
 }

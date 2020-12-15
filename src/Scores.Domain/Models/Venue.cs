@@ -15,7 +15,8 @@ namespace Scores.Domain.Models
         public int Capacity { get; set; }
         public int YearOpened { get; set; }
 
+        public bool Deactivated { get; set; }
+
         public int CityId { get; set; }
-        public City City { get; set; }
     }
 }

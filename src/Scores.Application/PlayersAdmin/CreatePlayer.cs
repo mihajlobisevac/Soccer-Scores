@@ -59,8 +59,8 @@ namespace Scores.Application.PlayersAdmin
                 ShirtNumber = request.ShirtNumber,
                 Foot = request.Foot,
                 ClubId = request.ClubId,
-                NationalityId = request.NationalityId,
-                PoBId = request.PoBId,
+                NationalityCountryId = request.NationalityId,
+                PoBCityId = request.PoBId,
             };
 
             var result = await playerManager.CreatePlayer(player);

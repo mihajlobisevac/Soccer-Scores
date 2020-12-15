@@ -42,8 +42,8 @@ namespace Scores.Application.PlayersAdmin
                 ShirtNumber = x.ShirtNumber,
                 Foot = x.Foot,
                 ClubId = x.ClubId,
-                NationalityId = x.NationalityId,
-                PoBId = x.PoBId,
+                NationalityId = x.NationalityCountryId,
+                PoBId = x.PoBCityId,
             });
     }
 }

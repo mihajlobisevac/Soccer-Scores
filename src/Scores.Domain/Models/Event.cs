@@ -28,10 +28,7 @@ namespace Scores.Domain.Models
         public string Class { get; set; }
 
         public int MatchId { get; set; }
-        public Match Match { get; set; }
         public int PlayerAId { get; set; }
-        public Player PlayerA { get; set; }
         public int PlayerBId { get; set; }
-        public Player PlayerB { get; set; }
     }
 }

@@ -31,11 +31,10 @@ namespace Scores.Domain.Models
         [Column(TypeName = "varchar(10)")]
         public string Foot { get; set; }
 
+        public bool Deactivated { get; set; }
+
         public int ClubId { get; set; }
-        public Club Club { get; set; }
-        public int NationalityId { get; set; }
-        public Country Nationality { get; set; }
-        public int PoBId { get; set; }
-        public City PoB { get; set; }
+        public int NationalityCountryId { get; set; }
+        public int PoBCityId { get; set; }
     }
 }

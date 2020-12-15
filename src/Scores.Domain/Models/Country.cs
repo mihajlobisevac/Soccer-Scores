@@ -19,5 +19,7 @@ namespace Scores.Domain.Models
 
         [Column(TypeName = "varchar(150)")]
         public string Flag { get; set; }
+
+        public bool Deactivated { get; set; }
     }
 }

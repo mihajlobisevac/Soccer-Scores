@@ -14,7 +14,8 @@ namespace Scores.Domain.Models
 
         public bool HasGroupStage { get; set; }
 
+        public bool Deactivated { get; set; }
+
         public int CountryId { get; set; }
-        public Country Country { get; set; }
     }
 }

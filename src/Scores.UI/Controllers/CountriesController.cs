@@ -17,11 +17,6 @@ namespace Scores.UI.Controllers
         public async Task<IActionResult> CreateCountry([FromBody] CreateCountry.Request request, [FromServices] CreateCountry createCountry)
             => Ok(await createCountry.Do(request));
 
-        // DELETE: countries/delete/1
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteCountry(int id, [FromServices] DeleteCountry deleteCountry)
-            => Ok(await deleteCountry.Do(id));
-
         // PUT: countries/update/1
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity([FromBody] UpdateCountry.Request request, [FromServices] UpdateCountry updateCountry)

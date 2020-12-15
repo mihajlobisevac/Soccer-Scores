@@ -18,7 +18,8 @@ namespace Scores.Domain.Models
 
         public int YearFounded { get; set; }
 
+        public bool Deactivated { get; set; }
+
         public int VenueId { get; set; }
-        public Venue Venue { get; set; }
     }
 }
