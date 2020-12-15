@@ -21,5 +21,6 @@ namespace Scores.Database
         public DbSet<Match> Matches { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Venue> Venues { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
     }
 }
