@@ -20,6 +20,7 @@ namespace Scores.Application.CountriesAdmin
             public string Name { get; set; }
             public string NameCode { get; set; }
             public string Flag { get; set; }
+            public bool Deactivated { get; set; }
         }
 
         public class Response
@@ -28,6 +29,7 @@ namespace Scores.Application.CountriesAdmin
             public string Name { get; set; }
             public string NameCode { get; set; }
             public string Flag { get; set; }
+            public bool Deactivated { get; set; }
         }
 
         public async Task<Response> Do(Request request)
@@ -36,7 +38,8 @@ namespace Scores.Application.CountriesAdmin
             {
                 Name = request.Name,
                 NameCode = request.NameCode,
-                Flag = request.Flag
+                Flag = request.Flag,
+                Deactivated = request.Deactivated
             };
 
             var result = await countryManager.CreateCountry(country);
@@ -49,7 +52,8 @@ namespace Scores.Application.CountriesAdmin
                 Id = country.Id,
                 Name = request.Name,
                 NameCode = request.NameCode,
-                Flag = request.Flag
+                Flag = request.Flag,
+                Deactivated = request.Deactivated
             };
         }
     }

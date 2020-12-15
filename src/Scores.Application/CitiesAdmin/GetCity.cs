@@ -16,6 +16,7 @@ namespace Scores.Application.CitiesAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -24,6 +25,7 @@ namespace Scores.Application.CitiesAdmin
             {
                 Id = x.Id,
                 Name = x.Name,
+                Deactivated = x.Deactivated,
                 CountryId = x.CountryId,
             });
     }

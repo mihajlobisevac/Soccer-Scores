@@ -18,6 +18,7 @@ namespace Scores.Application.MatchesAdmin
         {
             public int Id { get; set; }
             public DateTime KickOff { get; set; }
+            public bool Deactivated { get; set; }
             public int HomeTeamId { get; set; }
             public int AwayTeamId { get; set; }
         }
@@ -26,6 +27,7 @@ namespace Scores.Application.MatchesAdmin
         {
             public int Id { get; set; }
             public DateTime KickOff { get; set; }
+            public bool Deactivated { get; set; }
             public int HomeTeamId { get; set; }
             public int AwayTeamId { get; set; }
         }
@@ -35,6 +37,7 @@ namespace Scores.Application.MatchesAdmin
             var match = matchManager.GetMatchById(request.Id, x => x);
 
             match.KickOff = request.KickOff;
+            match.Deactivated = request.Deactivated;
             match.HomeTeamId = request.HomeTeamId;
             match.AwayTeamId = request.AwayTeamId;
 
@@ -44,6 +47,7 @@ namespace Scores.Application.MatchesAdmin
             {
                 Id = match.Id,
                 KickOff = match.KickOff,
+                Deactivated = match.Deactivated,
                 HomeTeamId = match.HomeTeamId,
                 AwayTeamId = match.AwayTeamId,
             };

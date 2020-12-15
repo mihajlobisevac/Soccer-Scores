@@ -18,6 +18,7 @@ namespace Scores.Application.TournamentsAdmin
             public int Id { get; set; }
             public string Name { get; set; }
             public bool HasGroupStage { get; set; }
+            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -26,6 +27,7 @@ namespace Scores.Application.TournamentsAdmin
             public int Id { get; set; }
             public string Name { get; set; }
             public bool HasGroupStage { get; set; }
+            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -35,6 +37,7 @@ namespace Scores.Application.TournamentsAdmin
 
             city.Name = request.Name;
             city.HasGroupStage = request.HasGroupStage;
+            city.Deactivated = request.Deactivated;
             city.CountryId = request.CountryId;
 
             await tournamentManager.UpdateTournament(city);
@@ -44,6 +47,7 @@ namespace Scores.Application.TournamentsAdmin
                 Id = city.Id,
                 Name = city.Name,
                 HasGroupStage = city.HasGroupStage,
+                Deactivated = city.Deactivated,
                 CountryId = city.CountryId,
             };
         }

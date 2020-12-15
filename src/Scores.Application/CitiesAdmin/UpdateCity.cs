@@ -17,6 +17,7 @@ namespace Scores.Application.CitiesAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -24,6 +25,7 @@ namespace Scores.Application.CitiesAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -32,6 +34,7 @@ namespace Scores.Application.CitiesAdmin
             var city = cityManager.GetCityById(request.Id, x => x);
 
             city.Name = request.Name;
+            city.Deactivated = request.Deactivated;
             city.CountryId = request.CountryId;
 
             await cityManager.UpdateCity(city);
@@ -40,6 +43,7 @@ namespace Scores.Application.CitiesAdmin
             {
                 Id = city.Id,
                 Name = city.Name,
+                Deactivated = city.Deactivated,
                 CountryId = city.CountryId,
             };
         }
