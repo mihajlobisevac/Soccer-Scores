@@ -12,7 +12,7 @@ namespace Scores.Domain.Infrastructure
 
         TResult GetStandingsById<TResult>(int id, Func<Standings, TResult> selector);
 
-        Task<int> AddClub(int standingsId, int clubId);
+        Task<int> AddClub(ClubStandings clubStandings);
         Task<int> RemoveClub(int id);
     }
 }

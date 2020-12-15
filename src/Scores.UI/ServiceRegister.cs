@@ -29,6 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
             @this.AddTransient<IPlayerManager, PlayerManager>();
             @this.AddTransient<IEventManager, EventManager>();
             @this.AddTransient<ITournamentManager, TournamentManager>();
+            @this.AddTransient<IStandingsManager, StandingsManager>();
 
             return @this;
         }

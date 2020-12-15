@@ -44,13 +44,9 @@ namespace Scores.Database
                 .Select(selector)
                 .FirstOrDefault();
 
-        public Task<int> AddClub(int standingsId, int clubId)
+        public Task<int> AddClub(ClubStandings clubStandings)
         {
-            context.ClubStandings.Add(new ClubStandings
-            {
-                StandingsId = standingsId,
-                ClubId = clubId
-            });
+            context.ClubStandings.Add(clubStandings);
 
             return context.SaveChangesAsync();
         }

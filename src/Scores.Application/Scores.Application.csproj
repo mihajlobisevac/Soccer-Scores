@@ -12,8 +12,4 @@
     <ProjectReference Include="..\Scores.Domain\Scores.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="StandingsAdmin\" />
-  </ItemGroup>
-
 </Project>
