@@ -6,75 +6,26 @@
 
 <div class="title-dates">
     <p>Matches</p>
-    <button>12/21/2020</button>
+    <button>@(DateTime.Now.Month)/@(DateTime.Now.Day)/@(DateTime.Now.Year)</button>
 </div>
 
-<div class="matches-container">
-    <div class="matches-comp">
-        <div class="matches-comp-flag">
-            <img src="Flag_of_England.svg" alt="flag" />
+@foreach (var tournament in Model.Fixtures)
+{
+    <div class="matches-container">
+        <div class="matches-comp">
+            <div class="matches-comp-flag">
+                <img src="Flag_of_England.svg" alt="flag" />
+            </div>
+            <div class="matches-comp-name">England - Premier League</div>
         </div>
-        <div class="matches-comp-name">England - Premier League</div>
-    </div>
 
-    <div class="match-container">
-        <div class="match-home-team">Liverpool</div>
-        <div class="match-result">1 - 2</div>
-        <div class="match-away-team">Tottenham Hotspur</div>
+        @foreach (var match in tournament)
+        {
+            <div class="match-container">
+                <div class="match-home-team">@match.HomeTeam.Name</div>
+                <div class="match-result">2 - 2</div>
+                <div class="match-away-team">@match.AwayTeam.Name</div>
+            </div>
+        }
     </div>
-    <div class="match-container">
-        <div class="match-home-team">Chelsea</div>
-        <div class="match-result">2 - 0</div>
-        <div class="match-away-team">Leeds United</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Manchester City</div>
-        <div class="match-result">10 - 2</div>
-        <div class="match-away-team">Watford</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Newcastle United</div>
-        <div class="match-result">1 - 2</div>
-        <div class="match-away-team">Crystal Palace</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Fulham</div>
-        <div class="match-result">3 - 2</div>
-        <div class="match-away-team">Norwich City</div>
-    </div>
-</div>
-
-<div class="matches-container">
-    <div class="matches-comp">
-        <div class="matches-comp-flag">
-            <img src="esp.svg" alt="flag" />
-        </div>
-        <div class="matches-comp-name">Spain - La Liga</div>
-    </div>
-
-    <div class="match-container">
-        <div class="match-home-team">Liverpool</div>
-        <div class="match-result">1 - 2</div>
-        <div class="match-away-team">Tottenham Hotspur</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Chelsea</div>
-        <div class="match-result">2 - 0</div>
-        <div class="match-away-team">Leeds United</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Manchester City</div>
-        <div class="match-result">10 - 2</div>
-        <div class="match-away-team">Watford</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Newcastle United</div>
-        <div class="match-result">1 - 2</div>
-        <div class="match-away-team">Crystal Palace</div>
-    </div>
-    <div class="match-container">
-        <div class="match-home-team">Fulham</div>
-        <div class="match-result">3 - 2</div>
-        <div class="match-away-team">Norwich City</div>
-    </div>
-</div>
+}

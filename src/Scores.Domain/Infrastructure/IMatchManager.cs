@@ -1,5 +1,6 @@
 ﻿using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Scores.Domain.Infrastructure
@@ -11,5 +12,6 @@ namespace Scores.Domain.Infrastructure
         Task<int> UpdateMatch(Match match);
 
         TResult GetMatchById<TResult>(int id, Func<Match, TResult> selector);
+        IEnumerable<TResult> GetMatchesByDate<TResult>(DateTime date, Func<Match, TResult> selector);
     }
 }
