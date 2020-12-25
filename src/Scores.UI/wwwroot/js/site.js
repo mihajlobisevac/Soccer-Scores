@@ -1,25 +1,19 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿
+var hamClosed = document.getElementById("hamClosed")
+var hamOpened = document.getElementById("hamOpened")
+var sideMenu = document.getElementById("sideMenu")
+var sideMenuBG = document.getElementById("sideMenuBG")
 
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+function openSideMenu() {
+    hamClosed.style.display = "none"
+    hamOpened.style.display = "block"
+    sideMenu.style.display = "block"
+    sideMenuBG.style.display = "block"
+}
 
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-
-    // Add a click event on each of them
-    $navbarBurgers.forEach( el => {
-      el.addEventListener('click', () => {
-
-        // Get the target from the "data-target" attribute
-        const target = el.dataset.target;
-        const $target = document.getElementById(target);
-
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-
-      });
-    });
-  }
-
-});
+function closeSideMenu() {
+    hamClosed.style.display = "block"
+    hamOpened.style.display = "none"
+    sideMenu.style.display = "none"
+    sideMenuBG.style.display = "none"
+}
