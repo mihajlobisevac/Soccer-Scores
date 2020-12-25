@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Scores.Domain.Models
 {
@@ -8,6 +6,8 @@ namespace Scores.Domain.Models
     {
         public int Id { get; set; }
         public int TeamCount { get; set; }
+        public DateTime SeasonStart { get; set; }
+        public DateTime SeasonEnd { get; set; }
 
         public bool Deactivated { get; set; }
 

@@ -11,5 +11,6 @@ namespace Scores.Domain.Models
 
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
+        public int StandingsId { get; set; }
     }
 }
