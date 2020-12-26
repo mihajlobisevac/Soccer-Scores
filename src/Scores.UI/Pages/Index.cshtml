@@ -9,22 +9,22 @@
     <button>@(DateTime.Now.Month)/@(DateTime.Now.Day)/@(DateTime.Now.Year)</button>
 </div>
 
-@foreach (var tournament in Model.Fixtures)
+@foreach (var fixture in Model.Fixtures)
 {
     <div class="matches-container">
         <div class="matches-comp">
             <div class="matches-comp-flag">
-                <img src="Flag_of_England.svg" alt="flag" />
+                <img src="@fixture.Tournament.Country.Flag" alt="flag" />
             </div>
-            <div class="matches-comp-name">England - Premier League</div>
+            <div class="matches-comp-name">@fixture.Tournament.Name</div>
         </div>
 
-        @foreach (var match in tournament)
+        @foreach (var match in fixture.Matches)
         {
             <div class="match-container">
-                <div class="match-home-team">@match.HomeTeam.Name</div>
-                <div class="match-result">2 - 2</div>
-                <div class="match-away-team">@match.AwayTeam.Name</div>
+                <a class="match-home-team" asp-page="/club/@match.HomeTeam.Slug}">@match.HomeTeam.Name</a>
+                <a class="match-result" asp-page="/match/@match.Id}">2 - 2</a>
+                <a class="match-away-team" asp-page="/club/@match.AwayTeam.Slug}">@match.AwayTeam.Name</a>
             </div>
         }
     </div>

@@ -48,7 +48,7 @@ namespace Scores.Database
 
         public IEnumerable<TResult> GetMatchesByDate<TResult>(DateTime date, Func<Match, TResult> selector)
                 => context.Matches
-                .Where(x => x.KickOff.Date == date.ToUniversalTime().Date)
+                //.Where(x => x.KickOff.Date == date.ToUniversalTime().Date)
                 .Select(selector)
                 .ToList();
     }

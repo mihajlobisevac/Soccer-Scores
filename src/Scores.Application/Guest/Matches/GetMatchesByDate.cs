@@ -29,12 +29,12 @@ namespace Scores.Application.Guest.Matches
             public GetStandings.Response Standings { get; set; }
         }
 
-        public IEnumerable<Response> Do()
+        public IEnumerable<Response> Do(DateTime date)
         {
             var getClub = new GetClubById(clubManager);
             var getStandings = new GetStandings(standingsManager);
 
-            return matchManager.GetMatchesByDate(DateTime.Now, (match)
+            return matchManager.GetMatchesByDate(date, (match)
                 => new Response
                 {
                     Id = match.Id,

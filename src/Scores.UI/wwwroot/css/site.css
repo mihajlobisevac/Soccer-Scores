@@ -66,7 +66,7 @@ button {
 
 a {
     text-decoration: none;
-    color: var(--clr-black);
+    color: inherit;
 }
 
 .main-container {
