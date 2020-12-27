@@ -1,5 +1,6 @@
 ﻿using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Scores.Domain.Infrastructure
@@ -11,5 +12,6 @@ namespace Scores.Domain.Infrastructure
         Task<int> UpdateEvent(Event evnt);
 
         TResult GetEventById<TResult>(int id, Func<Event, TResult> selector);
+        IEnumerable<TResult> GetEventsByMatchId<TResult>(int id, Func<Event, TResult> selector);
     }
 }

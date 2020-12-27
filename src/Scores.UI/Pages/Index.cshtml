@@ -21,9 +21,24 @@
 
         @foreach (var match in fixture.Matches)
         {
+            var result = match.MatchInfo.FirstOrDefault(x => x.Class == "FT");
+
             <div class="match-container">
                 <a class="match-home-team" asp-page="/club/@match.HomeTeam.Slug}">@match.HomeTeam.Name</a>
-                <a class="match-result" asp-page="/match/@match.Id}">2 - 2</a>
+
+                @if (result is null)
+                {
+                    <a class="match-result" asp-page="/match/@match.Id}">
+                        @match.KickOff.ToString("HH:mm")
+                    </a>
+                }
+                else
+                {
+                    <a class="match-result" asp-page="/match/@match.Id}">
+                        @(result.HomeScore):@(result.AwayScore)
+                    </a>
+                }
+
                 <a class="match-away-team" asp-page="/club/@match.AwayTeam.Slug}">@match.AwayTeam.Name</a>
             </div>
         }

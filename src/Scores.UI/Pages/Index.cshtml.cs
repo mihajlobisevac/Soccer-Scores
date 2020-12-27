@@ -10,7 +10,7 @@ namespace Scores.UI.Pages
     {
         public IEnumerable<GetFixtures.Response> Fixtures { get; set; }
 
-        public void OnGet([FromServices] GetMatchesByDate getMatches, [FromServices] GetFixtures getFixtures)
+        public void OnGet([FromServices] GetFixtures getFixtures)
         {
             Fixtures = getFixtures.Do(DateTime.Now);
         }

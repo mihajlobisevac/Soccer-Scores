@@ -1,6 +1,7 @@
 ﻿using Scores.Domain.Infrastructure;
 using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,5 +44,11 @@ namespace Scores.Database
                 .Where(x => x.Id == id)
                 .Select(selector)
                 .FirstOrDefault();
+
+        public IEnumerable<TResult> GetEventsByMatchId<TResult>(int id, Func<Event, TResult> selector)
+            => context.Events
+                .Where(x => x.MatchId == id)
+                .Select(selector)
+                .ToList();
     }
 }

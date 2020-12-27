@@ -12,15 +12,17 @@ namespace Scores.Application.Guest.Matches
     {
         private readonly IMatchManager matchManager;
         private readonly IClubManager clubManager;
+        private readonly IEventManager eventManager;
         private readonly IStandingsManager standingsManager;
         private readonly ITournamentManager tournamentManager;
         private readonly ICountryManager countryManager;
 
-        public GetFixtures(IMatchManager matchManager, IClubManager clubManager, 
+        public GetFixtures(IMatchManager matchManager, IClubManager clubManager, IEventManager eventManager,
             IStandingsManager standingsManager, ITournamentManager tournamentManager, ICountryManager countryManager)
         {
             this.matchManager = matchManager;
             this.clubManager = clubManager;
+            this.eventManager = eventManager;
             this.standingsManager = standingsManager;
             this.tournamentManager = tournamentManager;
             this.countryManager = countryManager;
@@ -34,11 +36,11 @@ namespace Scores.Application.Guest.Matches
 
         public IEnumerable<Response> Do(DateTime date)
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager)
+            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager, eventManager)
                 .Do(date)
                 .GroupBy(item => item.Standings.TournamentId)
                 .Select(group => group.ToList())
-                .ToList(); ;
+                .ToList();
 
             List<Response> Fixtures = new List<Response>();
 
