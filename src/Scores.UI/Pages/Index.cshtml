@@ -24,22 +24,26 @@
             var result = match.MatchInfo.FirstOrDefault(x => x.Class == "FT");
 
             <div class="match-container">
-                <a class="match-home-team" asp-page="/club/@match.HomeTeam.Slug}">@match.HomeTeam.Name</a>
+                <a class="match-home-team" asp-page="/Club" asp-route-slug="@match.HomeTeam.Slug">
+                    @match.HomeTeam.Name
+                </a>
 
                 @if (result is null)
                 {
-                    <a class="match-result" asp-page="/match/@match.Id}">
+                    <a class="match-result" asp-page="/Match" asp-route-id="@match.Id">
                         @match.KickOff.ToString("HH:mm")
                     </a>
                 }
                 else
                 {
-                    <a class="match-result" asp-page="/match/@match.Id}">
+                    <a class="match-result" asp-page="/Match" asp-route-id="@match.Id">
                         @(result.HomeScore):@(result.AwayScore)
                     </a>
                 }
 
-                <a class="match-away-team" asp-page="/club/@match.AwayTeam.Slug}">@match.AwayTeam.Name</a>
+                <a class="match-away-team" asp-page="/Club" asp-route-slug="@match.AwayTeam.Slug">
+                    @match.AwayTeam.Name
+                </a>
             </div>
         }
     </div>
