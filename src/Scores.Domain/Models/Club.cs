@@ -18,6 +18,9 @@ namespace Scores.Domain.Models
 
         public int YearFounded { get; set; }
 
+        [Column(TypeName = "varchar(100)")]
+        public string Logo { get; set; }
+
         public bool Deactivated { get; set; }
 
         public int VenueId { get; set; }

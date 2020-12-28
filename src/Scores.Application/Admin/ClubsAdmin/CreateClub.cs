@@ -20,6 +20,7 @@ namespace Scores.Application.ClubsAdmin
             public string Name { get; set; }
             public string NameCode { get; set; }
             public int YearFounded { get; set; }
+            public string Logo { get; set; }
             public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
@@ -30,6 +31,7 @@ namespace Scores.Application.ClubsAdmin
             public string Name { get; set; }
             public string NameCode { get; set; }
             public int YearFounded { get; set; }
+            public string Logo { get; set; }
             public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
@@ -41,6 +43,7 @@ namespace Scores.Application.ClubsAdmin
                 Name = request.Name,
                 NameCode = request.NameCode,
                 YearFounded = request.YearFounded,
+                Logo = request.Logo,
                 Deactivated = request.Deactivated,
                 VenueId = request.VenueId,
             };
@@ -56,6 +59,7 @@ namespace Scores.Application.ClubsAdmin
                 Name = club.Name,
                 NameCode = club.NameCode,
                 YearFounded = club.YearFounded,
+                Logo = club.Logo,
                 Deactivated = club.Deactivated,
                 VenueId = club.VenueId,
             };

@@ -18,6 +18,7 @@ namespace Scores.Application.ClubsAdmin
             public string Name { get; set; }
             public string NameCode { get; set; }
             public int YearFounded { get; set; }
+            public string Logo { get; set; }
             public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
@@ -29,6 +30,7 @@ namespace Scores.Application.ClubsAdmin
                 Name = x.Name,
                 NameCode = x.NameCode,
                 YearFounded = x.YearFounded,
+                Logo = x.Logo,
                 Deactivated = x.Deactivated,
                 VenueId = x.VenueId,
             });
