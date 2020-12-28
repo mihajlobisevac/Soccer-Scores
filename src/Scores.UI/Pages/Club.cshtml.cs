@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Scores.Application.Guest.Clubs;
 
 namespace Scores.UI.Pages
 {
     public class ClubModel : PageModel
     {
-        public string Slug { get; set; }
-        public void OnGet(string slug)
+        public GetClubById.Response Club { get; set; }
+
+        public void OnGet([FromServices] GetClubById getClub, int id)
         {
-            Slug = slug;
+            Club = getClub.Do(id);
         }
     }
 }

@@ -8,6 +8,9 @@
     --clr-gray: #393e46;
     --clr-black: #222831;
     --clr-orange: #D65A31;
+    --clr-loss: #ff646a;
+    --clr-draw: #e6cd50;
+    --clr-win: #7eff4f;
 }
 
 *, *::after, *::before {
@@ -262,3 +265,62 @@ nav {
 .match-result:hover {
     background: #bebebe;
 }
+
+/*===============================================================================================================================*/
+
+.club-container {
+    display: flex;
+    overflow: hidden;
+    margin: 0.5em 0 1.5em 0;
+    max-height: 8em;
+}
+
+    .club-container img {
+        height: 8em;
+        width: 8em;
+    }
+
+.club-info {
+    overflow: hidden;
+    padding-left: 0.5em;
+    flex-grow: 2;
+}
+
+    .club-info h5 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 0.25em;
+        color: var(--clr-gray);
+    }
+
+.club-info-table {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 2em;
+    width: 100%;
+}
+
+.club-info-i, .club-info-e {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0.15em 0;
+    align-self: center;
+}
+
+.club-info-e {
+    color: var(--clr-dwhite);
+}
+
+.club-info-i {
+    color: var(--clr-lgray);
+}
+
+
+.club-section-container {
+}
+
+    .club-section-container h5 {
+        font-size: 1.6rem;
+        color: var(--clr-gray);
+    }

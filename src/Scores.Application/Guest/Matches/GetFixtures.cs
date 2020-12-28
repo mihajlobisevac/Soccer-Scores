@@ -16,9 +16,12 @@ namespace Scores.Application.Guest.Matches
         private readonly IStandingsManager standingsManager;
         private readonly ITournamentManager tournamentManager;
         private readonly ICountryManager countryManager;
+        private readonly IVenueManager venueManager;
+        private readonly ICityManager cityManager;
 
         public GetFixtures(IMatchManager matchManager, IClubManager clubManager, IEventManager eventManager,
-            IStandingsManager standingsManager, ITournamentManager tournamentManager, ICountryManager countryManager)
+            IStandingsManager standingsManager, ITournamentManager tournamentManager, ICountryManager countryManager,
+            IVenueManager venueManager, ICityManager cityManager)
         {
             this.matchManager = matchManager;
             this.clubManager = clubManager;
@@ -26,6 +29,8 @@ namespace Scores.Application.Guest.Matches
             this.standingsManager = standingsManager;
             this.tournamentManager = tournamentManager;
             this.countryManager = countryManager;
+            this.venueManager = venueManager;
+            this.cityManager = cityManager;
         }
 
         public class Response
@@ -36,11 +41,12 @@ namespace Scores.Application.Guest.Matches
 
         public IEnumerable<Response> Do(DateTime date)
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager, eventManager)
-                .Do(date)
-                .GroupBy(item => item.Standings.TournamentId)
-                .Select(group => group.ToList())
-                .ToList();
+            var matches = new GetMatchesByDate(matchManager, clubManager, 
+                standingsManager, eventManager, venueManager, cityManager, countryManager)
+                    .Do(date)
+                    .GroupBy(item => item.Standings.TournamentId)
+                    .Select(group => group.ToList())
+                    .ToList();
 
             List<Response> Fixtures = new List<Response>();
 

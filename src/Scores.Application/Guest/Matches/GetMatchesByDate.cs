@@ -15,14 +15,21 @@ namespace Scores.Application.Guest.Matches
         private readonly IClubManager clubManager;
         private readonly IStandingsManager standingsManager;
         private readonly IEventManager eventManager;
+        private readonly IVenueManager venueManager;
+        private readonly ICityManager cityManager;
+        private readonly ICountryManager countryManager;
 
         public GetMatchesByDate(IMatchManager matchManager, IClubManager clubManager, 
-            IStandingsManager standingsManager, IEventManager eventManager)
+            IStandingsManager standingsManager, IEventManager eventManager, IVenueManager venueManager,
+            ICityManager cityManager, ICountryManager countryManager)
         {
             this.matchManager = matchManager;
             this.clubManager = clubManager;
             this.standingsManager = standingsManager;
             this.eventManager = eventManager;
+            this.venueManager = venueManager;
+            this.cityManager = cityManager;
+            this.countryManager = countryManager;
         }
 
         public class Response
@@ -37,7 +44,7 @@ namespace Scores.Application.Guest.Matches
 
         public IEnumerable<Response> Do(DateTime date)
         {
-            var getClub = new GetClubById(clubManager);
+            var getClub = new GetClubById(clubManager, venueManager, cityManager, countryManager);
             var getStandings = new GetStandings(standingsManager);
             var getEvents = new GetEventsByMatchId(eventManager);
 
