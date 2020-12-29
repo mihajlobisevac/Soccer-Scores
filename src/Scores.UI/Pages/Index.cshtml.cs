@@ -12,7 +12,7 @@ namespace Scores.UI.Pages
 
         public void OnGet([FromServices] GetFixtures getFixtures)
         {
-            Fixtures = getFixtures.Do(DateTime.Now);
+            Fixtures = getFixtures.DoByDate(new DateTime(2020, 12, 26)); // DateTime.Now default // this is for dummy data
         }
     }
 }

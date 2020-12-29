@@ -48,7 +48,13 @@ namespace Scores.Database
 
         public IEnumerable<TResult> GetMatchesByDate<TResult>(DateTime date, Func<Match, TResult> selector)
                 => context.Matches
-                //.Where(x => x.KickOff.Date == date.ToUniversalTime().Date)
+                .Where(x => x.KickOff.Date == date.ToUniversalTime().Date)
+                .Select(selector)
+                .ToList();
+
+        public IEnumerable<TResult> GetMatchesByClubId<TResult>(int id, Func<Match, TResult> selector)
+                => context.Matches
+                .Where(x => x.HomeTeamId == id || x.AwayTeamId == id)
                 .Select(selector)
                 .ToList();
     }

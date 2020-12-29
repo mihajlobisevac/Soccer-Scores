@@ -1,4 +1,7 @@
-﻿using Scores.Application.Guest.Tournaments;
+﻿using Scores.Application.Guest.Clubs;
+using Scores.Application.Guest.Events;
+using Scores.Application.Guest.Tournaments;
+using Scores.Application.StandingsAdmin;
 using Scores.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -36,12 +39,22 @@ namespace Scores.Application.Guest.Matches
         public class Response
         {
             public GetTournamentById.Response Tournament { get; set; }
-            public List<GetMatchesByDate.Response> Matches { get; set; } = new List<GetMatchesByDate.Response>();
+            public List<MatchViewModel> Matches { get; set; } = new List<MatchViewModel>();
         }
 
-        public IEnumerable<Response> Do(DateTime date)
+        public class MatchViewModel
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager, 
+            public int Id { get; set; }
+            public DateTime KickOff { get; set; }
+            public GetClubById.Response HomeTeam { get; set; }
+            public GetClubById.Response AwayTeam { get; set; }
+            public GetStandings.Response Standings { get; set; }
+            public IEnumerable<GetEventsByMatchId.Response> MatchInfo { get; set; }
+        }
+
+        public IEnumerable<Response> DoByDate(DateTime date)
+        {
+            var matches = new GetMatchesByDate(matchManager, clubManager,
                 standingsManager, eventManager, venueManager, cityManager, countryManager)
                     .Do(date)
                     .GroupBy(item => item.Standings.TournamentId)
@@ -67,7 +80,15 @@ namespace Scores.Application.Guest.Matches
                         });
                     }
 
-                    Fixtures[i].Matches.Add(match);
+                    Fixtures[i].Matches.Add(new MatchViewModel 
+                    {
+                        Id = match.Id,
+                        KickOff = match.KickOff,
+                        HomeTeam = match.HomeTeam,
+                        AwayTeam = match.AwayTeam,
+                        Standings = match.Standings,
+                        MatchInfo = match.MatchInfo,
+                    });
                 }
             }
 
