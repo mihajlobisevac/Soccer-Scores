@@ -56,8 +56,8 @@
                     resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
                 }
 
-                <a class="match-result" style="background: @resultColor" 
-                    asp-page="/Match" asp-route-id="@match.Id">
+                <a class="match-result" style="background: @resultColor"
+                   asp-page="/Match" asp-route-id="@match.Id">
                     @(result.HomeScore):@(result.AwayScore)
                 </a>
             }
@@ -69,4 +69,90 @@
     }
 
     <h5>Squad</h5>
+
+
+    <div class="squad-container">
+        @foreach (var player in Model.Squad.Where(x => x.Position == "Goalkeeper"))
+        {
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: #D6B231;">
+                    <span>
+                        @player.ShirtNumber
+                    </span>
+                </div>
+                <div class="squad-name-dob">
+                    <div class="squad-player-name">
+                        @player.FirstName @player.LastName
+                    </div>
+                    <div class="squad-player-dob">
+                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                        @age years old
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="squad-container">
+        @foreach (var player in Model.Squad.Where(x => x.Position == "Defender"))
+        {
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: #31AED6;">
+                    <span>
+                        @player.ShirtNumber
+                    </span>
+                </div>
+                <div class="squad-name-dob">
+                    <div class="squad-player-name">
+                        @player.FirstName @player.LastName
+                    </div>
+                    <div class="squad-player-dob">
+                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                        @age years old
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="squad-container">
+        @foreach (var player in Model.Squad.Where(x => x.Position == "Midfielder"))
+        {
+            <div class="squad-player">
+                <div class="squad-player-number" style="        background: #31D673;">
+                    <span>
+                        @player.ShirtNumber
+                    </span>
+                </div>
+                <div class="squad-name-dob">
+                    <div class="squad-player-name">
+                        @player.FirstName @player.LastName
+                    </div>
+                    <div class="squad-player-dob">
+                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                        @age years old
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="squad-container">
+        @foreach (var player in Model.Squad.Where(x => x.Position == "Attacker"))
+        {
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: #C32F00;">
+                    <span>
+                        @player.ShirtNumber
+                    </span>
+                </div>
+                <div class="squad-name-dob">
+                    <div class="squad-player-name">
+                        @player.FirstName @player.LastName
+                    </div>
+                    <div class="squad-player-dob">
+                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                        @age years old
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
