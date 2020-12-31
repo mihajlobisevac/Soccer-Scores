@@ -1,6 +1,7 @@
 ﻿using Scores.Domain.Infrastructure;
 using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,5 +44,11 @@ namespace Scores.Database
                 .Where(x => x.Id == id)
                 .Select(selector)
                 .FirstOrDefault();
+
+        public IEnumerable<TResult> GetPlayersByClubId<TResult>(int id, Func<Player, TResult> selector)
+            => context.Players
+                .Where(x => x.ClubId == id)
+                .Select(selector)
+                .ToList();
     }
 }

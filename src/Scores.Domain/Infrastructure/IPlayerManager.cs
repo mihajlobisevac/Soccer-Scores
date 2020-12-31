@@ -1,5 +1,6 @@
 ﻿using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Scores.Domain.Infrastructure
@@ -11,5 +12,6 @@ namespace Scores.Domain.Infrastructure
         Task<int> UpdatePlayer(Player player);
 
         TResult GetPlayerById<TResult>(int id, Func<Player, TResult> selector);
+        IEnumerable<TResult> GetPlayersByClubId<TResult>(int id, Func<Player, TResult> selector);
     }
 }
