@@ -17,10 +17,11 @@ namespace Scores.Application.Guest.Matches
         private readonly IVenueManager venueManager;
         private readonly ICityManager cityManager;
         private readonly ICountryManager countryManager;
+        private readonly IPlayerManager playerManager;
 
         public GetMatchesByClubId(IMatchManager matchManager, IClubManager clubManager,
             IStandingsManager standingsManager, IEventManager eventManager, IVenueManager venueManager,
-            ICityManager cityManager, ICountryManager countryManager)
+            ICityManager cityManager, ICountryManager countryManager, IPlayerManager playerManager)
         {
             this.matchManager = matchManager;
             this.clubManager = clubManager;
@@ -29,6 +30,7 @@ namespace Scores.Application.Guest.Matches
             this.venueManager = venueManager;
             this.cityManager = cityManager;
             this.countryManager = countryManager;
+            this.playerManager = playerManager;
         }
 
         public class Response
@@ -45,7 +47,7 @@ namespace Scores.Application.Guest.Matches
         {
             var getClub = new GetClubById(clubManager, venueManager, cityManager, countryManager);
             var getStandings = new GetStandings(standingsManager);
-            var getEvents = new GetEventsByMatchId(eventManager);
+            var getEvents = new GetEventsByMatchId(eventManager, playerManager);
 
             return matchManager.GetMatchesByClubId(id, (match)
                 => new Response

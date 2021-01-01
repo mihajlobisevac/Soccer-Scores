@@ -1,4 +1,5 @@
-﻿using Scores.Domain.Infrastructure;
+﻿using Scores.Application.Guest.Players;
+using Scores.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +10,12 @@ namespace Scores.Application.Guest.Events
     public class GetEventsByMatchId
     {
         private readonly IEventManager eventManager;
+        private readonly IPlayerManager playerManager;
 
-        public GetEventsByMatchId(IEventManager eventManager)
+        public GetEventsByMatchId(IEventManager eventManager, IPlayerManager playerManager)
         {
             this.eventManager = eventManager;
+            this.playerManager = playerManager;
         }
 
         public class Response
@@ -23,12 +26,15 @@ namespace Scores.Application.Guest.Events
             public bool IsHome { get; set; }
             public string Type { get; set; }
             public string Class { get; set; }
-            public int PlayerAId { get; set; }
-            public int PlayerBId { get; set; }
+            public GetPlayerById.Response PlayerA { get; set; }
+            public GetPlayerById.Response PlayerB { get; set; }
         }
 
-        public IEnumerable<Response> Do(int matchId) =>
-            eventManager.GetEventsByMatchId(matchId, x => new Response
+        public IEnumerable<Response> Do(int matchId)
+        {
+            var getPlayer = new GetPlayerById(playerManager);
+
+            return eventManager.GetEventsByMatchId(matchId, x => new Response
             {
                 HomeScore = x.HomeScore,
                 AwayScore = x.AwayScore,
@@ -36,8 +42,9 @@ namespace Scores.Application.Guest.Events
                 IsHome = x.IsHome,
                 Type = x.Type,
                 Class = x.Class,
-                PlayerAId = x.PlayerAId,
-                PlayerBId = x.PlayerBId,
+                PlayerA = getPlayer.Do(x.PlayerAId),
+                PlayerB = getPlayer.Do(x.PlayerBId),
             });
+        }
     }
 }
