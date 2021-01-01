@@ -373,3 +373,61 @@ nav {
     color: var(--clr-lgray);
 }
 
+/*===============================================================================================================================*/
+
+.result-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: var(--clr-gray);
+}
+
+.result-ft {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.result-home-team, .result-away-team {
+    overflow: hidden;
+}
+
+.result-container img {
+    height: 4em;
+}
+
+.result-team-name {
+    padding: 0.5em 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.lineups-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 1em 0;
+}
+
+    .lineups-container .squad-player {
+        align-items: center;
+        margin: 0.5em;
+    }
+
+    .lineups-container .squad-player-number {
+        max-width: 1.5em;
+        max-height: 1.5em;
+        min-width: 1.5em;
+        min-height: 1.5em;
+    }
+
+        .lineups-container .squad-player-number span {
+            font-size: 1rem;
+        }
+
+    .lineups-container .squad-player-name {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0 0 0 0.5em;
+    }
+
