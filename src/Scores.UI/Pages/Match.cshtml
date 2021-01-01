@@ -3,6 +3,10 @@
 @{
 }
 
+<div class="result-match-info">
+    @Model.Match.Standings.Tournament.Name | @Model.Match.KickOff.ToString("MM/dd/yy") | KO @Model.Match.KickOff.ToString("HH:mm")
+</div>
+
 <div class="result-container">
     <div class="result-home-team">
         <img src="/FC_Barcelona.svg" alt="club image" />
@@ -15,13 +19,13 @@
     </div>
 
     <div class="result-team-name">
-        FC Barcelona Hotspur
+        @Model.Match.HomeTeam.Name
     </div>
     <div>
 
     </div>
     <div class="result-team-name">
-        Real Madrid CF
+        @Model.Match.AwayTeam.Name
     </div>
 </div>
 

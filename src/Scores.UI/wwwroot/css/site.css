@@ -381,6 +381,7 @@ nav {
     align-items: center;
     text-align: center;
     overflow: hidden;
+    margin-bottom: 1.5em;
     color: var(--clr-gray);
 }
 
@@ -401,6 +402,14 @@ nav {
     padding: 0.5em 0 0 0;
     font-size: 1.1rem;
     font-weight: 700;
+}
+
+.result-match-info {
+    color: var(--clr-lgray);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 1em 0 1em 0;
 }
 
 .lineups-container {
@@ -428,6 +437,5 @@ nav {
     .lineups-container .squad-player-name {
         font-size: 1rem;
         font-weight: 600;
-        padding: 0 0 0 0.5em;
+        padding: 0 0 0 0.25em;
     }
-
