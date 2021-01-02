@@ -6,7 +6,7 @@
 
 <div class="title-dates">
     <p>Matches</p>
-    <button>@(DateTime.Now.Month)/@(DateTime.Now.Day)/@(DateTime.Now.Year)</button>
+    <button>@DateTime.Now.ToString("MM/dd/yy")</button>
 </div>
 
 @foreach (var fixture in Model.Fixtures)

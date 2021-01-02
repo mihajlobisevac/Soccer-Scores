@@ -21,10 +21,11 @@ namespace Scores.Application.Guest.Matches
         private readonly ICountryManager countryManager;
         private readonly IVenueManager venueManager;
         private readonly ICityManager cityManager;
+        private readonly IPlayerManager playerManager;
 
         public GetFixtures(IMatchManager matchManager, IClubManager clubManager, IEventManager eventManager,
             IStandingsManager standingsManager, ITournamentManager tournamentManager, ICountryManager countryManager,
-            IVenueManager venueManager, ICityManager cityManager)
+            IVenueManager venueManager, ICityManager cityManager, IPlayerManager playerManager)
         {
             this.matchManager = matchManager;
             this.clubManager = clubManager;
@@ -34,6 +35,7 @@ namespace Scores.Application.Guest.Matches
             this.countryManager = countryManager;
             this.venueManager = venueManager;
             this.cityManager = cityManager;
+            this.playerManager = playerManager;
         }
 
         public class Response
@@ -54,8 +56,8 @@ namespace Scores.Application.Guest.Matches
 
         public IEnumerable<Response> DoByDate(DateTime date)
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager,
-                standingsManager, eventManager, venueManager, cityManager, countryManager)
+            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager, 
+                eventManager, venueManager, cityManager, countryManager, playerManager)
                     .Do(date)
                     .GroupBy(item => item.Standings.TournamentId)
                     .Select(group => group.ToList())

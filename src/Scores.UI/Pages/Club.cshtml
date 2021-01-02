@@ -75,7 +75,7 @@
         @foreach (var player in Model.Squad.Where(x => x.Position == "Goalkeeper"))
         {
             <div class="squad-player">
-                <div class="squad-player-number" style="background: #D6B231;">
+                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
                     <span>
                         @player.ShirtNumber
                     </span>
@@ -96,7 +96,7 @@
         @foreach (var player in Model.Squad.Where(x => x.Position == "Defender"))
         {
             <div class="squad-player">
-                <div class="squad-player-number" style="background: #31AED6;">
+                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
                     <span>
                         @player.ShirtNumber
                     </span>
@@ -117,7 +117,7 @@
         @foreach (var player in Model.Squad.Where(x => x.Position == "Midfielder"))
         {
             <div class="squad-player">
-                <div class="squad-player-number" style="        background: #31D673;">
+                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
                     <span>
                         @player.ShirtNumber
                     </span>
@@ -138,7 +138,7 @@
         @foreach (var player in Model.Squad.Where(x => x.Position == "Attacker"))
         {
             <div class="squad-player">
-                <div class="squad-player-number" style="background: #C32F00;">
+                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
                     <span>
                         @player.ShirtNumber
                     </span>

@@ -11,6 +11,10 @@
     --clr-loss: #ff646a;
     --clr-draw: #e6cd50;
     --clr-win: #7eff4f;
+    --clr-goalkeeper: #ca9e00;
+    --clr-defender: #257690;
+    --clr-midfielder: #0bb300;
+    --clr-attacker: #C32F00;
 }
 
 *, *::after, *::before {
@@ -373,3 +377,73 @@ nav {
     color: var(--clr-lgray);
 }
 
+/*===============================================================================================================================*/
+
+.result-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 1.5em;
+    color: var(--clr-gray);
+}
+
+.result-ft {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.result-home-team, .result-away-team {
+    overflow: hidden;
+}
+
+.result-container img {
+    height: 4em;
+}
+
+.result-team-name {
+    padding: 0.5em 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.result-match-info {
+    color: var(--clr-lgray);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 1em 0 1em 0;
+}
+
+.lineups-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+    .lineups-container .squad-player {
+        align-items: center;
+        margin: 0.5em;
+    }
+
+    .lineups-container .squad-player-number {
+        max-width: 1.5em;
+        max-height: 1.5em;
+        min-width: 1.5em;
+        min-height: 1.5em;
+    }
+
+        .lineups-container .squad-player-number span {
+            font-size: 1rem;
+        }
+
+    .lineups-container .squad-player-name {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0 0 0 0.5em;
+    }
+
+.lineups-substitutes {
+    color: var(--clr-lgray);
+    font-weight: 500;
+}
