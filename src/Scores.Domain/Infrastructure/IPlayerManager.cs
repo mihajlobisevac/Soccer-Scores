@@ -13,5 +13,6 @@ namespace Scores.Domain.Infrastructure
 
         TResult GetPlayerById<TResult>(int id, Func<Player, TResult> selector);
         IEnumerable<TResult> GetPlayersByClubId<TResult>(int id, Func<Player, TResult> selector);
+        IEnumerable<TResult> GetPlayersByMatchId<TResult>(int id, Func<MatchPlayer, TResult> selector);
     }
 }

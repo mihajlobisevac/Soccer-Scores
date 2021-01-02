@@ -11,6 +11,10 @@
     --clr-loss: #ff646a;
     --clr-draw: #e6cd50;
     --clr-win: #7eff4f;
+    --clr-goalkeeper: #ca9e00;
+    --clr-defender: #257690;
+    --clr-midfielder: #0bb300;
+    --clr-attacker: #C32F00;
 }
 
 *, *::after, *::before {
@@ -415,7 +419,6 @@ nav {
 .lineups-container {
     display: grid;
     grid-template-columns: 50% 50%;
-    margin: 1em 0;
 }
 
     .lineups-container .squad-player {
@@ -437,5 +440,10 @@ nav {
     .lineups-container .squad-player-name {
         font-size: 1rem;
         font-weight: 600;
-        padding: 0 0 0 0.25em;
+        padding: 0 0 0 0.5em;
     }
+
+.lineups-substitutes {
+    color: var(--clr-lgray);
+    font-weight: 500;
+}

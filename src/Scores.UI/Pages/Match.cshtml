@@ -8,25 +8,31 @@
 </div>
 
 <div class="result-container">
-    <div class="result-home-team">
-        <img src="/FC_Barcelona.svg" alt="club image" />
-    </div>
+    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id" asp-route-slug="@Model.Match.HomeTeam.Name.ToLower()">
+        <div class="result-home-team">
+            <img src="/FC_Barcelona.svg" alt="club image" />
+        </div>
+    </a>
     <div class="result-ft">
         @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").HomeScore - @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").AwayScore
     </div>
-    <div class="result-away-team">
-        <img src="/Real_Madrid_CF.svg" alt="club image" />
-    </div>
+    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id" asp-route-slug="@Model.Match.AwayTeam.Name.ToLower()">
+        <div class="result-away-team">
+            <img src="/Real_Madrid_CF.svg" alt="club image" />
+        </div>
+    </a>
 
-    <div class="result-team-name">
-        @Model.Match.HomeTeam.Name
-    </div>
-    <div>
-
-    </div>
-    <div class="result-team-name">
-        @Model.Match.AwayTeam.Name
-    </div>
+    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id" asp-route-slug="@Model.Match.HomeTeam.Name.ToLower()">
+        <div class="result-team-name">
+            @Model.Match.HomeTeam.Name
+        </div>
+    </a>
+    <div></div>
+    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id" asp-route-slug="@Model.Match.AwayTeam.Name.ToLower()">
+        <div class="result-team-name">
+            @Model.Match.AwayTeam.Name
+        </div>
+    </a>
 </div>
 
 <div class="matches-container">
@@ -34,10 +40,10 @@
     {
         var isPenalty = evnt.Class == "Penalty" ? " (PG)" : "";
 
-        var homeGoal = 
+        var homeGoal =
             evnt.IsHome == true ? $"{evnt.PlayerA.FirstName.Substring(0, 1)}. {evnt.PlayerA.LastName}{isPenalty} {evnt.Minute}'" : "";
 
-        var awayGoal = 
+        var awayGoal =
             evnt.IsHome == false ? $"{evnt.Minute}' {evnt.PlayerA.FirstName.Substring(0, 1)}. {evnt.PlayerA.LastName}{isPenalty}" : "";
 
         <div class="match-container">
@@ -52,58 +58,81 @@
     }
 </div>
 
-<h5>Lineups</h5>
+<h5 style="margin-bottom: 0.5em">Lineups</h5>
 <div class="lineups-container">
     <div class="lineups-player">
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
+        @foreach (var matchPlayer in Model.Lineups.Where(x => x.IsHome == true && x.IsSubstitute == false))
+        {
+            if (matchPlayer.Player != null)
+            {
+                var shirtNum = matchPlayer.Player.ShirtNumber;
+
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
+                        <span>@shirtNum</span>
+                    </div>
+                    <div class="squad-player-name">
+                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                    </div>
+                </div>
+            }
+        }
     </div>
     <div class="lineups-player">
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
-        <div class="squad-player">
-            <div class="squad-player-number" style="background: #D6B231;">
-                <span>12</span>
-            </div>
-            <div class="squad-player-name">
-                M. ter Stegen
-            </div>
-        </div>
+        @foreach (var matchPlayer in Model.Lineups.Where(x => x.IsHome == false && x.IsSubstitute == false))
+        {
+            if (matchPlayer.Player != null)
+            {
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
+                        <span>@matchPlayer.Player.ShirtNumber</span>
+                    </div>
+                    <div class="squad-player-name">
+                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="lineups-substitutes" style="margin-top: 0.5em">
+    Substitutes
+</div>
+<div class="lineups-container">
+    <div class="lineups-player">
+        @foreach (var matchPlayer in Model.Lineups.Where(x => x.IsHome == true && x.IsSubstitute == true))
+        {
+            if (matchPlayer.Player != null)
+            {
+                var shirtNum = matchPlayer.Player.ShirtNumber;
+
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-gray)">
+                        <span>@shirtNum</span>
+                    </div>
+                    <div class="squad-player-name">
+                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="lineups-player">
+        @foreach (var matchPlayer in Model.Lineups.Where(x => x.IsHome == true && x.IsSubstitute == true))
+        {
+            if (matchPlayer.Player != null)
+            {
+                var shirtNum = matchPlayer.Player.ShirtNumber;
+
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-gray)">
+                        <span>@shirtNum</span>
+                    </div>
+                    <div class="squad-player-name">
+                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>

@@ -50,5 +50,11 @@ namespace Scores.Database
                 .Where(x => x.ClubId == id)
                 .Select(selector)
                 .ToList();
+
+        public IEnumerable<TResult> GetPlayersByMatchId<TResult>(int id, Func<MatchPlayer, TResult> selector)
+            => context.MatchPlayers
+                .Where(x => x.MatchId == id)
+                .Select(selector)
+                .ToList();
     }
 }
