@@ -14,5 +14,6 @@ namespace Scores.Domain.Infrastructure
         TResult GetMatchById<TResult>(int id, Func<Match, TResult> selector);
         IEnumerable<TResult> GetMatchesByDate<TResult>(DateTime date, Func<Match, TResult> selector);
         IEnumerable<TResult> GetMatchesByClubId<TResult>(int id, Func<Match, TResult> selector);
+        IEnumerable<TResult> GetMatchesByPlayerId<TResult>(int id, Func<MatchPlayer, TResult> selector);
     }
 }

@@ -53,8 +53,14 @@ namespace Scores.Database
                 .ToList();
 
         public IEnumerable<TResult> GetMatchesByClubId<TResult>(int id, Func<Match, TResult> selector)
-                => context.Matches
+            => context.Matches
                 .Where(x => x.HomeTeamId == id || x.AwayTeamId == id)
+                .Select(selector)
+                .ToList();
+
+        public IEnumerable<TResult> GetMatchesByPlayerId<TResult>(int id, Func<MatchPlayer, TResult> selector)
+            => context.MatchPlayers
+                .Where(x => x.PlayerId == id)
                 .Select(selector)
                 .ToList();
     }

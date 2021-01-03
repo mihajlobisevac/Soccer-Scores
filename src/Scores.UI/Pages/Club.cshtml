@@ -1,4 +1,4 @@
-﻿@page "{id}/{slug}"
+﻿@page "{id}"
 @model Scores.UI.Pages.ClubModel
 @{
 }
@@ -29,7 +29,7 @@
         var playingHome = match.HomeTeam.Id == Model.Club.Id ? true : false;
 
         <div class="match-container">
-            <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id" asp-route-slug="@match.HomeTeam.Slug">
+            <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id">
                 @match.HomeTeam.Name
             </a>
 
@@ -62,7 +62,7 @@
                 </a>
             }
 
-            <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id" asp-route-slug="@match.AwayTeam.Slug">
+            <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id">
                 @match.AwayTeam.Name
             </a>
         </div>

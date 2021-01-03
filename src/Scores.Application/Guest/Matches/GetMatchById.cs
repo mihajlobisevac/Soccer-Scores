@@ -39,6 +39,7 @@ namespace Scores.Application.Guest.Matches
 
         public class Response
         {
+            public int Id { get; set; }
             public DateTime KickOff { get; set; }
             public GetClubById.Response HomeTeam { get; set; }
             public GetClubById.Response AwayTeam { get; set; }
@@ -54,6 +55,7 @@ namespace Scores.Application.Guest.Matches
 
             return matchManager.GetMatchById(id, x => new Response
             {
+                Id = x.Id,
                 KickOff = x.KickOff,
                 HomeTeam = getClub.Do(x.HomeTeamId),
                 AwayTeam = getClub.Do(x.AwayTeamId),
