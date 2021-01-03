@@ -1,0 +1,82 @@
+﻿@page "{id}"
+@model Scores.UI.Pages.PlayerModel
+@{
+}
+
+@if (Model.Player == null)
+{
+    <div>loading...</div>
+}
+else
+{
+    <div class="player-container">
+        <h4>@Model.Player.FirstName @Model.Player.LastName</h4>
+        <img src="/FC_Barcelona.svg" alt="club image" />
+    </div>
+
+    <div class="club-info" style="padding-left: 0.1em;margin-bottom: 1.5em;">
+        <div class="club-info-table">
+            <div class="club-info-e">Nationality</div>
+            <div class="club-info-i">@Model.Player.Nationality.Name</div>
+            <div class="club-info-e">City of Birth</div>
+            <div class="club-info-i">@Model.Player.CityOfBirth.Name</div>
+            <div class="club-info-e">Date of Birth</div>
+            <div class="club-info-i">@Model.Player.DoB.ToString("dd/MM/yyyy")</div>
+            <div class="club-info-e">Height</div>
+            <div class="club-info-i">@Model.Player.Height cm</div>
+            <div class="club-info-e">Weight</div>
+            <div class="club-info-i">@Model.Player.Weight cm</div>
+            <div class="club-info-e">Position</div>
+            <div class="club-info-i">@Model.Player.Position</div>
+            <div class="club-info-e">Foot</div>
+            <div class="club-info-i">@Model.Player.Foot</div>
+        </div>
+    </div>
+
+    <h5>Matches</h5>
+
+    @foreach (var match in Model.Matches)
+    {
+        var result = match.Match.Events.FirstOrDefault(x => x.Class == "FT");
+        var playingHome = match.Match.HomeTeam.Id == Model.Player.Club.Id ? true : false;
+
+        <div class="match-container">
+            <a class="match-home-team" asp-page="/Club" asp-route-id="@match.Match.HomeTeam.Id">
+                @match.Match.HomeTeam.Name
+            </a>
+
+            @if (result is null)
+            {
+                <a class="match-result" asp-page="/Match" asp-route-id="@match.Match.Id">
+                    @match.Match.KickOff.ToString("HH:mm")
+                </a>
+            }
+            else
+            {
+                string resultColor;
+
+                if (playingHome)
+                {
+                    resultColor = result.HomeScore > result.AwayScore ? "var(--clr-win)" : "";
+                    resultColor = result.HomeScore < result.AwayScore ? "var(--clr-loss)" : resultColor;
+                    resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
+                }
+                else
+                {
+                    resultColor = result.HomeScore > result.AwayScore ? "var(--clr-loss)" : "";
+                    resultColor = result.HomeScore < result.AwayScore ? "var(--clr-win)" : resultColor;
+                    resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
+                }
+
+                <a class="match-result" style="background: @resultColor"
+                   asp-page="/Match" asp-route-id="@match.Match.Id">
+                    @(result.HomeScore):@(result.AwayScore)
+                </a>
+            }
+
+            <a class="match-away-team" asp-page="/Club" asp-route-id="@match.Match.AwayTeam.Id">
+                @match.Match.AwayTeam.Name
+            </a>
+        </div>
+    }
+}

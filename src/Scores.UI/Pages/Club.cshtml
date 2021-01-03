@@ -1,4 +1,4 @@
-﻿@page "{id}/{slug}"
+﻿@page "{id}"
 @model Scores.UI.Pages.ClubModel
 @{
 }
@@ -29,7 +29,7 @@
         var playingHome = match.HomeTeam.Id == Model.Club.Id ? true : false;
 
         <div class="match-container">
-            <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id" asp-route-slug="@match.HomeTeam.Slug">
+            <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id">
                 @match.HomeTeam.Name
             </a>
 
@@ -62,7 +62,7 @@
                 </a>
             }
 
-            <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id" asp-route-slug="@match.AwayTeam.Slug">
+            <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id">
                 @match.AwayTeam.Name
             </a>
         </div>
@@ -74,85 +74,93 @@
     <div class="squad-container">
         @foreach (var player in Model.Squad.Where(x => x.Position == "Goalkeeper"))
         {
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
-                    <span>
-                        @player.ShirtNumber
-                    </span>
-                </div>
-                <div class="squad-name-dob">
-                    <div class="squad-player-name">
-                        @player.FirstName @player.LastName
+            <a asp-page="/Player" asp-route-id="@player.Id">
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
+                        <span>
+                            @player.ShirtNumber
+                        </span>
                     </div>
-                    <div class="squad-player-dob">
-                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
-                        @age years old
+                    <div class="squad-name-dob">
+                        <div class="squad-player-name">
+                            @player.FirstName @player.LastName
+                        </div>
+                        <div class="squad-player-dob">
+                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @age years old
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </div>
     <div class="squad-container">
         @foreach (var player in Model.Squad.Where(x => x.Position == "Defender"))
         {
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
-                    <span>
-                        @player.ShirtNumber
-                    </span>
-                </div>
-                <div class="squad-name-dob">
-                    <div class="squad-player-name">
-                        @player.FirstName @player.LastName
+            <a asp-page="/Player" asp-route-id="@player.Id">
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
+                        <span>
+                            @player.ShirtNumber
+                        </span>
                     </div>
-                    <div class="squad-player-dob">
-                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
-                        @age years old
+                    <div class="squad-name-dob">
+                        <div class="squad-player-name">
+                            @player.FirstName @player.LastName
+                        </div>
+                        <div class="squad-player-dob">
+                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @age years old
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </div>
     <div class="squad-container">
         @foreach (var player in Model.Squad.Where(x => x.Position == "Midfielder"))
         {
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
-                    <span>
-                        @player.ShirtNumber
-                    </span>
-                </div>
-                <div class="squad-name-dob">
-                    <div class="squad-player-name">
-                        @player.FirstName @player.LastName
+            <a asp-page="/Player" asp-route-id="@player.Id">
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
+                        <span>
+                            @player.ShirtNumber
+                        </span>
                     </div>
-                    <div class="squad-player-dob">
-                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
-                        @age years old
+                    <div class="squad-name-dob">
+                        <div class="squad-player-name">
+                            @player.FirstName @player.LastName
+                        </div>
+                        <div class="squad-player-dob">
+                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @age years old
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </div>
     <div class="squad-container">
         @foreach (var player in Model.Squad.Where(x => x.Position == "Attacker"))
         {
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
-                    <span>
-                        @player.ShirtNumber
-                    </span>
-                </div>
-                <div class="squad-name-dob">
-                    <div class="squad-player-name">
-                        @player.FirstName @player.LastName
+            <a asp-page="/Player" asp-route-id="@player.Id">
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-@player.Position.ToLower())">
+                        <span>
+                            @player.ShirtNumber
+                        </span>
                     </div>
-                    <div class="squad-player-dob">
-                        @{ var age = DateTime.Now.Year - player.DoB.Year; }
-                        @age years old
+                    <div class="squad-name-dob">
+                        <div class="squad-player-name">
+                            @player.FirstName @player.LastName
+                        </div>
+                        <div class="squad-player-dob">
+                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @age years old
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </div>
 </div>

@@ -48,7 +48,7 @@ namespace Scores.Application.Guest.Matches
         {
             var getClub = new GetClubById(clubManager, venueManager, cityManager, countryManager);
             var getStandings = new GetStandings(standingsManager);
-            var getEvents = new GetEventsByMatchId(eventManager, playerManager);
+            var getEvents = new GetEventsByMatchId(eventManager, playerManager, clubManager, venueManager, cityManager, countryManager);
 
             return matchManager.GetMatchesByDate(date, (match)
                 => new Response

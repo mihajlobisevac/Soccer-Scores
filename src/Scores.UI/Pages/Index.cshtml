@@ -24,7 +24,7 @@
             var result = match.MatchInfo.FirstOrDefault(x => x.Class == "FT");
 
             <div class="match-container">
-                <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id" asp-route-slug="@match.HomeTeam.Slug">
+                <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id">
                     @match.HomeTeam.Name
                 </a>
 
@@ -41,7 +41,7 @@
                     </a>
                 }
 
-                <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id" asp-route-slug="@match.AwayTeam.Slug">
+                <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id">
                     @match.AwayTeam.Name
                 </a>
             </div>

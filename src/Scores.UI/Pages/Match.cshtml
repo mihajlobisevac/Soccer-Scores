@@ -8,7 +8,7 @@
 </div>
 
 <div class="result-container">
-    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id" asp-route-slug="@Model.Match.HomeTeam.Name.ToLower()">
+    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id">
         <div class="result-home-team">
             <img src="/FC_Barcelona.svg" alt="club image" />
         </div>
@@ -16,19 +16,19 @@
     <div class="result-ft">
         @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").HomeScore - @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").AwayScore
     </div>
-    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id" asp-route-slug="@Model.Match.AwayTeam.Name.ToLower()">
+    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id">
         <div class="result-away-team">
             <img src="/Real_Madrid_CF.svg" alt="club image" />
         </div>
     </a>
 
-    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id" asp-route-slug="@Model.Match.HomeTeam.Name.ToLower()">
+    <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id">
         <div class="result-team-name">
             @Model.Match.HomeTeam.Name
         </div>
     </a>
     <div></div>
-    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id" asp-route-slug="@Model.Match.AwayTeam.Name.ToLower()">
+    <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id">
         <div class="result-team-name">
             @Model.Match.AwayTeam.Name
         </div>
@@ -67,14 +67,16 @@
             {
                 var shirtNum = matchPlayer.Player.ShirtNumber;
 
-                <div class="squad-player">
-                    <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
-                        <span>@shirtNum</span>
+                <a asp-page="/Player" asp-route-id="@matchPlayer.Player.Id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
+                            <span>@shirtNum</span>
+                        </div>
+                        <div class="squad-player-name">
+                            @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                        </div>
                     </div>
-                    <div class="squad-player-name">
-                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
-                    </div>
-                </div>
+                </a>
             }
         }
     </div>
@@ -83,14 +85,16 @@
         {
             if (matchPlayer.Player != null)
             {
-                <div class="squad-player">
-                    <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
-                        <span>@matchPlayer.Player.ShirtNumber</span>
+                <a asp-page="/Player" asp-route-id="@matchPlayer.Player.Id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-@matchPlayer.Player.Position.ToLower())">
+                            <span>@matchPlayer.Player.ShirtNumber</span>
+                        </div>
+                        <div class="squad-player-name">
+                            @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                        </div>
                     </div>
-                    <div class="squad-player-name">
-                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
-                    </div>
-                </div>
+                </a>
             }
         }
     </div>
@@ -106,14 +110,16 @@
             {
                 var shirtNum = matchPlayer.Player.ShirtNumber;
 
-                <div class="squad-player">
-                    <div class="squad-player-number" style="background: var(--clr-gray)">
-                        <span>@shirtNum</span>
+                <a asp-page="/Player" asp-route-id="@matchPlayer.Player.Id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-gray)">
+                            <span>@shirtNum</span>
+                        </div>
+                        <div class="squad-player-name">
+                            @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                        </div>
                     </div>
-                    <div class="squad-player-name">
-                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
-                    </div>
-                </div>
+                </a>
             }
         }
     </div>
@@ -124,14 +130,16 @@
             {
                 var shirtNum = matchPlayer.Player.ShirtNumber;
 
-                <div class="squad-player">
-                    <div class="squad-player-number" style="background: var(--clr-gray)">
-                        <span>@shirtNum</span>
+                <a asp-page="/Player" asp-route-id="@matchPlayer.Player.Id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-gray)">
+                            <span>@shirtNum</span>
+                        </div>
+                        <div class="squad-player-name">
+                            @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
+                        </div>
                     </div>
-                    <div class="squad-player-name">
-                        @(matchPlayer.Player.FirstName.Substring(0, 1)). @matchPlayer.Player.LastName
-                    </div>
-                </div>
+                </a>
             }
         }
     </div>

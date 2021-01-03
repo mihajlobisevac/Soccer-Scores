@@ -447,3 +447,16 @@ nav {
     color: var(--clr-lgray);
     font-weight: 500;
 }
+
+/*===============================================================================================================================*/
+
+.player-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 0.5em 0;
+}
+
+    .player-container img {
+        height: 3.5em;
+    }
