@@ -1,0 +1,68 @@
+﻿@page "{id}"
+@model Scores.UI.Pages.PlayerModel
+@{
+}
+
+@if (Model.Player == null)
+{
+    <div>loading...</div>
+}
+else
+{
+    <div class="player-container">
+        <h4>@Model.Player.FirstName @Model.Player.LastName</h4>
+        <img src="/FC_Barcelona.svg" alt="club image" />
+    </div>
+
+    <div class="club-info" style="padding-left: 0.1em;margin-bottom: 1.5em;">
+        <div class="club-info-table">
+            <div class="club-info-e">Nationality</div>
+            <div class="club-info-i">@Model.Player.Nationality.Name</div>
+            <div class="club-info-e">City of Birth</div>
+            <div class="club-info-i">@Model.Player.CityOfBirth.Name</div>
+            <div class="club-info-e">Date of Birth</div>
+            <div class="club-info-i">@Model.Player.DoB.ToString("dd/MM/yyyy")</div>
+            <div class="club-info-e">Height</div>
+            <div class="club-info-i">@Model.Player.Height cm</div>
+            <div class="club-info-e">Weight</div>
+            <div class="club-info-i">@Model.Player.Weight cm</div>
+            <div class="club-info-e">Position</div>
+            <div class="club-info-i">@Model.Player.Position</div>
+            <div class="club-info-e">Foot</div>
+            <div class="club-info-i">@Model.Player.Foot</div>
+        </div>
+    </div>
+
+    <h5>Matches</h5>
+
+    <div class="match-container">
+        <div class="match-home-team">FC Barcelona</div>
+        <div class="match-result" style="background: var(--clr-loss)">1 - 2</div>
+        <div class="match-away-team">Tottenham Hotspur</div>
+    </div>
+    <div class="match-container">
+        <div class="match-home-team">FC Barcelona</div>
+        <div class="match-result" style="background: var(--clr-win)">2 - 0</div>
+        <div class="match-away-team">Leeds United</div>
+    </div>
+    <div class="match-container">
+        <div class="match-home-team">Manchester City</div>
+        <div class="match-result" style="background: var(--clr-draw)">2 - 2</div>
+        <div class="match-away-team">FC Barcelona</div>
+    </div>
+    <div class="match-container">
+        <div class="match-home-team">Newcastle United</div>
+        <div class="match-result">21:00</div>
+        <div class="match-away-team">FC Barcelona</div>
+    </div>
+    <div class="match-container">
+        <div class="match-home-team">Fulham</div>
+        <div class="match-result">16:00</div>
+        <div class="match-away-team">FC Barcelona</div>
+    </div>
+    <div class="match-container">
+        <div class="match-home-team">FC Barcelona</div>
+        <div class="match-result">21:00</div>
+        <div class="match-away-team">Watford</div>
+    </div>
+}

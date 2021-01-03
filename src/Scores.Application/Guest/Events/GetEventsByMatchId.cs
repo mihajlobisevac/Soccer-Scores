@@ -11,11 +11,20 @@ namespace Scores.Application.Guest.Events
     {
         private readonly IEventManager eventManager;
         private readonly IPlayerManager playerManager;
+        private readonly IClubManager clubManager;
+        private readonly IVenueManager venueManager;
+        private readonly ICityManager cityManager;
+        private readonly ICountryManager countryManager;
 
-        public GetEventsByMatchId(IEventManager eventManager, IPlayerManager playerManager)
+        public GetEventsByMatchId(IEventManager eventManager, IPlayerManager playerManager, IClubManager clubManager,
+            IVenueManager venueManager, ICityManager cityManager, ICountryManager countryManager)
         {
             this.eventManager = eventManager;
             this.playerManager = playerManager;
+            this.clubManager = clubManager;
+            this.venueManager = venueManager;
+            this.cityManager = cityManager;
+            this.countryManager = countryManager;
         }
 
         public class Response
@@ -32,7 +41,7 @@ namespace Scores.Application.Guest.Events
 
         public IEnumerable<Response> Do(int matchId)
         {
-            var getPlayer = new GetPlayerById(playerManager);
+            var getPlayer = new GetPlayerById(playerManager, clubManager, venueManager, cityManager, countryManager);
 
             return eventManager.GetEventsByMatchId(matchId, x => new Response
             {
