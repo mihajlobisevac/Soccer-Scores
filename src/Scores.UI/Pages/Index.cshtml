@@ -12,12 +12,15 @@
 @foreach (var fixture in Model.Fixtures)
 {
     <div class="matches-container">
-        <div class="matches-comp">
-            <div class="matches-comp-flag">
-                <img src="@fixture.Tournament.Country.Flag" alt="flag" />
+
+        <a asp-page="/Standings">
+            <div class="matches-comp">
+                <div class="matches-comp-flag">
+                    <img src="@fixture.Tournament.Country.Flag" alt="flag" />
+                </div>
+                <div class="matches-comp-name">@fixture.Tournament.Name</div>
             </div>
-            <div class="matches-comp-name">@fixture.Tournament.Name</div>
-        </div>
+        </a>
 
         @foreach (var match in fixture.Matches)
         {
@@ -46,5 +49,6 @@
                 </a>
             </div>
         }
+
     </div>
 }

@@ -3,9 +3,11 @@
 @{
 }
 
-<div class="result-match-info">
-    @Model.Match.Standings.Tournament.Name | @Model.Match.KickOff.ToString("MM/dd/yy") | KO @Model.Match.KickOff.ToString("HH:mm")
-</div>
+<a asp-page="/Standings">
+    <div class="result-match-info">
+        @Model.Match.Standings.Tournament.Name | @Model.Match.KickOff.ToString("MM/dd/yy") | KO @Model.Match.KickOff.ToString("HH:mm")
+    </div>
+</a>
 
 <div class="result-container">
     <a asp-page="/Club" asp-route-id="@Model.Match.HomeTeam.Id">
