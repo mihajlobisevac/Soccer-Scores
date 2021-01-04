@@ -1,11 +1,16 @@
-﻿@page
+﻿@page "{id}"
 @model Scores.UI.Pages.StandingsModel
 @{
 }
 
 <div class="player-container">
-    <h4>La Liga</h4>
-    <img src="/FC_Barcelona.svg" alt="club image" />
+    <h4>@Model.Standings.Tournament.Name</h4>
+    @*<img src="/FC_Barcelona.svg" alt="club image" />*@
+    <div class="matches-comp">
+        <div class="matches-comp-flag" style="width:3em;height:3em;margin:0">
+            <img src="@Model.Standings.Tournament.Country.Flag" alt="flag" />
+        </div>
+    </div>
 </div>
 
 <div class="title-dates">
@@ -14,36 +19,33 @@
 
 <h5>Matches</h5>
 
-<div class="match-container">
-    <div class="match-home-team">FC Barcelona</div>
-    <div class="match-result" style="background: var(--clr-loss)">1 - 2</div>
-    <div class="match-away-team">Tottenham Hotspur</div>
-</div>
-<div class="match-container">
-    <div class="match-home-team">FC Barcelona</div>
-    <div class="match-result" style="background: var(--clr-win)">2 - 0</div>
-    <div class="match-away-team">Leeds United</div>
-</div>
-<div class="match-container">
-    <div class="match-home-team">Manchester City</div>
-    <div class="match-result" style="background: var(--clr-draw)">2 - 2</div>
-    <div class="match-away-team">FC Barcelona</div>
-</div>
-<div class="match-container">
-    <div class="match-home-team">Newcastle United</div>
-    <div class="match-result">21:00</div>
-    <div class="match-away-team">FC Barcelona</div>
-</div>
-<div class="match-container">
-    <div class="match-home-team">Fulham</div>
-    <div class="match-result">16:00</div>
-    <div class="match-away-team">FC Barcelona</div>
-</div>
-<div class="match-container">
-    <div class="match-home-team">FC Barcelona</div>
-    <div class="match-result">21:00</div>
-    <div class="match-away-team">Watford</div>
-</div>
+@foreach (var match in Model.Matches)
+{
+    var result = match.Match.Events.FirstOrDefault(x => x.Class == "FT");
+
+    <div class="match-container">
+        <a class="match-home-team" asp-page="/Club" asp-route-id="@match.Match.HomeTeam.Id">
+            @match.Match.HomeTeam.Name
+        </a>
+
+        @if (result is null)
+        {
+            <a class="match-result" asp-page="/Match" asp-route-id="@match.Match.Id">
+                @match.Match.KickOff.ToString("HH:mm")
+            </a>
+        }
+        else
+        {
+            <a class="match-result" asp-page="/Match" asp-route-id="@match.Match.Id">
+                @(result.HomeScore):@(result.AwayScore)
+            </a>
+        }
+
+        <a class="match-away-team" asp-page="/Club" asp-route-id="@match.Match.AwayTeam.Id">
+            @match.Match.AwayTeam.Name
+        </a>
+    </div>
+}
 
 <h5>Standings</h5>
 

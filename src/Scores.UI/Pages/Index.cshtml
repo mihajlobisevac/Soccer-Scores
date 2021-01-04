@@ -13,12 +13,12 @@
 {
     <div class="matches-container">
 
-        <a asp-page="/Standings">
+        <a asp-page="/Standings" asp-route-id="@fixture.Standings.Id">
             <div class="matches-comp">
                 <div class="matches-comp-flag">
-                    <img src="@fixture.Tournament.Country.Flag" alt="flag" />
+                    <img src="@fixture.Standings.Tournament.Country.Flag" alt="flag" />
                 </div>
-                <div class="matches-comp-name">@fixture.Tournament.Name</div>
+                <div class="matches-comp-name">@fixture.Standings.Tournament.Name</div>
             </div>
         </a>
 

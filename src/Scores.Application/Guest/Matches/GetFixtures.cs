@@ -1,5 +1,6 @@
 ﻿using Scores.Application.Guest.Clubs;
 using Scores.Application.Guest.Events;
+using Scores.Application.Guest.Standings;
 using Scores.Application.Guest.Tournaments;
 using Scores.Application.StandingsAdmin;
 using Scores.Domain.Infrastructure;
@@ -40,7 +41,7 @@ namespace Scores.Application.Guest.Matches
 
         public class Response
         {
-            public GetTournamentById.Response Tournament { get; set; }
+            public GetStandingsById.Response Standings { get; set; }
             public List<MatchViewModel> Matches { get; set; } = new List<MatchViewModel>();
         }
 
@@ -59,7 +60,7 @@ namespace Scores.Application.Guest.Matches
             var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager, 
                 eventManager, venueManager, cityManager, countryManager, playerManager)
                     .Do(date)
-                    .GroupBy(item => item.Standings.TournamentId)
+                    .GroupBy(item => item.Standings.Id)
                     .Select(group => group.ToList())
                     .ToList();
 
@@ -77,8 +78,8 @@ namespace Scores.Application.Guest.Matches
 
                         Fixtures.Add(new Response
                         {
-                            Tournament = new GetTournamentById(tournamentManager, countryManager)
-                                .Do(match.Standings.TournamentId)
+                            Standings = new GetStandingsById(standingsManager, tournamentManager, countryManager)
+                                .Do(match.Standings.Id)
                         });
                     }
 
