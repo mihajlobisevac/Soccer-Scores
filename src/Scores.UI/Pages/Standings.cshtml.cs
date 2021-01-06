@@ -12,7 +12,7 @@ namespace Scores.UI.Pages
     public class StandingsModel : PageModel
     {
         public GetStandingsById.Response Standings { get; set; }
-        public List<GetMatchesByStandingsId.Response> Matches { get; set; }
+        public List<GetMatchById.Response> Matches { get; set; }
 
         public void OnGet([FromServices] GetStandingsById getStandings, [FromServices] GetMatchesByStandingsId getMatches, int id)
         {

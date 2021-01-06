@@ -21,28 +21,28 @@
 
 @foreach (var match in Model.Matches)
 {
-    var result = match.Match.Events.FirstOrDefault(x => x.Class == "FT");
+    var result = match.Events.FirstOrDefault(x => x.Class == "FT");
 
     <div class="match-container">
-        <a class="match-home-team" asp-page="/Club" asp-route-id="@match.Match.HomeTeam.Id">
-            @match.Match.HomeTeam.Name
+        <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id">
+            @match.HomeTeam.Name
         </a>
 
         @if (result is null)
         {
-            <a class="match-result" asp-page="/Match" asp-route-id="@match.Match.Id">
-                @match.Match.KickOff.ToString("HH:mm")
+            <a class="match-result" asp-page="/Match" asp-route-id="@match.Id">
+                @match.KickOff.ToString("HH:mm")
             </a>
         }
         else
         {
-            <a class="match-result" asp-page="/Match" asp-route-id="@match.Match.Id">
+            <a class="match-result" asp-page="/Match" asp-route-id="@match.Id">
                 @(result.HomeScore):@(result.AwayScore)
             </a>
         }
 
-        <a class="match-away-team" asp-page="/Club" asp-route-id="@match.Match.AwayTeam.Id">
-            @match.Match.AwayTeam.Name
+        <a class="match-away-team" asp-page="/Club" asp-route-id="@match.AwayTeam.Id">
+            @match.AwayTeam.Name
         </a>
     </div>
 }

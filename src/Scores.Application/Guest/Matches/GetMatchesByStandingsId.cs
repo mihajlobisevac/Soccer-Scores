@@ -36,21 +36,13 @@ namespace Scores.Application.Guest.Matches
             this.playerManager = playerManager;
         }
 
-        public class Response
-        {
-            public GetMatchById.Response Match { get; set; }
-        }
-
-        public IEnumerable<Response> Do(int id)
+        public IEnumerable<GetMatchById.Response> Do(int id)
         {
             var getMatch = new GetMatchById(matchManager, clubManager, venueManager, eventManager,
                 cityManager, countryManager, standingsManager, tournamentManager, playerManager);
 
-            return matchManager.GetMatchesByStandingsId(id, (match)
-                => new Response
-                {
-                    Match = getMatch.Do(match.Id),
-                });
+            return matchManager
+                .GetMatchesByStandingsId(id, (match) => getMatch.Do(match.Id));
         }
     }
 }
