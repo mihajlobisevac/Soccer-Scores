@@ -22,6 +22,7 @@ namespace Scores.Application.Guest.Standings
 
         public class Response
         {
+            public int Id { get; set; }
             public GetTournamentById.Response Tournament { get; set; }
         }
 
@@ -31,7 +32,8 @@ namespace Scores.Application.Guest.Standings
 
             return standingsManager.GetStandingsById(id, x => new Response
             {
-                Tournament = getTournament.Do(x.TournamentId)
+                Id = x.Id,
+                Tournament = getTournament.Do(x.TournamentId),
             });
         }
     }

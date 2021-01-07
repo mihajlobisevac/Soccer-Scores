@@ -9,7 +9,7 @@ using System.Text;
 namespace Scores.Application.Guest.Matches
 {
     [Service]
-    public class GetMatchesByPlayerId
+    public class GetMatchesByStandingsId
     {
         private readonly IMatchManager matchManager;
         private readonly IClubManager clubManager;
@@ -21,7 +21,7 @@ namespace Scores.Application.Guest.Matches
         private readonly ITournamentManager tournamentManager;
         private readonly IPlayerManager playerManager;
 
-        public GetMatchesByPlayerId(IMatchManager matchManager, IClubManager clubManager, IVenueManager venueManager,
+        public GetMatchesByStandingsId(IMatchManager matchManager, IClubManager clubManager, IVenueManager venueManager,
             IEventManager eventManager, ICityManager cityManager, ICountryManager countryManager, IStandingsManager standingsManager,
             ITournamentManager tournamentManager, IPlayerManager playerManager)
         {
@@ -42,7 +42,7 @@ namespace Scores.Application.Guest.Matches
                 cityManager, countryManager, standingsManager, tournamentManager, playerManager);
 
             return matchManager
-                .GetMatchesByPlayerId(id, (match) => getMatch.Do(match.MatchId));
+                .GetMatchesByStandingsId(id, (match) => getMatch.Do(match.Id));
         }
     }
 }
