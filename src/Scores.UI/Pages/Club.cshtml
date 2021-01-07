@@ -86,7 +86,14 @@
                             @player.FirstName @player.LastName
                         </div>
                         <div class="squad-player-dob">
-                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @{
+                                var today = DateTime.Now;
+                                var dob = player.DoB;
+
+                                int age = dob.Month > today.Month || dob.Month == today.Month && dob.Day > today.Day
+                                    ? today.Year - dob.Year - 1 : today.Year - dob.Year;
+                            }
+
                             @age years old
                         </div>
                     </div>
@@ -109,7 +116,14 @@
                             @player.FirstName @player.LastName
                         </div>
                         <div class="squad-player-dob">
-                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @{
+                                var today = DateTime.Now;
+                                var dob = player.DoB;
+
+                                int age = dob.Month > today.Month || dob.Month == today.Month && dob.Day > today.Day
+                                    ? today.Year - dob.Year - 1 : today.Year - dob.Year;
+                            }
+
                             @age years old
                         </div>
                     </div>
@@ -132,7 +146,14 @@
                             @player.FirstName @player.LastName
                         </div>
                         <div class="squad-player-dob">
-                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @{
+                                var today = DateTime.Now;
+                                var dob = player.DoB;
+
+                                int age = dob.Month > today.Month || dob.Month == today.Month && dob.Day > today.Day
+                                    ? today.Year - dob.Year - 1 : today.Year - dob.Year;
+                            }
+
                             @age years old
                         </div>
                     </div>
@@ -155,7 +176,14 @@
                             @player.FirstName @player.LastName
                         </div>
                         <div class="squad-player-dob">
-                            @{ var age = DateTime.Now.Year - player.DoB.Year; }
+                            @{
+                                var today = DateTime.Now;
+                                var dob = player.DoB;
+
+                                int age = dob.Month > today.Month || dob.Month == today.Month && dob.Day > today.Day
+                                    ? today.Year - dob.Year - 1 : today.Year - dob.Year;
+                            }
+
                             @age years old
                         </div>
                     </div>

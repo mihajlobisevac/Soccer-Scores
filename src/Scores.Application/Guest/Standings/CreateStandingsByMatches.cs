@@ -12,6 +12,7 @@ namespace Scores.Application.Guest.Standings
     {
         public class ClubViewModel
         {
+            public int Id { get; set; }
             public string Name { get; set; }
             public int Played { get; set; }
             public int Wins { get; set; }
@@ -32,6 +33,7 @@ namespace Scores.Application.Guest.Standings
 
                     Clubs.Add(new ClubViewModel
                     {
+                        Id = match.HomeTeam.Id,
                         Name = match.HomeTeam.Name,
                         Played = WDL.Played,
                         Wins = WDL.Wins,
@@ -47,6 +49,7 @@ namespace Scores.Application.Guest.Standings
 
                     Clubs.Add(new ClubViewModel
                     {
+                        Id = match.AwayTeam.Id,
                         Name = match.AwayTeam.Name,
                         Played = WDL.Played,
                         Wins = WDL.Wins,

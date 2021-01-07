@@ -64,7 +64,7 @@
         foreach (var club in Model.Table.OrderByDescending(x => x.Points))
         {
             <div class="st-light st-center">@position</div>
-            <div class="st-strong">@club.Name</div>
+            <a asp-page="/Club" asp-route-id="@club.Id"><div class="st-strong">@club.Name</div></a>
             <div class="st-light st-center">@club.Played</div>
             <div class="st-light st-center">@club.Wins</div>
             <div class="st-light st-center">@club.Draws</div>
