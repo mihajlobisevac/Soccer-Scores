@@ -13,11 +13,17 @@ namespace Scores.UI.Pages
     {
         public GetStandingsById.Response Standings { get; set; }
         public List<GetMatchById.Response> Matches { get; set; }
+        public List<CreateStandingsByMatches.ClubViewModel> Table { get; set; }
 
-        public void OnGet([FromServices] GetStandingsById getStandings, [FromServices] GetMatchesByStandingsId getMatches, int id)
+        public void OnGet([FromServices] GetStandingsById getStandings, 
+            [FromServices] GetMatchesByStandingsId getMatches,
+            [FromServices] CreateStandingsByMatches createStandings,
+            int id)
         {
             Standings = getStandings.Do(id);
             Matches = getMatches.Do(id).ToList();
+
+            Table = createStandings.Do(Matches).ToList();
         }
     }
 }
