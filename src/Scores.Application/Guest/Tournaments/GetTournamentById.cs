@@ -33,6 +33,7 @@ namespace Scores.Application.Guest.Tournaments
                 Country = countryManager.GetCountryById(x.CountryId, 
                     y => new GetCountryById.Response
                     {
+                        Id = y.Id,
                         Name = y.Name,
                         NameCode = y.NameCode,
                         Flag = y.Flag,

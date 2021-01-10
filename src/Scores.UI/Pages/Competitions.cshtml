@@ -3,4 +3,12 @@
 @{
 }
 
-<h4>Competitions</h4>
+@foreach (var country in Model.Countries)
+{
+    <h4>@country.CountryName</h4>
+
+    foreach (var tourney in country.Tournaments)
+    {
+        <h5>@tourney.Name</h5>
+    }
+}
