@@ -1,6 +1,7 @@
 ﻿using Scores.Domain.Infrastructure;
 using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,6 +42,15 @@ namespace Scores.Database
         public TResult GetStandingsById<TResult>(int id, Func<Standings, TResult> selector)
             => context.Standings
                 .Where(x => x.Id == id)
+                .Select(selector)
+                .FirstOrDefault();
+
+        public TResult GetStandingsByTournamentId<TResult>(int id, Func<Standings, TResult> selector)
+            => context.Standings
+                .Where(x => 
+                    x.TournamentId == id && 
+                    x.SeasonStart.Year <= DateTime.Now.Year && 
+                    x.SeasonEnd.Year >= DateTime.Now.Year)
                 .Select(selector)
                 .FirstOrDefault();
 

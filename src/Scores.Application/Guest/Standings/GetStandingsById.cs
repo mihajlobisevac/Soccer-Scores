@@ -28,7 +28,7 @@ namespace Scores.Application.Guest.Standings
 
         public Response Do(int id)
         {
-            var getTournament = new GetTournamentById(tournamentManager, countryManager);
+            var getTournament = new GetTournamentById(tournamentManager, countryManager, standingsManager);
 
             return standingsManager.GetStandingsById(id, x => new Response
             {

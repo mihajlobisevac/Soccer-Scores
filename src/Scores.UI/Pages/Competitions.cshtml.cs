@@ -10,11 +10,11 @@ namespace Scores.UI.Pages
 {
     public class CompetitionsModel : PageModel
     {
-        public List<GetTournaments.Response> Countries { get; set; }
+        public IEnumerable<GetTournaments.Response> Countries { get; set; }
 
         public void OnGet([FromServices] GetTournaments getTournaments)
         {
-            Countries = getTournaments.Do().ToList();
+            Countries = getTournaments.Do();
         }
     }
 }

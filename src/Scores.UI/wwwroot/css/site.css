@@ -481,3 +481,13 @@ nav {
     .standings-container .st-light {
         color: var(--clr-lgray);
     }
+
+/*===============================================================================================================================*/
+
+.competition-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0.35em 0;
+    padding: 0 0 0 1.2em;
+    color: var(--clr-lgray);
+}
