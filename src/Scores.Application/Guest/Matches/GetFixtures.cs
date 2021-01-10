@@ -57,7 +57,7 @@ namespace Scores.Application.Guest.Matches
 
         public IEnumerable<Response> DoByDate(DateTime date)
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager, 
+            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager,
                 eventManager, venueManager, cityManager, countryManager, playerManager)
                     .Do(date)
                     .GroupBy(item => item.Standings.Id)

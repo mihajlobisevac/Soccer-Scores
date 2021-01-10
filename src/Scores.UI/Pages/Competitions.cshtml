@@ -3,4 +3,22 @@
 @{
 }
 
-<h4>Competitions</h4>
+<div class="title-dates">
+    <p>Competitions</p>
+</div>
+
+@foreach (var country in Model.Countries)
+{
+    <div class="matches-container">
+        <div class="matches-comp">
+            <div class="matches-comp-flag">
+                <img src="@country.CountryFlag" alt="flag" />
+            </div>
+            <div class="matches-comp-name">@country.CountryName</div>
+        </div>
+        @foreach (var tourney in country.Tournaments)
+        {
+            <a asp-page="/Standings" asp-route-id="@tourney.CurrentStandingsId"><div class="competition-name">@tourney.Name</div></a>
+        }
+    </div>
+}

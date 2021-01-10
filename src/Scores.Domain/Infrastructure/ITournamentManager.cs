@@ -1,5 +1,6 @@
 ﻿using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Scores.Domain.Infrastructure
@@ -11,5 +12,6 @@ namespace Scores.Domain.Infrastructure
         Task<int> UpdateTournament(Tournament tournament);
 
         TResult GetTournamentById<TResult>(int id, Func<Tournament, TResult> selector);
+        IEnumerable<TResult> GetTournaments<TResult>(Func<Tournament, TResult> selector);
     }
 }

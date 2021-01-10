@@ -1,5 +1,6 @@
 ﻿using Scores.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Scores.Domain.Infrastructure
@@ -11,6 +12,7 @@ namespace Scores.Domain.Infrastructure
         Task<int> UpdateStandings(Standings standings);
 
         TResult GetStandingsById<TResult>(int id, Func<Standings, TResult> selector);
+        TResult GetStandingsByTournamentId<TResult>(int id, Func<Standings, TResult> selector);
 
         Task<int> AddClub(ClubStandings clubStandings);
         Task<int> RemoveClub(int id);
