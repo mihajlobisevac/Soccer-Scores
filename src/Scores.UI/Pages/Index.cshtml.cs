@@ -8,11 +8,11 @@ namespace Scores.UI.Pages
 {
     public class IndexModel : PageModel
     {
-        public IEnumerable<GetFixtures.Response> Fixtures { get; set; }
+        public IEnumerable<GetFixturesByDate.Response> Fixtures { get; set; }
 
-        public void OnGet([FromServices] GetFixtures getFixtures)
+        public void OnGet([FromServices] GetFixturesByDate getFixtures)
         {
-            Fixtures = getFixtures.DoByDate(new DateTime(2020, 12, 26)); // DateTime.Now default // this is for dummy data
+            Fixtures = getFixtures.Do(new DateTime(2020, 12, 26)); // DateTime.Now default // this is for dummy data
         }
     }
 }

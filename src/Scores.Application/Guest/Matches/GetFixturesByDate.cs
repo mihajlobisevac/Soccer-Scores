@@ -12,7 +12,7 @@ using System.Text;
 namespace Scores.Application.Guest.Matches
 {
     [Service]
-    public class GetFixtures
+    public class GetFixturesByDate
     {
         private readonly IMatchManager matchManager;
         private readonly IClubManager clubManager;
@@ -24,7 +24,7 @@ namespace Scores.Application.Guest.Matches
         private readonly ICityManager cityManager;
         private readonly IPlayerManager playerManager;
 
-        public GetFixtures(IMatchManager matchManager, IClubManager clubManager, IEventManager eventManager,
+        public GetFixturesByDate(IMatchManager matchManager, IClubManager clubManager, IEventManager eventManager,
             IStandingsManager standingsManager, ITournamentManager tournamentManager, ICountryManager countryManager,
             IVenueManager venueManager, ICityManager cityManager, IPlayerManager playerManager)
         {
@@ -42,7 +42,13 @@ namespace Scores.Application.Guest.Matches
         public class Response
         {
             public GetStandingsById.Response Standings { get; set; }
-            public List<MatchViewModel> Matches { get; set; } = new List<MatchViewModel>();
+            public List<MatchViewModel> Matches { get; set; }
+
+            public Response(GetStandingsById.Response standings)
+            {
+                Standings = standings;
+                Matches = new List<MatchViewModel>();
+            }
         }
 
         public class MatchViewModel
@@ -52,46 +58,71 @@ namespace Scores.Application.Guest.Matches
             public GetClubById.Response HomeTeam { get; set; }
             public GetClubById.Response AwayTeam { get; set; }
             public GetStandings.Response Standings { get; set; }
-            public IEnumerable<GetEventsByMatchId.Response> MatchInfo { get; set; }
+            public IEnumerable<GetEventsByMatchId.Response> Incidents { get; set; }
         }
 
-        public IEnumerable<Response> DoByDate(DateTime date)
+        public IEnumerable<Response> Do(DateTime date)
         {
-            var matches = new GetMatchesByDate(matchManager, clubManager, standingsManager,
-                eventManager, venueManager, cityManager, countryManager, playerManager)
-                    .Do(date)
-                    .GroupBy(item => item.Standings.Id)
-                    .Select(group => group.ToList())
-                    .ToList();
+            var tournaments = GetTournamentsWithMatches(date);
 
+            return CreateFixtures(tournaments);
+        }
+
+        private List<List<MatchViewModel>> GetTournamentsWithMatches(DateTime date)
+        {
+            var matches = GetMatchesByDate(date);
+            var tournaments = ExtractTournamentsFromMatches(matches);
+
+            return tournaments;
+        }
+
+        private IEnumerable<MatchViewModel> GetMatchesByDate(DateTime date)
+        {
+            var getMatches = new GetMatchesByDate(matchManager, clubManager, standingsManager,
+                eventManager, venueManager, cityManager, countryManager, playerManager);
+
+            return getMatches.Do(date)
+                .Select(x => new MatchViewModel
+                {
+                    Id = x.Id,
+                    KickOff = x.KickOff,
+                    HomeTeam = x.HomeTeam,
+                    AwayTeam = x.AwayTeam,
+                    Standings = x.Standings,
+                    Incidents = x.Incidents,
+                });
+        }
+
+        private List<List<MatchViewModel>> ExtractTournamentsFromMatches(IEnumerable<MatchViewModel> matches)
+        {
+            var extractedTournaments = matches
+                .GroupBy(item => item.Standings.Id)
+                .Select(group => group.ToList())
+                .ToList();
+
+            return extractedTournaments;
+        }
+
+        private List<Response> CreateFixtures(List<List<MatchViewModel>> tournaments)
+        {
             List<Response> Fixtures = new List<Response>();
+
+            var getStandings = new GetStandingsById(standingsManager, tournamentManager, countryManager);
 
             int tournamentId = -1;
 
-            for (int i = 0; i < matches.Count; i++)
+            for (int i = 0; i < tournaments.Count; i++)
             {
-                foreach (var match in matches[i])
+                foreach (var match in tournaments[i])
                 {
                     if (tournamentId != match.Standings.TournamentId)
                     {
                         tournamentId = match.Standings.TournamentId;
 
-                        Fixtures.Add(new Response
-                        {
-                            Standings = new GetStandingsById(standingsManager, tournamentManager, countryManager)
-                                .Do(match.Standings.Id)
-                        });
+                        Fixtures.Add(new Response(getStandings.Do(match.Standings.Id)));
                     }
 
-                    Fixtures[i].Matches.Add(new MatchViewModel 
-                    {
-                        Id = match.Id,
-                        KickOff = match.KickOff,
-                        HomeTeam = match.HomeTeam,
-                        AwayTeam = match.AwayTeam,
-                        Standings = match.Standings,
-                        MatchInfo = match.MatchInfo,
-                    });
+                    Fixtures[i].Matches.Add(match);
                 }
             }
 

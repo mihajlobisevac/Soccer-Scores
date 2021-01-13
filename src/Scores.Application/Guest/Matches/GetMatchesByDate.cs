@@ -41,7 +41,7 @@ namespace Scores.Application.Guest.Matches
             public GetClubById.Response HomeTeam { get; set; }
             public GetClubById.Response AwayTeam { get; set; }
             public GetStandings.Response Standings { get; set; }
-            public IEnumerable<GetEventsByMatchId.Response> MatchInfo { get; set; }
+            public IEnumerable<GetEventsByMatchId.Response> Incidents { get; set; }
         }
 
         public IEnumerable<Response> Do(DateTime date)
@@ -58,7 +58,7 @@ namespace Scores.Application.Guest.Matches
                     HomeTeam = getClub.Do(match.HomeTeamId),
                     AwayTeam = getClub.Do(match.AwayTeamId),
                     Standings = getStandings.Do(match.StandingsId),
-                    MatchInfo = getEvents.Do(match.Id),
+                    Incidents = getEvents.Do(match.Id),
                 });
         }
     }
