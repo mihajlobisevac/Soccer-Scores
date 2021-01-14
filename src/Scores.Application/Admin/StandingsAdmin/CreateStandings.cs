@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,8 +36,6 @@ namespace Scores.Application.StandingsAdmin
         {
             var standings = new Standings
             {
-                TeamCount = request.TeamCount,
-                Deactivated = request.Deactivated,
                 TournamentId = request.TournamentId
             };
 
@@ -49,8 +47,6 @@ namespace Scores.Application.StandingsAdmin
             return new Response
             {
                 Id = standings.Id,
-                TeamCount = standings.TeamCount,
-                Deactivated = standings.Deactivated,
                 TournamentId = standings.TournamentId,
             };
         }

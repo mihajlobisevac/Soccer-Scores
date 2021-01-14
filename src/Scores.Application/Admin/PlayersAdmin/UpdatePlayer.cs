@@ -62,7 +62,6 @@ namespace Scores.Application.PlayersAdmin
             player.Position = request.Position;
             player.ShirtNumber = request.ShirtNumber;
             player.Foot = request.Foot;
-            player.Deactivated = request.Deactivated;
             player.ClubId = request.ClubId;
             player.NationalityCountryId = request.NationalityId;
             player.PoBCityId = request.PoBId;
@@ -80,7 +79,6 @@ namespace Scores.Application.PlayersAdmin
                 Position = request.Position,
                 ShirtNumber = request.ShirtNumber,
                 Foot = request.Foot,
-                Deactivated = request.Deactivated,
                 ClubId = request.ClubId,
                 NationalityId = request.NationalityId,
                 PoBId = request.PoBId,

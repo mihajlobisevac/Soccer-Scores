@@ -16,16 +16,12 @@ namespace Scores.Application.StandingsAdmin
         public class Request
         {
             public int Id { get; set; }
-            public int TeamCount { get; set; }
-            public bool Deactivated { get; set; }
             public int TournamentId { get; set; }
         }
 
         public class Response
         {
             public int Id { get; set; }
-            public int TeamCount { get; set; }
-            public bool Deactivated { get; set; }
             public int TournamentId { get; set; }
         }
 
@@ -33,8 +29,6 @@ namespace Scores.Application.StandingsAdmin
         {
             var standings = standingsManager.GetStandingsById(request.Id, x => x);
 
-            standings.TeamCount = request.TeamCount;
-            standings.Deactivated = request.Deactivated;
             standings.TournamentId = request.TournamentId;
 
             await standingsManager.UpdateStandings(standings);
@@ -42,8 +36,6 @@ namespace Scores.Application.StandingsAdmin
             return new Response
             {
                 Id = standings.Id,
-                TeamCount = standings.TeamCount,
-                Deactivated = standings.Deactivated,
                 TournamentId = standings.TournamentId,
             };
         }

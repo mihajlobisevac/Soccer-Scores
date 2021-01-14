@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 
 namespace Scores.Application.CountriesAdmin
 {
@@ -27,9 +27,7 @@ namespace Scores.Application.CountriesAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public string Flag { get; set; }
-            public bool Deactivated { get; set; }
         }
 
         public async Task<Response> Do(Request request)
@@ -37,9 +35,7 @@ namespace Scores.Application.CountriesAdmin
             var country = new Country
             {
                 Name = request.Name,
-                NameCode = request.NameCode,
                 Flag = request.Flag,
-                Deactivated = request.Deactivated
             };
 
             var result = await countryManager.CreateCountry(country);
@@ -51,9 +47,7 @@ namespace Scores.Application.CountriesAdmin
             {
                 Id = country.Id,
                 Name = request.Name,
-                NameCode = request.NameCode,
                 Flag = request.Flag,
-                Deactivated = request.Deactivated
             };
         }
     }

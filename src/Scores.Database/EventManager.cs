@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace Scores.Database
             this.context = context;
         }
 
-        public Task<int> CreateEvent(Event evnt)
+        public Task<int> CreateEvent(Incident evnt)
         {
             context.Events.Add(evnt);
 
@@ -32,20 +32,20 @@ namespace Scores.Database
             return context.SaveChangesAsync();
         }
 
-        public Task<int> UpdateEvent(Event evnt)
+        public Task<int> UpdateEvent(Incident evnt)
         {
             context.Events.Update(evnt);
 
             return context.SaveChangesAsync();
         }
 
-        public TResult GetEventById<TResult>(int id, Func<Event, TResult> selector)
+        public TResult GetEventById<TResult>(int id, Func<Incident, TResult> selector)
             => context.Events
                 .Where(x => x.Id == id)
                 .Select(selector)
                 .FirstOrDefault();
 
-        public IEnumerable<TResult> GetEventsByMatchId<TResult>(int id, Func<Event, TResult> selector)
+        public IEnumerable<TResult> GetEventsByMatchId<TResult>(int id, Func<Incident, TResult> selector)
             => context.Events
                 .Where(x => x.MatchId == id)
                 .Select(selector)

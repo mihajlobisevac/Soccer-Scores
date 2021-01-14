@@ -17,7 +17,6 @@ namespace Scores.Application.TournamentsAdmin
             public int Id { get; set; }
             public string Name { get; set; }
             public bool HasGroupStage { get; set; }
-            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -27,7 +26,6 @@ namespace Scores.Application.TournamentsAdmin
                 Id = x.Id,
                 Name = x.Name,
                 HasGroupStage = x.HasGroupStage,
-                Deactivated = x.Deactivated,
                 CountryId = x.CountryId,
             });
     }

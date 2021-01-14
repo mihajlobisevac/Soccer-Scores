@@ -1,30 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Scores.Domain.Models
+﻿namespace Scores.Domain.Entities
 {
-    public class Event
+    public class Incident
     {
         public int Id { get; set; }
 
-        [Required]
         public int HomeScore { get; set; }
-
-        [Required]
         public int AwayScore { get; set; }
-
-        [Required]
         public int Minute { get; set; }
-
-        [Required]
         public bool IsHome { get; set; }
-
-        [Required]
-        [Column(TypeName = "varchar(50)")]
         public string Type { get; set; }
-
-        [Required]
-        [Column(TypeName = "varchar(50)")]
         public string Class { get; set; }
 
         public int MatchId { get; set; }

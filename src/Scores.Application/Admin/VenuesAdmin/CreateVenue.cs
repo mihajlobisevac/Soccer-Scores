@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -20,7 +20,6 @@ namespace Scores.Application.VenuesAdmin
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public int CityId { get; set; }
         }
 
@@ -30,7 +29,6 @@ namespace Scores.Application.VenuesAdmin
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public int CityId { get; set; }
         }
 
@@ -41,7 +39,6 @@ namespace Scores.Application.VenuesAdmin
                 Name = request.Name,
                 Capacity = request.Capacity,
                 YearOpened = request.YearOpened,
-                Deactivated = request.Deactivated,
                 CityId = request.CityId,
             };
 
@@ -56,7 +53,6 @@ namespace Scores.Application.VenuesAdmin
                 Name = venue.Name,
                 Capacity = venue.Capacity,
                 YearOpened = venue.YearOpened,
-                Deactivated = venue.Deactivated,
                 CityId = venue.CityId,
             };
         }

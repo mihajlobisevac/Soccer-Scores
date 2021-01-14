@@ -21,7 +21,6 @@ namespace Scores.Application.VenuesAdmin
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public int CityId { get; set; }
         }
 
@@ -32,7 +31,6 @@ namespace Scores.Application.VenuesAdmin
                 Name = x.Name,
                 Capacity = x.Capacity,
                 YearOpened = x.YearOpened,
-                Deactivated = x.Deactivated,
                 CityId = x.CityId,
             });
     }

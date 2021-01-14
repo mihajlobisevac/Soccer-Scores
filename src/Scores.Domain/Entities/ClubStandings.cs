@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Scores.Domain.Models
+﻿namespace Scores.Domain.Entities
 {
     public class ClubStandings
     {

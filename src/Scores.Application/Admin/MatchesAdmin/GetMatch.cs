@@ -1,7 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Scores.Application.MatchesAdmin
 {
@@ -19,7 +17,6 @@ namespace Scores.Application.MatchesAdmin
         {
             public int Id { get; set; }
             public DateTime KickOff { get; set; }
-            public bool Deactivated { get; set; }
             public int HomeTeamId { get; set; }
             public int AwayTeamId { get; set; }
         }
@@ -29,7 +26,6 @@ namespace Scores.Application.MatchesAdmin
             {
                 Id = x.Id,
                 KickOff = x.KickOff,
-                Deactivated = x.Deactivated,
                 HomeTeamId = x.HomeTeamId,
                 AwayTeamId = x.AwayTeamId,
             });

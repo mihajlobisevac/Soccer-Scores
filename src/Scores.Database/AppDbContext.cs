@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 
 namespace Scores.Database
@@ -17,7 +17,7 @@ namespace Scores.Database
         public DbSet<City> Cities { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Incident> Events { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Venue> Venues { get; set; }

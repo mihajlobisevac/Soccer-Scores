@@ -15,8 +15,6 @@ namespace Scores.Application.StandingsAdmin
         public class Response
         {
             public int Id { get; set; }
-            public int TeamCount { get; set; }
-            public bool Deactivated { get; set; }
             public int TournamentId { get; set; }
         }
 
@@ -24,8 +22,6 @@ namespace Scores.Application.StandingsAdmin
             standingsManager.GetStandingsById(id, x => new Response
             {
                 Id = x.Id,
-                TeamCount = x.TeamCount,
-                Deactivated = x.Deactivated,
                 TournamentId = x.TournamentId,
             });
     }

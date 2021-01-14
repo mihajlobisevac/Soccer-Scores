@@ -1,4 +1,4 @@
-﻿using Scores.Domain.Models;
+﻿using Scores.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
