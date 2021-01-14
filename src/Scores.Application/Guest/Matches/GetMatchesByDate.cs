@@ -1,7 +1,6 @@
 ﻿using Scores.Application.Guest.Clubs;
 using Scores.Application.Guest.Events;
-using Scores.Application.MatchesAdmin;
-using Scores.Application.StandingsAdmin;
+using Scores.Application.Guest.Standings;
 using Scores.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,26 +11,10 @@ namespace Scores.Application.Guest.Matches
     public class GetMatchesByDate
     {
         private readonly IMatchManager matchManager;
-        private readonly IClubManager clubManager;
-        private readonly IStandingsManager standingsManager;
-        private readonly IEventManager eventManager;
-        private readonly IVenueManager venueManager;
-        private readonly ICityManager cityManager;
-        private readonly ICountryManager countryManager;
-        private readonly IPlayerManager playerManager;
 
-        public GetMatchesByDate(IMatchManager matchManager, IClubManager clubManager, 
-            IStandingsManager standingsManager, IEventManager eventManager, IVenueManager venueManager,
-            ICityManager cityManager, ICountryManager countryManager, IPlayerManager playerManager)
+        public GetMatchesByDate(IMatchManager matchManager)
         {
             this.matchManager = matchManager;
-            this.clubManager = clubManager;
-            this.standingsManager = standingsManager;
-            this.eventManager = eventManager;
-            this.venueManager = venueManager;
-            this.cityManager = cityManager;
-            this.countryManager = countryManager;
-            this.playerManager = playerManager;
         }
 
         public class Response
@@ -40,16 +23,16 @@ namespace Scores.Application.Guest.Matches
             public DateTime KickOff { get; set; }
             public GetClubById.Response HomeTeam { get; set; }
             public GetClubById.Response AwayTeam { get; set; }
-            public GetStandings.Response Standings { get; set; }
+            public GetStandingsById.Response Standings { get; set; }
             public IEnumerable<GetEventsByMatchId.Response> Incidents { get; set; }
         }
 
-        public IEnumerable<Response> Do(DateTime date)
+        public IEnumerable<Response> Do(
+            DateTime date, 
+            GetClubById getClub, 
+            GetStandingsById getStandings, 
+            GetEventsByMatchId getEvents)
         {
-            var getClub = new GetClubById(clubManager, venueManager, cityManager, countryManager);
-            var getStandings = new GetStandings(standingsManager);
-            var getEvents = new GetEventsByMatchId(eventManager, playerManager, clubManager, venueManager, cityManager, countryManager);
-
             return matchManager.GetMatchesByDate(date, (match)
                 => new Response
                 {

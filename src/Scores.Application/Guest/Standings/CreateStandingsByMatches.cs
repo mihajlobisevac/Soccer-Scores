@@ -78,19 +78,19 @@ namespace Scores.Application.Guest.Standings
                 winDrawLoss.Played = matches.FindAll(x => x.HomeTeam.Id == clubId || x.AwayTeam.Id == clubId).Count;
 
                 winDrawLoss.Wins = matches.FindAll(x => x.HomeTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore > y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore > y.AwayScore)).Count;
                 winDrawLoss.Wins += matches.FindAll(x => x.AwayTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore < y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore < y.AwayScore)).Count;
 
                 winDrawLoss.Draws = matches.FindAll(x => x.HomeTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore == y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore == y.AwayScore)).Count;
                 winDrawLoss.Draws += matches.FindAll(x => x.AwayTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore == y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore == y.AwayScore)).Count;
 
                 winDrawLoss.Losses = matches.FindAll(x => x.HomeTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore < y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore < y.AwayScore)).Count;
                 winDrawLoss.Losses += matches.FindAll(x => x.AwayTeam.Id == clubId &&
-                    x.Events.Any(y => y.Class == "FT" && y.HomeScore > y.AwayScore)).Count;
+                    x.Incidents.Any(y => y.Class == "FT" && y.HomeScore > y.AwayScore)).Count;
 
                 winDrawLoss.Points = (3 * winDrawLoss.Wins) + winDrawLoss.Draws;
 

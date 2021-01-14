@@ -21,7 +21,7 @@
 
 @foreach (var match in Model.Matches)
 {
-    var result = match.Events.FirstOrDefault(x => x.Class == "FT");
+    var result = match.Incidents.FirstOrDefault(x => x.Class == "FT");
 
     <div class="match-container">
         <a class="match-home-team" asp-page="/Club" asp-route-id="@match.HomeTeam.Id">

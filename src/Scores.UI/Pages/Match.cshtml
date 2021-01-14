@@ -16,7 +16,7 @@
         </div>
     </a>
     <div class="result-ft">
-        @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").HomeScore - @Model.Match.Events.FirstOrDefault(x => x.Class == "FT").AwayScore
+        @Model.Match.Incidents.FirstOrDefault(x => x.Class == "FT").HomeScore - @Model.Match.Incidents.FirstOrDefault(x => x.Class == "FT").AwayScore
     </div>
     <a asp-page="/Club" asp-route-id="@Model.Match.AwayTeam.Id">
         <div class="result-away-team">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="matches-container">
-    @foreach (var evnt in Model.Match.Events.Where(x => x.Type == "Goal"))
+    @foreach (var evnt in Model.Match.Incidents.Where(x => x.Type == "Goal"))
     {
         var isPenalty = evnt.Class == "Penalty" ? " (PG)" : "";
 

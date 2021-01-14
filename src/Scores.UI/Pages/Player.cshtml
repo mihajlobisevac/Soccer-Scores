@@ -37,7 +37,7 @@ else
 
     @foreach (var match in Model.Matches)
     {
-        var result = match.Events.FirstOrDefault(x => x.Class == "FT");
+        var result = match.Incidents.FirstOrDefault(x => x.Class == "FT");
         var playingHome = match.HomeTeam.Id == Model.Player.Club.Id ? true : false;
 
         <div class="match-container">
