@@ -27,18 +27,18 @@ namespace Scores.Application.Guest.Standings
 
             foreach (var match in Matches)
             {
-                if (HomeTeamNotInTable(StandingsTable, match.Id))
+                if (HomeTeamNotInTable(StandingsTable, match.HomeTeam.Id))
                 {
-                    var club = CalculateClub(match.HomeTeam.Id, match.HomeTeam.Name, Matches);
+                    var newClub = CalculateClub(match.HomeTeam.Id, match.HomeTeam.Name, Matches);
 
-                    StandingsTable.Add(club);
+                    StandingsTable.Add(newClub);
                 }
 
-                if (AwayTeamNotInTable(StandingsTable, match.Id))
+                if (AwayTeamNotInTable(StandingsTable, match.AwayTeam.Id))
                 {
-                    var club = CalculateClub(match.AwayTeam.Id, match.AwayTeam.Name, Matches);
+                    var newClub = CalculateClub(match.AwayTeam.Id, match.AwayTeam.Name, Matches);
 
-                    StandingsTable.Add(club);
+                    StandingsTable.Add(newClub);
                 }
             }
 
@@ -98,8 +98,8 @@ namespace Scores.Application.Guest.Standings
         }
 
         private int CalculatePoints(int clubWins, int clubDraws) => (3 * clubWins) + clubDraws;
-        private bool AwayTeamNotInTable(List<ClubViewModel> StandingsClubs, int matchId) => !StandingsClubs.Any(x => x.Id == matchId);
-        private bool HomeTeamNotInTable(List<ClubViewModel> StandingsClubs, int matchId) => !StandingsClubs.Any(x => x.Id == matchId);
+        private bool AwayTeamNotInTable(List<ClubViewModel> StandingsClubs, int clubId) => !StandingsClubs.Any(x => x.Id == clubId);
+        private bool HomeTeamNotInTable(List<ClubViewModel> StandingsClubs, int clubId) => !StandingsClubs.Any(x => x.Id == clubId);
     }
 }
  
