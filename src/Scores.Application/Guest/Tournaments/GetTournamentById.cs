@@ -35,22 +35,17 @@ namespace Scores.Application.Guest.Tournaments
         public Response Do(int id)
         {
             var getStandings = new GetStandingsByTournamentId(standingsManager);
+            var getCountry = new GetCountryById(countryManager);
 
-            return tournamentManager.GetTournamentById(id, x => new Response
-            {
-                Id = x.Id,
-                Name = x.Name,
-                HasGroupStage = x.HasGroupStage,
-                Country = countryManager.GetCountryById(x.CountryId,
-                    y => new GetCountryById.Response
+            return tournamentManager.GetTournamentById(id, 
+                x => new Response
                     {
-                        Id = y.Id,
-                        Name = y.Name,
-                        NameCode = y.NameCode,
-                        Flag = y.Flag,
-                    }),
-                CurrentStandingsId = getStandings.Do(x.Id).Id,
-            });
+                        Id = x.Id,
+                        Name = x.Name,
+                        HasGroupStage = x.HasGroupStage,
+                        Country = getCountry.Do(x.CountryId),
+                        CurrentStandingsId = getStandings.Do(x.Id).Id,
+                    });
         }
     }
 }

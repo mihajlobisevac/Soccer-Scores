@@ -30,9 +30,14 @@ namespace Scores.Application.Guest.Tournaments
 
         public IEnumerable<Response> Do()
         {
-            List<Response> Countries = new List<Response>();
-
             var tournaments = GetTourneys();
+
+            return GroupTournamentsByCountry(tournaments);
+        }
+
+        private static IEnumerable<Response> GroupTournamentsByCountry(List<GetTournamentById.Response> tournaments)
+        {
+            List<Response> Countries = new List<Response>();
             var countryId = -1;
             var countryIndex = -1;
 
@@ -40,12 +45,12 @@ namespace Scores.Application.Guest.Tournaments
             {
                 if (countryId != tournaments[i].Country.Id)
                 {
-                    Countries.Add(new Response 
-                        {
-                            CountryName = tournaments[i].Country.Name,
-                            CountryFlag = tournaments[i].Country.Flag,
-                            Tournaments = new List<GetTournamentById.Response>() 
-                        });
+                    Countries.Add(new Response
+                    {
+                        CountryName = tournaments[i].Country.Name,
+                        CountryFlag = tournaments[i].Country.Flag,
+                        Tournaments = new List<GetTournamentById.Response>()
+                    });
 
                     countryIndex++;
                 }
@@ -61,24 +66,18 @@ namespace Scores.Application.Guest.Tournaments
         private List<GetTournamentById.Response> GetTourneys()
         {
             var getStandings = new GetStandingsByTournamentId(standingsManager);
+            var getCountry = new GetCountryById(countryManager);
 
-            return tournamentManager.GetTournaments(x =>
-                new GetTournamentById.Response
-                {
-                    Name = x.Name,
-                    HasGroupStage = x.HasGroupStage,
-                    Country = countryManager.GetCountryById(x.CountryId,
-                        y => new GetCountryById.Response
-                        {
-                            Id = y.Id,
-                            Name = y.Name,
-                            NameCode = y.NameCode,
-                            Flag = y.Flag,
-                        }),
-                    CurrentStandingsId = getStandings.Do(x.Id).Id,
-                })
-            .OrderBy(x => x.Country.Id)
-            .ToList();
+            return tournamentManager
+                .GetTournaments(t => new GetTournamentById.Response
+                    {
+                        Name = t.Name,
+                        HasGroupStage = t.HasGroupStage,
+                        Country = getCountry.Do(t.CountryId),
+                        CurrentStandingsId = getStandings.Do(t.Id).Id,
+                    })
+                .OrderBy(x => x.Country.Id)
+                .ToList();
         }
     }
 }
