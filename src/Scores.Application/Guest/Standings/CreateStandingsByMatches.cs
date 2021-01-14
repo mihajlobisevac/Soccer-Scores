@@ -98,8 +98,8 @@ namespace Scores.Application.Guest.Standings
         }
 
         private int CalculatePoints(int clubWins, int clubDraws) => (3 * clubWins) + clubDraws;
-        private bool AwayTeamNotInTable(List<ClubViewModel> StandingsClubs, int clubId) => !StandingsClubs.Any(x => x.Id == clubId);
-        private bool HomeTeamNotInTable(List<ClubViewModel> StandingsClubs, int clubId) => !StandingsClubs.Any(x => x.Id == clubId);
+        private bool AwayTeamNotInTable(List<ClubViewModel> StandingsTable, int clubId) => !StandingsTable.Any(x => x.Id == clubId);
+        private bool HomeTeamNotInTable(List<ClubViewModel> StandingsTable, int clubId) => !StandingsTable.Any(x => x.Id == clubId);
     }
 }
  
