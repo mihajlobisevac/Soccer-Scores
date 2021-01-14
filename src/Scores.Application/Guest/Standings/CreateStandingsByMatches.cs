@@ -27,14 +27,14 @@ namespace Scores.Application.Guest.Standings
 
             foreach (var match in Matches)
             {
-                if (HomeTeamNotInStandings(StandingsTable, match))
+                if (HomeTeamNotInTable(StandingsTable, match.Id))
                 {
                     var club = CalculateClub(match.HomeTeam.Id, match.HomeTeam.Name, Matches);
 
                     StandingsTable.Add(club);
                 }
 
-                if (AwayTeamNotInStandings(StandingsTable, match))
+                if (AwayTeamNotInTable(StandingsTable, match.Id))
                 {
                     var club = CalculateClub(match.AwayTeam.Id, match.AwayTeam.Name, Matches);
 
@@ -45,17 +45,7 @@ namespace Scores.Application.Guest.Standings
             return StandingsTable;
         }
 
-        private static bool AwayTeamNotInStandings(List<ClubViewModel> StandingsClubs, GetMatchById.Response match)
-        {
-            return !StandingsClubs.Any(x => x.Id == match.AwayTeam.Id);
-        }
-
-        private static bool HomeTeamNotInStandings(List<ClubViewModel> StandingsClubs, GetMatchById.Response match)
-        {
-            return !StandingsClubs.Any(x => x.Id == match.HomeTeam.Id);
-        }
-
-        private static ClubViewModel CalculateClub(int clubId, string name, List<GetMatchById.Response> matches)
+        private ClubViewModel CalculateClub(int clubId, string name, List<GetMatchById.Response> matches)
         {
             var club = new ClubViewModel
             {
@@ -73,14 +63,14 @@ namespace Scores.Application.Guest.Standings
             return club;
         }
 
-        private static int CalculatePlayedMatches(int clubId, List<GetMatchById.Response> matches)
+        private int CalculatePlayedMatches(int clubId, List<GetMatchById.Response> matches)
         {
             return matches
                 .FindAll(x => x.HomeTeam.Id == clubId || x.AwayTeam.Id == clubId)
                 .Count;
         }
 
-        private static int CalculateWins(int clubId, List<GetMatchById.Response> matches)
+        private int CalculateWins(int clubId, List<GetMatchById.Response> matches)
         {
             return
                 matches.FindAll(x => clubId == x.HomeTeam.Id &&
@@ -90,14 +80,14 @@ namespace Scores.Application.Guest.Standings
                     x.Incidents.Any(y => y.Class == "FT" && y.HomeScore < y.AwayScore)).Count;
         }
 
-        private static int CalculateDraws(int clubId, List<GetMatchById.Response> matches)
+        private int CalculateDraws(int clubId, List<GetMatchById.Response> matches)
         {
             return
                 matches.FindAll(x => (clubId == x.HomeTeam.Id || clubId == x.AwayTeam.Id) &&
                     x.Incidents.Any(y => y.Class == "FT" && y.HomeScore == y.AwayScore)).Count;
         }
 
-        private static int CalculateLosses(int clubId, List<GetMatchById.Response> matches)
+        private int CalculateLosses(int clubId, List<GetMatchById.Response> matches)
         {
             return
                 matches.FindAll(x => clubId == x.HomeTeam.Id &&
@@ -107,7 +97,9 @@ namespace Scores.Application.Guest.Standings
                     x.Incidents.Any(y => y.Class == "FT" && y.HomeScore > y.AwayScore)).Count;
         }
 
-        private static int CalculatePoints(int clubWins, int clubDraws) => (3 * clubWins) + clubDraws;
+        private int CalculatePoints(int clubWins, int clubDraws) => (3 * clubWins) + clubDraws;
+        private bool AwayTeamNotInTable(List<ClubViewModel> StandingsClubs, int matchId) => !StandingsClubs.Any(x => x.Id == matchId);
+        private bool HomeTeamNotInTable(List<ClubViewModel> StandingsClubs, int matchId) => !StandingsClubs.Any(x => x.Id == matchId);
     }
 }
  
