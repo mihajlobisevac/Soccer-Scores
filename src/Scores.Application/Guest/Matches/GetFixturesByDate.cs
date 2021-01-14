@@ -1,5 +1,6 @@
 ﻿using Scores.Application.Guest.Clubs;
 using Scores.Application.Guest.Events;
+using Scores.Application.Guest.Players;
 using Scores.Application.Guest.Standings;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,10 @@ namespace Scores.Application.Guest.Matches
             GetMatchesByDate getMatches,
             GetClubById getClub,
             GetStandingsById getStandings,
-            GetEventsByMatchId getEvents)
+            GetEventsByMatchId getEvents,
+            GetPlayerById getPlayer)
         {
-            var tournaments = GetTournamentsWithMatches(date, getMatches, getClub, getStandings, getEvents);
+            var tournaments = GetTournamentsWithMatches(date, getMatches, getClub, getStandings, getEvents, getPlayer);
 
             return CreateFixtures(tournaments, getStandings);
         }
@@ -49,9 +51,10 @@ namespace Scores.Application.Guest.Matches
             GetMatchesByDate getMatches,
             GetClubById getClub,
             GetStandingsById getStandings,
-            GetEventsByMatchId getEvents)
+            GetEventsByMatchId getEvents,
+            GetPlayerById getPlayer)
         {
-            var matches = GetMatchesByDate(date, getMatches, getClub, getStandings, getEvents);
+            var matches = GetMatchesByDate(date, getMatches, getClub, getStandings, getEvents, getPlayer);
             var tournaments = ExtractTournamentsFromMatches(matches);
 
             return tournaments;
@@ -62,9 +65,10 @@ namespace Scores.Application.Guest.Matches
             GetMatchesByDate getMatches,
             GetClubById getClub,
             GetStandingsById getStandings,
-            GetEventsByMatchId getEvents)
+            GetEventsByMatchId getEvents,
+            GetPlayerById getPlayer)
         {
-            return getMatches.Do(date, getClub, getStandings, getEvents)
+            return getMatches.Do(date, getClub, getStandings, getEvents, getPlayer)
                 .Select(x => new MatchViewModel
                 {
                     Id = x.Id,

@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Scores.Application.Guest.Clubs;
@@ -27,7 +24,7 @@ namespace Scores.UI.Pages
             int id)
         {
             Player = getPlayer.Do(id);
-            Matches = getPlayerMatches.Do(id, getMatch, getClub, getStandings, getEvents);
+            Matches = getPlayerMatches.Do(id, getMatch, getClub, getStandings, getEvents, getPlayer);
         }
     }
 }

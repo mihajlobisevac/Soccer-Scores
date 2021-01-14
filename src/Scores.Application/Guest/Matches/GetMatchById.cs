@@ -1,5 +1,6 @@
 ﻿using Scores.Application.Guest.Clubs;
 using Scores.Application.Guest.Events;
+using Scores.Application.Guest.Players;
 using Scores.Application.Guest.Standings;
 using Scores.Domain.Infrastructure;
 using System;
@@ -31,7 +32,8 @@ namespace Scores.Application.Guest.Matches
             int id, 
             GetClubById getClub, 
             GetStandingsById getStandings, 
-            GetEventsByMatchId getEvents)
+            GetEventsByMatchId getEvents,
+            GetPlayerById getPlayer)
         {
             return matchManager
                 .GetMatchById(id, x => new Response
@@ -41,7 +43,7 @@ namespace Scores.Application.Guest.Matches
                         HomeTeam = getClub.Do(x.HomeTeamId),
                         AwayTeam = getClub.Do(x.AwayTeamId),
                         Standings = getStandings.Do(x.StandingsId),
-                        Incidents = getEvents.Do(x.Id),
+                        Incidents = getEvents.Do(x.Id, getPlayer),
                     });
         }
     }

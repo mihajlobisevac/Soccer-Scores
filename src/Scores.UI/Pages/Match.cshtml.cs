@@ -21,10 +21,11 @@ namespace Scores.UI.Pages
             [FromServices] GetPlayersByMatchId getLineups, 
             [FromServices] GetClubById getClub, 
             [FromServices] GetStandingsById getStandings, 
-            [FromServices] GetEventsByMatchId getEvents, 
+            [FromServices] GetEventsByMatchId getEvents,
+            [FromServices] GetPlayerById getPlayer,
             int id)
         {
-            Match = getMatch.Do(id, getClub, getStandings, getEvents);
+            Match = getMatch.Do(id, getClub, getStandings, getEvents, getPlayer);
             Lineups = getLineups.Do(id).ToList();
         }
     }

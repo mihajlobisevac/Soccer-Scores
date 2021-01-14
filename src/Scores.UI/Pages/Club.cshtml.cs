@@ -23,6 +23,7 @@ namespace Scores.UI.Pages
             [FromServices] GetPlayersByClubId getPlayers, 
             [FromServices] GetStandingsById getStandings, 
             [FromServices] GetEventsByMatchId getEvents, 
+            [FromServices] GetPlayerById getPlayer, 
             int id)
         {
             Club = getClub.Do(id);
@@ -30,7 +31,7 @@ namespace Scores.UI.Pages
             Squad = getPlayers.Do(Club.Id).ToList();
             
             Matches = getMatches
-                .Do(Club.Id, getClub, getStandings, getEvents)
+                .Do(Club.Id, getClub, getStandings, getEvents, getPlayer)
                 .ToList();
 
             Matches.Sort((x, y) => DateTime.Compare(x.KickOff, y.KickOff));

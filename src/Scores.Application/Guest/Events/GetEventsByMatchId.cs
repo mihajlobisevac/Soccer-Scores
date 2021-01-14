@@ -10,21 +10,10 @@ namespace Scores.Application.Guest.Events
     public class GetEventsByMatchId
     {
         private readonly IEventManager eventManager;
-        private readonly IPlayerManager playerManager;
-        private readonly IClubManager clubManager;
-        private readonly IVenueManager venueManager;
-        private readonly ICityManager cityManager;
-        private readonly ICountryManager countryManager;
 
-        public GetEventsByMatchId(IEventManager eventManager, IPlayerManager playerManager, IClubManager clubManager,
-            IVenueManager venueManager, ICityManager cityManager, ICountryManager countryManager)
+        public GetEventsByMatchId(IEventManager eventManager)
         {
             this.eventManager = eventManager;
-            this.playerManager = playerManager;
-            this.clubManager = clubManager;
-            this.venueManager = venueManager;
-            this.cityManager = cityManager;
-            this.countryManager = countryManager;
         }
 
         public class Response
@@ -39,21 +28,21 @@ namespace Scores.Application.Guest.Events
             public GetPlayerById.Response PlayerB { get; set; }
         }
 
-        public IEnumerable<Response> Do(int matchId)
+        public IEnumerable<Response> Do(int matchId, GetPlayerById getPlayer)
         {
-            var getPlayer = new GetPlayerById(playerManager, clubManager, venueManager, cityManager, countryManager);
-
-            return eventManager.GetEventsByMatchId(matchId, x => new Response
-            {
-                HomeScore = x.HomeScore,
-                AwayScore = x.AwayScore,
-                Minute = x.Minute,
-                IsHome = x.IsHome,
-                Type = x.Type,
-                Class = x.Class,
-                PlayerA = getPlayer.Do(x.PlayerAId),
-                PlayerB = getPlayer.Do(x.PlayerBId),
-            });
+            return eventManager
+                .GetEventsByMatchId(matchId, 
+                    x => new Response
+                    {
+                        HomeScore = x.HomeScore,
+                        AwayScore = x.AwayScore,
+                        Minute = x.Minute,
+                        IsHome = x.IsHome,
+                        Type = x.Type,
+                        Class = x.Class,
+                        PlayerA = getPlayer.Do(x.PlayerAId),
+                        PlayerB = getPlayer.Do(x.PlayerBId),
+                    });
         }
     }
 }
