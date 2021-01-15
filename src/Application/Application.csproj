@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Mappings\" />
     <Folder Include="Admin\Cities\" />
     <Folder Include="Admin\Clubs\" />
     <Folder Include="Admin\Competitions\" />

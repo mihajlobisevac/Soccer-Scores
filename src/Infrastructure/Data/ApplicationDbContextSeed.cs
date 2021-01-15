@@ -21,6 +21,9 @@ namespace SoccerScores.Infrastructure.Data
                     new City { Name = "Barcelona", Country = new Country { Name = "Spain", Flag = "https://restcountries.eu/data/esp.svg" } },
                 };
 
+                cities.Add(new City { Name = "Manchester", Country = cities[0].Country });
+                cities.Add(new City { Name = "Madrid", Country = cities[3].Country });
+
                 cities.ForEach(x => context.Cities.Add(x));
 
                 await context.SaveChangesAsync();
