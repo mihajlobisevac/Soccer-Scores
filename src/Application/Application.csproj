@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Mappings\" />
+    <Folder Include="Entities\Cities\" />
+    <Folder Include="Entities\Clubs\" />
+    <Folder Include="Entities\Competitions\" />
+    <Folder Include="Entities\Countries\Commands\" />
+    <Folder Include="Entities\Countries\Queries\" />
+    <Folder Include="Entities\Incidents\" />
+    <Folder Include="Entities\Matches\" />
+    <Folder Include="Entities\Players\" />
+    <Folder Include="Entities\Standings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>
