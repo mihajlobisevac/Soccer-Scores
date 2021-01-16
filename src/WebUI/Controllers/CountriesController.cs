@@ -11,5 +11,11 @@ namespace SoccerScores.WebUI.Controllers
         {
             return await Mediator.Send(new GetCountriesQuery());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CountryDto>> Get(int id)
+        {
+            return await Mediator.Send(new GetCountryQuery { Id = id });
+        }
     }
 }
