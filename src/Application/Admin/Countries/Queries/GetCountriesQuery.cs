@@ -29,16 +29,7 @@ namespace SoccerScores.Application.Admin.Countries.Queries
             return new CountriesVm
             {
                 Countries = await context.Countries
-                    .Select(x => new CountryDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Flag = x.Flag,
-                        Test = "Yo",
-                        Cities = x.Cities
-                            .Select(x => x.Name)
-                            .ToList(),
-                    })
+                    .ProjectTo<CountryDto>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken)
             };
         }
