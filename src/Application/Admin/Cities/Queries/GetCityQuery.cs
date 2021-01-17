@@ -32,4 +32,4 @@ namespace SoccerScores.Application.Admin.Cities.Queries
             return mapper.Map<CityDto>(entity);
         }
     }
-    }
+}

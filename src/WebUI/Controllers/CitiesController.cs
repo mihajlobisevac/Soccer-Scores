@@ -7,6 +7,12 @@ namespace WebUI.Controllers
 {
     public class CitiesController : ApiControllerBase
     {
+        [HttpGet("all")]
+        public async Task<ActionResult<CitiesVm>> Get()
+        {
+            return await Mediator.Send(new GetCitiesQuery());
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CityDto>> Get(int id)
         {
