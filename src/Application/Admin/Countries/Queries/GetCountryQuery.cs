@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SoccerScores.Application.Common.Exceptions;
 using SoccerScores.Application.Common.Interfaces;
-using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 

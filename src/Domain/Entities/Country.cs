@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SoccerScores.Domain.Entities
 {
@@ -10,5 +11,10 @@ namespace SoccerScores.Domain.Entities
         public string Flag { get; set; }
 
         public ICollection<City> Cities { get; set; }
+
+        public object Select(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
