@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Seasons.Queries;
+using SoccerScores.Application.Admin.Seasons.Commands.CreateSeason;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -16,6 +17,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<SeasonDto>> Get(int id)
         {
             return await Mediator.Send(new GetSeasonQuery { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateSeasonCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }
