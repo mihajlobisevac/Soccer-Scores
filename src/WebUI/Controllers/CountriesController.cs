@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Countries.Commands.CreateCountry;
 using SoccerScores.Application.Admin.Countries.Commands.DeleteCountry;
+using SoccerScores.Application.Admin.Countries.Commands.UpdateCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -24,6 +25,19 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<int>> Create(CreateCountryCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, UpdateCountryCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
