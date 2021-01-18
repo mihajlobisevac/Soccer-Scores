@@ -1,6 +1,6 @@
-﻿using SoccerScores.Application.Admin.Countries.Queries;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using SoccerScores.Application.Admin.Countries.Queries;
 using SoccerScores.Application.Admin.Countries.Commands.CreateCountry;
 using SoccerScores.Application.Admin.Countries.Commands.DeleteCountry;
 using SoccerScores.Application.Admin.Countries.Commands.UpdateCountry;
