@@ -48,6 +48,8 @@ namespace SoccerScores.Infrastructure.Data
                 var seasons = new List<Season>
                 {
                     new Season { Start = new DateTime(2020, 9, 12), End = new DateTime(2021, 5, 14), Competition = competitions[0] },
+                    new Season { Start = new DateTime(2019, 9, 12), End = new DateTime(2020, 5, 14), Competition = competitions[0] },
+                    new Season { Start = new DateTime(2018, 9, 12), End = new DateTime(2019, 5, 14), Competition = competitions[0] },
                     new Season { Start = new DateTime(2010, 9, 12), End = new DateTime(2011, 5, 14), Competition = competitions[1] },
                     new Season { Start = new DateTime(2014, 9, 12), End = new DateTime(2015, 5, 14), Competition = competitions[2] },
                     new Season { Start = new DateTime(2007, 9, 12), End = new DateTime(2008, 5, 14), Competition = competitions[3] },
