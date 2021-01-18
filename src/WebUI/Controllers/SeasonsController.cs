@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Seasons.Queries;
 using SoccerScores.Application.Admin.Seasons.Commands.CreateSeason;
+using SoccerScores.Application.Admin.Seasons.Commands.DeleteSeason;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -23,6 +24,14 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<int>> Create(CreateSeasonCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteSeasonCommand { Id = id });
+
+            return NoContent();
         }
     }
 }
