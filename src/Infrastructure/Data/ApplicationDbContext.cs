@@ -19,7 +19,7 @@ namespace SoccerScores.Infrastructure.Data
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<Season> Standings { get; set; }
+        public DbSet<Season> Seasons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.LogTo(Console.WriteLine);

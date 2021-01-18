@@ -3,6 +3,7 @@ using Domain.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace SoccerScores.Infrastructure.Data
 {
@@ -43,6 +44,16 @@ namespace SoccerScores.Infrastructure.Data
                 };
 
                 context.Competitions.AddRange(competitions);
+
+                var seasons = new List<Season>
+                {
+                    new Season { Start = new DateTime(2020, 9, 12), End = new DateTime(2021, 5, 14), Competition = competitions[0] },
+                    new Season { Start = new DateTime(2010, 9, 12), End = new DateTime(2011, 5, 14), Competition = competitions[1] },
+                    new Season { Start = new DateTime(2014, 9, 12), End = new DateTime(2015, 5, 14), Competition = competitions[2] },
+                    new Season { Start = new DateTime(2007, 9, 12), End = new DateTime(2008, 5, 14), Competition = competitions[3] },
+                };
+
+                context.Seasons.AddRange(seasons);
 
                 await context.SaveChangesAsync();
             }
