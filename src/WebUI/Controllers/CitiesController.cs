@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SoccerScores.Application.Admin.Cities.Commands.CreateCity;
 using SoccerScores.Application.Admin.Cities.Queries;
 using SoccerScores.WebUI.Controllers;
 using System.Threading.Tasks;
@@ -17,6 +18,17 @@ namespace WebUI.Controllers
         public async Task<ActionResult<CityDto>> Get(int id)
         {
             return await Mediator.Send(new GetCityQuery { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(int id, CreateCityCommand command)
+        {
+            if (id != command.CountryId)
+            {
+                return BadRequest();
+            }
+
+            return await Mediator.Send(command);
         }
     }
 }
