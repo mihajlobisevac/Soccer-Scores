@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Competitions.Queries;
 using SoccerScores.Application.Admin.Competitions.Commands.UpdateCompetition;
 using SoccerStreams.Application.Admin.Competitions.Commands.CreateCompetition;
+using SoccerStreams.Application.Admin.Competitions.Commands.DeleteCompetition;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -35,6 +36,14 @@ namespace SoccerScores.WebUI.Controllers
             }
 
             await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteCompetitionCommand { Id = id });
 
             return NoContent();
         }
