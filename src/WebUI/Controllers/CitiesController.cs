@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Cities.Queries;
 using SoccerScores.Application.Admin.Cities.Commands.CreateCity;
 using SoccerScores.Application.Admin.Cities.Commands.UpdateCity;
+using SoccerScores.Application.Admin.Cities.Commands.DeleteCity;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -35,6 +36,14 @@ namespace SoccerScores.WebUI.Controllers
             }
 
             await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteCityCommand { Id = id });
 
             return NoContent();
         }
