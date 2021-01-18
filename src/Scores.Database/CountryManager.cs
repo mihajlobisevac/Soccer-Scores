@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 
 namespace Scores.Database
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 
 namespace Scores.Domain.Infrastructure
 {

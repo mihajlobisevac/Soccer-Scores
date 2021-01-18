@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -46,7 +46,7 @@ namespace Scores.Application.EventsAdmin
 
         public async Task<Response> Do(Request request)
         {
-            var evnt = new Event
+            var evnt = new Incident
             {
                 HomeScore = request.HomeScore,
                 AwayScore = request.AwayScore,

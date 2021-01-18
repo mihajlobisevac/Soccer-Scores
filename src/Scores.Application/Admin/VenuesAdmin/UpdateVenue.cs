@@ -22,7 +22,6 @@ namespace Scores.Application.VenuesAdmin
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public int CityId { get; set; }
         }
 
@@ -32,7 +31,6 @@ namespace Scores.Application.VenuesAdmin
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public int CityId { get; set; }
         }
 
@@ -43,7 +41,6 @@ namespace Scores.Application.VenuesAdmin
             venue.Name = request.Name;
             venue.Capacity = request.Capacity;
             venue.YearOpened = request.YearOpened;
-            venue.Deactivated = request.Deactivated;
             venue.CityId = request.CityId;
 
             await venueManager.UpdateVenue(venue);
@@ -54,7 +51,6 @@ namespace Scores.Application.VenuesAdmin
                 Name = venue.Name,
                 Capacity = venue.Capacity,
                 YearOpened = venue.YearOpened,
-                Deactivated = venue.Deactivated,
                 CityId = venue.CityId,
             };
         }

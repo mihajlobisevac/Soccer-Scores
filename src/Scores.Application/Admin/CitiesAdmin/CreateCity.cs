@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 
 namespace Scores.Application.CitiesAdmin
 {
@@ -26,7 +26,6 @@ namespace Scores.Application.CitiesAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -35,7 +34,6 @@ namespace Scores.Application.CitiesAdmin
             var city = new City
             {
                 Name = request.Name,
-                Deactivated = request.Deactivated,
                 CountryId = request.CountryId
             };
 
@@ -48,7 +46,6 @@ namespace Scores.Application.CitiesAdmin
             {
                 Id = city.Id,
                 Name = city.Name,
-                Deactivated = city.Deactivated,
                 CountryId = city.CountryId
             };
         }

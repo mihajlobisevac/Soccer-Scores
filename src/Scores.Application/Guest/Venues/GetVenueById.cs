@@ -26,7 +26,6 @@ namespace Scores.Application.Guest.Venues
             public string Name { get; set; }
             public int Capacity { get; set; }
             public int YearOpened { get; set; }
-            public bool Deactivated { get; set; }
             public GetCityById.Response City { get; set; }
         }
 
@@ -37,7 +36,6 @@ namespace Scores.Application.Guest.Venues
                 Name = x.Name,
                 Capacity = x.Capacity,
                 YearOpened = x.YearOpened,
-                Deactivated = x.Deactivated,
                 City = new GetCityById(cityManager, countryManager).Do(x.CityId),
             });
     }

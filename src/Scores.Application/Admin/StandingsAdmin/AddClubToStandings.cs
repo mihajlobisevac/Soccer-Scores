@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 

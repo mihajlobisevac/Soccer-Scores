@@ -1,8 +1,5 @@
 ﻿using Scores.Application.Guest.Countries;
 using Scores.Domain.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Scores.Application.Guest.Cities
 {
@@ -22,7 +19,6 @@ namespace Scores.Application.Guest.Cities
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public bool Deactivated { get; set; }
             public string Country { get; set; }
         }
 
@@ -31,7 +27,6 @@ namespace Scores.Application.Guest.Cities
             {
                 Id = x.Id,
                 Name = x.Name,
-                Deactivated = x.Deactivated,
                 Country = new GetCountryById(countryManager).Do(x.CountryId).Name,
             });
     }

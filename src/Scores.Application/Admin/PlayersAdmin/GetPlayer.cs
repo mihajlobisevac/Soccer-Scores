@@ -24,7 +24,6 @@ namespace Scores.Application.PlayersAdmin
             public string Position { get; set; }
             public int ShirtNumber { get; set; }
             public string Foot { get; set; }
-            public bool Deactivated { get; set; }
             public int ClubId { get; set; }
             public int NationalityId { get; set; }
             public int PoBId { get; set; }
@@ -42,7 +41,6 @@ namespace Scores.Application.PlayersAdmin
                 Position = x.Position,
                 ShirtNumber = x.ShirtNumber,
                 Foot = x.Foot,
-                Deactivated = x.Deactivated,
                 ClubId = x.ClubId,
                 NationalityId = x.NationalityCountryId,
                 PoBId = x.PoBCityId,

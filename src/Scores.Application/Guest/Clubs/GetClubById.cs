@@ -28,10 +28,8 @@ namespace Scores.Application.Guest.Clubs
             public int Id { get; set; }
             public string Slug { get; set; }
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public int YearFounded { get; set; }
             public string Logo { get; set; }
-            public bool Deactivated { get; set; }
             public GetVenueById.Response Venue { get; set; }
         }
 
@@ -41,10 +39,8 @@ namespace Scores.Application.Guest.Clubs
                 Id = x.Id,
                 Slug = x.Name.Replace(" ", "").Replace(".", ""),
                 Name = x.Name,
-                NameCode = x.NameCode,
                 YearFounded = x.YearFounded,
                 Logo = x.Logo,
-                Deactivated = x.Deactivated,
                 Venue = new GetVenueById(venueManager, cityManager, countryManager).Do(x.VenueId),
             });
     }

@@ -19,7 +19,6 @@ namespace Scores.Application.Guest.Countries
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public string Flag { get; set; }
         }
 
@@ -28,7 +27,6 @@ namespace Scores.Application.Guest.Countries
             {
                 Id = x.Id,
                 Name = x.Name,
-                NameCode = x.NameCode,
                 Flag = x.Flag,
             });
     }

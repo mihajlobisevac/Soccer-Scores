@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -18,10 +18,8 @@ namespace Scores.Application.ClubsAdmin
         public class Request
         {
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public int YearFounded { get; set; }
             public string Logo { get; set; }
-            public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
 
@@ -29,10 +27,8 @@ namespace Scores.Application.ClubsAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public int YearFounded { get; set; }
             public string Logo { get; set; }
-            public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
 
@@ -41,10 +37,8 @@ namespace Scores.Application.ClubsAdmin
             var club = new Club
             {
                 Name = request.Name,
-                NameCode = request.NameCode,
                 YearFounded = request.YearFounded,
                 Logo = request.Logo,
-                Deactivated = request.Deactivated,
                 VenueId = request.VenueId,
             };
 
@@ -57,10 +51,8 @@ namespace Scores.Application.ClubsAdmin
             {
                 Id = club.Id,
                 Name = club.Name,
-                NameCode = club.NameCode,
                 YearFounded = club.YearFounded,
                 Logo = club.Logo,
-                Deactivated = club.Deactivated,
                 VenueId = club.VenueId,
             };
         }

@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +19,6 @@ namespace Scores.Application.TournamentsAdmin
         {
             public string Name { get; set; }
             public bool HasGroupStage { get; set; }
-            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -28,7 +27,6 @@ namespace Scores.Application.TournamentsAdmin
             public int Id { get; set; }
             public string Name { get; set; }
             public bool HasGroupStage { get; set; }
-            public bool Deactivated { get; set; }
             public int CountryId { get; set; }
         }
 
@@ -38,7 +36,6 @@ namespace Scores.Application.TournamentsAdmin
             {
                 Name = request.Name,
                 HasGroupStage = request.HasGroupStage,
-                Deactivated = request.Deactivated,
                 CountryId = request.CountryId
             };
 
@@ -52,7 +49,6 @@ namespace Scores.Application.TournamentsAdmin
                 Id = tournament.Id,
                 Name = tournament.Name,
                 HasGroupStage = tournament.HasGroupStage,
-                Deactivated = tournament.Deactivated,
                 CountryId = tournament.CountryId
             };
         }

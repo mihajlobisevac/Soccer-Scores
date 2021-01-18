@@ -31,10 +31,8 @@ namespace Scores.Application.ClubsAdmin
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public string NameCode { get; set; }
             public int YearFounded { get; set; }
             public string Logo { get; set; }
-            public bool Deactivated { get; set; }
             public int VenueId { get; set; }
         }
 
@@ -43,10 +41,8 @@ namespace Scores.Application.ClubsAdmin
             var club = clubManager.GetClubById(request.Id, x => x);
 
             club.Name = request.Name;
-            club.NameCode = request.NameCode;
             club.YearFounded = request.YearFounded;
             club.Logo = request.Logo;
-            club.Deactivated = request.Deactivated;
             club.VenueId = request.VenueId;
 
             await clubManager.UpdateClub(club);
@@ -55,10 +51,8 @@ namespace Scores.Application.ClubsAdmin
             {
                 Id = club.Id,
                 Name = club.Name,
-                NameCode = club.NameCode,
                 YearFounded = club.YearFounded,
                 Logo = club.Logo,
-                Deactivated = club.Deactivated,
                 VenueId = club.VenueId,
             };
         }

@@ -1,5 +1,5 @@
 ﻿using Scores.Domain.Infrastructure;
-using Scores.Domain.Models;
+using Scores.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -25,7 +25,6 @@ namespace Scores.Application.PlayersAdmin
             public string Position { get; set; }
             public int ShirtNumber { get; set; }
             public string Foot { get; set; }
-            public bool Deactivated { get; set; }
             public int ClubId { get; set; }
             public int NationalityId { get; set; }
             public int PoBId { get; set; }
@@ -42,7 +41,6 @@ namespace Scores.Application.PlayersAdmin
             public string Position { get; set; }
             public int ShirtNumber { get; set; }
             public string Foot { get; set; }
-            public bool Deactivated { get; set; }
             public int ClubId { get; set; }
             public int NationalityId { get; set; }
             public int PoBId { get; set; }
@@ -60,7 +58,6 @@ namespace Scores.Application.PlayersAdmin
                 Position = request.Position,
                 ShirtNumber = request.ShirtNumber,
                 Foot = request.Foot,
-                Deactivated = request.Deactivated,
                 ClubId = request.ClubId,
                 NationalityCountryId = request.NationalityId,
                 PoBCityId = request.PoBId,
@@ -82,7 +79,6 @@ namespace Scores.Application.PlayersAdmin
                 Position = request.Position,
                 ShirtNumber = request.ShirtNumber,
                 Foot = request.Foot,
-                Deactivated = request.Deactivated,
                 ClubId = request.ClubId,
                 NationalityId = request.NationalityId,
                 PoBId = request.PoBId,
