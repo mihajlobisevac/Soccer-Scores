@@ -4,7 +4,7 @@ using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Countries.Commands
+namespace SoccerScores.Application.Admin.Countries.Commands.CreateCountry
 {
     public class CreateCountryCommand : IRequest<int>
     {

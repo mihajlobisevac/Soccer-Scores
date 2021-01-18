@@ -17,6 +17,7 @@
     <Folder Include="Admin\Cities\Commands\" />
     <Folder Include="Admin\Clubs\" />
     <Folder Include="Admin\Competitions\" />
+    <Folder Include="Admin\Countries\Commands\UpdateCountry\" />
     <Folder Include="Admin\Incidents\" />
     <Folder Include="Admin\Matches\" />
     <Folder Include="Admin\Players\" />

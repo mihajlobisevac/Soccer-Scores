@@ -1,7 +1,8 @@
 ﻿using SoccerScores.Application.Admin.Countries.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Countries.Commands;
+using SoccerScores.Application.Admin.Countries.Commands.CreateCountry;
+using SoccerScores.Application.Admin.Countries.Commands.DeleteCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -23,6 +24,14 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<int>> Create(CreateCountryCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteCountryCommand { Id = id });
+
+            return NoContent();
         }
     }
 }
