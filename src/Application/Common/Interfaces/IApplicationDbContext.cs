@@ -14,7 +14,7 @@ namespace SoccerScores.Application.Common.Interfaces
         DbSet<Incident> Incidents { get; set; }
         DbSet<Match> Matches { get; set; }
         DbSet<Player> Players { get; set; }
-        DbSet<Season> Standings { get; set; }
+        DbSet<Season> Seasons { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

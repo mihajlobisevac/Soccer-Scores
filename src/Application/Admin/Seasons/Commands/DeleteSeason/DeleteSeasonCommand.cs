@@ -5,33 +5,32 @@ using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Cities.Commands.UpdateCity
+namespace SoccerScores.Application.Admin.Seasons.Commands.DeleteSeason
 {
-    public class UpdateCityCommand : IRequest
+    public class DeleteSeasonCommand : IRequest
     {
         public int Id { get; set; }
-        public string Name { get; set; }
     }
 
-    public class UpdateCityCommandHandler : IRequestHandler<UpdateCityCommand>
+    public class DeleteSeasonCommandHandler : IRequestHandler<DeleteSeasonCommand>
     {
         private readonly IApplicationDbContext context;
 
-        public UpdateCityCommandHandler(IApplicationDbContext context)
+        public DeleteSeasonCommandHandler(IApplicationDbContext context)
         {
             this.context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCityCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteSeasonCommand request, CancellationToken cancellationToken)
         {
-            var city = await context.Cities.FindAsync(request.Id);
+            var entity = await context.Seasons.FindAsync(request.Id);
 
-            if (city == null)
+            if (entity == null)
             {
                 throw new NotFoundException(nameof(City), request.Id);
             }
 
-            city.Name = request.Name;
+            context.Seasons.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 

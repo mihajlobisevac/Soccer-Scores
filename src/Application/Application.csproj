@@ -15,11 +15,9 @@
 
   <ItemGroup>
     <Folder Include="Admin\Clubs\" />
-    <Folder Include="Admin\Competitions\" />
     <Folder Include="Admin\Incidents\" />
     <Folder Include="Admin\Matches\" />
     <Folder Include="Admin\Players\" />
-    <Folder Include="Admin\Standings\" />
   </ItemGroup>
 
   <ItemGroup>
