@@ -1,6 +1,7 @@
 ﻿using SoccerScores.Application.Admin.Countries.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using SoccerScores.Application.Admin.Countries.Commands;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -16,6 +17,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<CountryDto>> Get(int id)
         {
             return await Mediator.Send(new GetCountryQuery { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateCountryCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }

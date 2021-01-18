@@ -1,5 +1,7 @@
 ﻿using SoccerScores.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace SoccerScores.Application.Common.Interfaces
 {
@@ -13,5 +15,7 @@ namespace SoccerScores.Application.Common.Interfaces
         DbSet<Match> Matches { get; set; }
         DbSet<Player> Players { get; set; }
         DbSet<Season> Standings { get; set; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
