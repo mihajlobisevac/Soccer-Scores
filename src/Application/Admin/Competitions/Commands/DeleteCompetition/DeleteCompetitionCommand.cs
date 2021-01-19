@@ -5,7 +5,7 @@ using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerStreams.Application.Admin.Competitions.Commands.DeleteCompetition
+namespace SoccerScores.Application.Admin.Competitions.Commands.DeleteCompetition
 {
     public class DeleteCompetitionCommand : IRequest
     {

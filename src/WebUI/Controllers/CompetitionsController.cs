@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using SoccerScores.Application.Admin.Competitions.Queries;
 using SoccerScores.Application.Admin.Competitions.Commands.UpdateCompetition;
-using SoccerStreams.Application.Admin.Competitions.Commands.CreateCompetition;
-using SoccerStreams.Application.Admin.Competitions.Commands.DeleteCompetition;
+using SoccerScores.Application.Admin.Competitions.Commands.CreateCompetition;
+using SoccerScores.Application.Admin.Competitions.Commands.DeleteCompetition;
 
 namespace SoccerScores.WebUI.Controllers
 {

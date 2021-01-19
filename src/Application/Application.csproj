@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Clubs\" />
+    <Folder Include="Admin\Clubs\Commands\" />
     <Folder Include="Admin\Incidents\" />
     <Folder Include="Admin\Matches\" />
     <Folder Include="Admin\Players\" />
