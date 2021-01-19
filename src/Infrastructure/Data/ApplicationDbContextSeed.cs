@@ -59,10 +59,10 @@ namespace SoccerScores.Infrastructure.Data
 
                 var clubs = new List<Club>
                 {
-                    new Club { Name = "F.C. Barcelona", Venue = "Camp Nou", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2017.png", Participations = new List<Season> { seasons[6] } },
-                    new Club { Name = "Real Madrid C.F.", Venue = "Santiago Bernabéu", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2016.png", Participations = new List<Season> { seasons[6] } },
-                    new Club { Name = "Liverpool", Venue = "Anfield", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/663.png", Participations = new List<Season> { seasons[0], seasons[1], seasons[2] } },
-                    new Club { Name = "Manchester United", Venue = "Old Trafford", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/662.png", Participations = new List<Season> { seasons[0], seasons[1], seasons[2] } },
+                    new Club { Name = "F.C. Barcelona", Venue = "Camp Nou", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2017.png" },
+                    new Club { Name = "Real Madrid C.F.", Venue = "Santiago Bernabéu", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2016.png" },
+                    new Club { Name = "Liverpool", Venue = "Anfield", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/663.png" },
+                    new Club { Name = "Manchester United", Venue = "Old Trafford", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/662.png" },
                 };
 
                 context.Clubs.AddRange(clubs);
