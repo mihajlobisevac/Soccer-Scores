@@ -59,13 +59,79 @@ namespace SoccerScores.Infrastructure.Data
 
                 var clubs = new List<Club>
                 {
-                    new Club { Name = "F.C. Barcelona", Venue = "Camp Nou", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2017.png" },
-                    new Club { Name = "Real Madrid C.F.", Venue = "Santiago Bernabéu", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2016.png" },
-                    new Club { Name = "Liverpool", Venue = "Anfield", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/663.png" },
-                    new Club { Name = "Manchester United", Venue = "Old Trafford", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/662.png" },
+                    new Club { Name = "F.C. Barcelona", Venue = "Camp Nou", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2017.png", Participations = new List<Season> { seasons[6] } },
+                    new Club { Name = "Real Madrid C.F.", Venue = "Santiago Bernabéu", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/2016.png", Participations = new List<Season> { seasons[6] } },
+                    new Club { Name = "Liverpool", Venue = "Anfield", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/663.png", Participations = new List<Season> { seasons[0], seasons[1], seasons[2] } },
+                    new Club { Name = "Manchester United", Venue = "Old Trafford", YearFounded = 1899, Crest = "https://secure.cache.images.core.optasports.com/soccer/teams/150x150/662.png", Participations = new List<Season> { seasons[0], seasons[1], seasons[2] } },
                 };
 
                 context.Clubs.AddRange(clubs);
+
+                var players = new List<Player>
+                {
+                    new Player
+                    {
+                        FirstName = "Lionel",
+                        LastName = "Messi",
+                        DateOfBirth = new DateTime(1987, 6, 24),
+                        Position = Position.Attacker,
+                        Foot = Foot.Left,
+                        Height = 170,
+                        Weight = 72,
+                        Nationality = countries[0],
+                        PlaceOfBirth = cities[0],
+                    },
+                    new Player
+                    {
+                        FirstName = "Ansu",
+                        LastName = "Fati",
+                        DateOfBirth = new DateTime(2001, 6, 24),
+                        Position = Position.Attacker,
+                        Foot = Foot.Right,
+                        Height = 178,
+                        Weight = 66,
+                        Nationality = countries[3],
+                        PlaceOfBirth = cities[4],
+                    },
+                    new Player
+                    {
+                        FirstName = "Karim",
+                        LastName = "Benzema",
+                        DateOfBirth = new DateTime(1987, 6, 24),
+                        Position = Position.Attacker,
+                        Foot = Foot.Right,
+                        Height = 185,
+                        Weight = 81,
+                        Nationality = countries[1],
+                        PlaceOfBirth = cities[2],
+                    },
+                };
+
+                context.Players.AddRange(players);
+
+                var clubPlayers = new List<ClubPlayer>
+                {
+                    new ClubPlayer
+                    {
+                        ShirtNumber = 10,
+                        Club = clubs[0],
+                        Player = players[0],
+                    },
+                    new ClubPlayer
+                    {
+                        ShirtNumber = 17,
+                        Club = clubs[0],
+                        Player = players[1],
+                    },
+                    new ClubPlayer
+                    {
+                        ShirtNumber = 9,
+                        Club = clubs[1],
+                        Player = players[2],
+                    },
+                };
+
+                context.ClubPlayers.AddRange(clubPlayers);
 
                 await context.SaveChangesAsync();
             }
