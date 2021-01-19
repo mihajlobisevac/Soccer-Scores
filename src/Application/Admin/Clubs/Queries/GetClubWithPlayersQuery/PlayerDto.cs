@@ -4,7 +4,7 @@ using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System;
 
-namespace SoccerScores.Application.Admin.Clubs.Queries
+namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery
 {
     public class PlayerDto : IMapFrom<Player>
     {

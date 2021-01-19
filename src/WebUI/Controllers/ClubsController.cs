@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Clubs.Queries;
+using SoccerScores.Application.Admin.Clubs.Queries.GetClubQuery;
+using SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery;
 
 namespace SoccerScores.WebUI.Controllers
 {

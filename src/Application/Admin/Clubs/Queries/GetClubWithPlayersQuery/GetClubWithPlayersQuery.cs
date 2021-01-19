@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Clubs.Queries
+namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery
 {
     public class GetClubWithPlayersQuery : IRequest<ClubWithPlayersDto>
     {
