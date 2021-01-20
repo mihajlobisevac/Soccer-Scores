@@ -43,8 +43,7 @@ namespace SoccerScores.Application.Admin.Players.Commands.CreatePlayer
             var placeOfBirth = await context.Cities.FindAsync(request.PlaceOfBirthId)
                 ?? throw new NotFoundException(nameof(City), request.PlaceOfBirthId);
 
-            var club = await context.Clubs.FindAsync(request.ClubId)
-                ?? throw new NotFoundException(nameof(Club), request.ClubId);
+            var club = await context.Clubs.FindAsync(request.ClubId);
 
             var entity = new Player
             {
@@ -61,14 +60,17 @@ namespace SoccerScores.Application.Admin.Players.Commands.CreatePlayer
 
             context.Players.Add(entity);
 
-            var clubPlayer = new ClubPlayer
+            if (club != null)
             {
-                ShirtNumber = request.ShirtNumber,
-                Player = entity,
-                Club = club,
-            };
+                var clubPlayer = new ClubPlayer
+                {
+                    ShirtNumber = request.ShirtNumber,
+                    Player = entity,
+                    Club = club,
+                };
 
-            context.ClubPlayers.Add(clubPlayer);
+                context.ClubPlayers.Add(clubPlayer);
+            }
 
             await context.SaveChangesAsync(cancellationToken);
 

@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Player.Id))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Player.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Player.LastName))
-                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.Player.DateOfBirth.ToString("yyyy,MM,dd")))
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.Player.DateOfBirth))
                 .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Player.Position.ToString()))
                 .ForMember(dest => dest.Foot, opt => opt.MapFrom(src => src.Player.Foot.ToString()))
                 .ForMember(dest => dest.Height, opt => opt.MapFrom(src => src.Player.Height))

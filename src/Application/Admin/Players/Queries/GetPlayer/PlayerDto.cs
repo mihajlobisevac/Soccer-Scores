@@ -5,7 +5,7 @@ using System;
 
 namespace SoccerScores.Application.Admin.Players.Queries.GetPlayer
 {
-    public class PlayerDto : IMapFrom<ClubPlayer>
+    public class PlayerDto : IMapFrom<ClubPlayer>, IMapFrom<Player>
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -42,6 +42,12 @@ namespace SoccerScores.Application.Admin.Players.Queries.GetPlayer
                 .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => src.Player.Nationality.Name))
                 .ForMember(dest => dest.PlaceOfBirth, opt => opt.MapFrom(src => src.Player.PlaceOfBirth.Name))
                 .ForMember(dest => dest.Club, opt => opt.MapFrom(src => src.Club));
+
+            profile.CreateMap<Player, PlayerDto>()
+                .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Position.ToString()))
+                .ForMember(dest => dest.Foot, opt => opt.MapFrom(src => src.Foot.ToString()))
+                .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => src.Nationality.Name))
+                .ForMember(dest => dest.PlaceOfBirth, opt => opt.MapFrom(src => src.PlaceOfBirth.Name));
         }
     }
 }
