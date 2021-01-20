@@ -4,6 +4,7 @@ using SoccerScores.Application.Admin.Clubs.Queries.GetClubQuery;
 using SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery;
 using SoccerScores.Application.Admin.Clubs.Commands.CreateClub;
 using SoccerScores.Application.Admin.Clubs.Commands.UpdateClub;
+using SoccerScores.Application.Admin.Clubs.Commands.DeleteClub;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -36,6 +37,14 @@ namespace SoccerScores.WebUI.Controllers
             }
 
             await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteClubCommand { Id = id });
 
             return NoContent();
         }
