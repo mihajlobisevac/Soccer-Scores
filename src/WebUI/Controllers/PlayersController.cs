@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Admin.Players.Commands.CreatePlayer;
+using SoccerScores.Application.Admin.Players.Commands.DeletePlayer;
 using SoccerScores.Application.Admin.Players.Commands.UpdatePlayer;
 using SoccerScores.Application.Admin.Players.Queries.GetPlayer;
 using SoccerScores.Application.Admin.Players.Queries.GetPlayersByClub;
@@ -36,6 +37,14 @@ namespace SoccerScores.WebUI.Controllers
             }
 
             await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeletePlayerCommand { Id = id });
 
             return NoContent();
         }
