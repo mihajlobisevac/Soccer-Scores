@@ -27,7 +27,10 @@ namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery
 
         public async Task<ClubWithPlayersDto> Handle(GetClubWithPlayersQuery request, CancellationToken cancellationToken)
         {
-            var club = await context.Clubs.FindAsync(request.Id);
+            var club = await context.Clubs
+                .Include(x => x.City)
+                .ThenInclude(x => x.Country)
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             var players = await context.ClubPlayers
                 .Where(x => x.Club == club)
