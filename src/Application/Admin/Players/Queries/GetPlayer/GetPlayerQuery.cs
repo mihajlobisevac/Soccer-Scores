@@ -25,13 +25,25 @@ namespace SoccerScores.Application.Admin.Players.Queries.GetPlayer
 
         public async Task<PlayerDto> Handle(GetPlayerQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.ClubPlayers
+            var hasClub = await context.ClubPlayers.AnyAsync(x => x.Player.Id == request.Id);
+
+            if (hasClub)
+            {
+                var playerWithClub = await context.ClubPlayers
                 .Include(x => x.Club)
                 .Include(x => x.Player).ThenInclude(y => y.Nationality)
                 .Include(x => x.Player).ThenInclude(y => y.PlaceOfBirth)
                 .FirstOrDefaultAsync(x => x.Player.Id == request.Id, cancellationToken);
 
-            return mapper.Map<PlayerDto>(entity);
+                return mapper.Map<PlayerDto>(playerWithClub);
+            }
+
+            var player = await context.Players
+                .Include(x => x.Nationality)
+                .Include(x => x.PlaceOfBirth)
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+            return mapper.Map<PlayerDto>(player);
         }
     }
 }

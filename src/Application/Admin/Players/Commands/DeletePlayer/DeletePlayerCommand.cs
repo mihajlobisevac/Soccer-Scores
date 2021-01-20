@@ -24,10 +24,10 @@ namespace SoccerScores.Application.Admin.Players.Commands.DeletePlayer
 
         public async Task<Unit> Handle(DeletePlayerCommand request, CancellationToken cancellationToken)
         {
-            var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
-
             var entity = await context.Players.FindAsync(request.Id) 
                 ?? throw new NotFoundException(nameof(Player), request.Id);
+
+            var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
 
             if (clubPlayer != null)
             {

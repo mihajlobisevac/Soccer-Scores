@@ -13,7 +13,6 @@ namespace SoccerScores.Application.Admin.Players.Commands.UpdatePlayer
     public class UpdatePlayerCommand : IRequest
     {
         public int Id { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DateOfBirth { get; set; }
@@ -21,7 +20,6 @@ namespace SoccerScores.Application.Admin.Players.Commands.UpdatePlayer
         public string Foot { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }
-
         public int NationalityId { get; set; }
         public int PlaceOfBirthId { get; set; }
 
@@ -49,12 +47,6 @@ namespace SoccerScores.Application.Admin.Players.Commands.UpdatePlayer
             var placeOfBirth = await context.Cities.FindAsync(request.PlaceOfBirthId)
                 ?? throw new NotFoundException(nameof(City), request.PlaceOfBirthId);
 
-            var club = await context.Clubs.FindAsync(request.ClubId)
-                ?? throw new NotFoundException(nameof(Club), request.ClubId);
-
-            var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id)
-                ?? throw new NotFoundException(nameof(ClubPlayer), request.ClubId);
-
             player.FirstName = request.FirstName;
             player.LastName = request.LastName;
             player.DateOfBirth = DateTime.Parse(request.DateOfBirth);
@@ -62,12 +54,29 @@ namespace SoccerScores.Application.Admin.Players.Commands.UpdatePlayer
             player.Foot = (Foot)Enum.Parse(typeof(Foot), request.Foot, false);
             player.Height = request.Height;
             player.Weight = request.Weight;
-
             player.Nationality = nationality;
             player.PlaceOfBirth = placeOfBirth;
 
-            clubPlayer.Club = club;
-            clubPlayer.ShirtNumber = request.ShirtNumber;
+            var club = await context.Clubs.FindAsync(request.ClubId);
+            var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
+
+            if (club != null)
+            {
+                if (clubPlayer == null)
+                {
+                    context.ClubPlayers.Add(new ClubPlayer
+                    {
+                        ShirtNumber = request.ShirtNumber,
+                        Player = player,
+                        Club = club,
+                    });
+                }
+                else
+                {
+                    clubPlayer.Club = club;
+                    clubPlayer.ShirtNumber = request.ShirtNumber;
+                }
+            }
 
             await context.SaveChangesAsync(cancellationToken);
 
