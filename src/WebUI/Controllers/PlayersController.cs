@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Admin.Players.Commands.CreatePlayer;
+using SoccerScores.Application.Admin.Players.Commands.UpdatePlayer;
 using SoccerScores.Application.Admin.Players.Queries.GetPlayer;
 using SoccerScores.Application.Admin.Players.Queries.GetPlayersByClub;
 using System.Threading.Tasks;
@@ -24,6 +25,19 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<int>> Create(CreatePlayerCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, UpdatePlayerCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }
