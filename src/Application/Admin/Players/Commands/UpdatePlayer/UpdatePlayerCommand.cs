@@ -58,10 +58,11 @@ namespace SoccerScores.Application.Admin.Players.Commands.UpdatePlayer
             player.PlaceOfBirth = placeOfBirth;
 
             var club = await context.Clubs.FindAsync(request.ClubId);
-            var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
 
             if (club != null)
             {
+                var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
+
                 if (clubPlayer == null)
                 {
                     context.ClubPlayers.Add(new ClubPlayer
