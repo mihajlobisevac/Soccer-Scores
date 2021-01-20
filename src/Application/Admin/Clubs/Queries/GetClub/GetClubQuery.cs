@@ -5,7 +5,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubQuery
+namespace SoccerScores.Application.Admin.Clubs.Queries.GetClub
 {
     public class GetClubQuery : IRequest<ClubDto>
     {

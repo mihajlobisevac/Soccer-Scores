@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Clubs.Queries.GetClubQuery;
-using SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayersQuery;
+using SoccerScores.Application.Admin.Clubs.Queries.GetClub;
+using SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayers;
 using SoccerScores.Application.Admin.Clubs.Commands.CreateClub;
 using SoccerScores.Application.Admin.Clubs.Commands.UpdateClub;
 using SoccerScores.Application.Admin.Clubs.Commands.DeleteClub;
