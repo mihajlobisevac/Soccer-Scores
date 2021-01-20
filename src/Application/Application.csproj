@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Admin\Clubs\Commands\DeleteClub\" />
-    <Folder Include="Admin\Clubs\Commands\UpdateClub\" />
     <Folder Include="Admin\Incidents\" />
     <Folder Include="Admin\Matches\" />
     <Folder Include="Admin\Players\Commands\" />
