@@ -11,6 +11,7 @@ namespace SoccerScores.Domain.Entities
         public string Venue { get; set; }
         public int YearFounded { get; set; }
 
+        public City City { get; set; }
         public ICollection<ClubPlayer> Players { get; set; }
         public ICollection<Season> Participations { get; set; }
     }
