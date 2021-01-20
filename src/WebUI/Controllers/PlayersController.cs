@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Admin.Players.Queries.GetPlayer;
+using SoccerScores.Application.Admin.Players.Queries.GetPlayersByClub;
 using System.Threading.Tasks;
 
 namespace SoccerScores.WebUI.Controllers
@@ -10,6 +11,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<PlayerDto>> Get(int id)
         {
             return await Mediator.Send(new GetPlayerQuery { Id = id });
+        }
+
+        [HttpGet("club/{id}")]
+        public async Task<ActionResult<PlayersVm>> GetWithPlayers(int id)
+        {
+            return await Mediator.Send(new GetPlayersByClubQuery { Id = id });
         }
     }
 }
