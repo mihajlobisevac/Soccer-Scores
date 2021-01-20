@@ -2,7 +2,7 @@
 using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 
-namespace SoccerScores.Application.Admin.Clubs.Queries.GetClubQuery
+namespace SoccerScores.Application.Admin.Clubs.Queries.GetClub
 {
     public class ClubDto : IMapFrom<Club>
     {
