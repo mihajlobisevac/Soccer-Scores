@@ -9,6 +9,7 @@ namespace SoccerScores.Application.Common.Interfaces
     {
         DbSet<City> Cities { get; set; }
         DbSet<Club> Clubs { get; set; }
+        DbSet<ClubPlayer> ClubPlayers { get; set; }
         DbSet<Competition> Competitions { get; set; }
         DbSet<Country> Countries { get; set; }
         DbSet<Incident> Incidents { get; set; }

@@ -14,6 +14,7 @@ namespace SoccerScores.Infrastructure.Data
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Club> Clubs { get; set; }
+        public DbSet<ClubPlayer> ClubPlayers { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Incident> Incidents { get; set; }

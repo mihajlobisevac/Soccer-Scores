@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Clubs\" />
     <Folder Include="Admin\Incidents\" />
     <Folder Include="Admin\Matches\" />
-    <Folder Include="Admin\Players\" />
+    <Folder Include="Admin\Players\Commands\" />
+    <Folder Include="Admin\Players\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerStreams.Application.Admin.Competitions.Commands.CreateCompetition
+namespace SoccerScores.Application.Admin.Competitions.Commands.CreateCompetition
 {
     public class CreateCompetitionCommand : IRequest<int>
     {
