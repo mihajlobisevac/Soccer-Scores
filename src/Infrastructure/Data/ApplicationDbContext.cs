@@ -19,6 +19,7 @@ namespace SoccerScores.Infrastructure.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<MatchPlayer> MatchPlayers { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Season> Seasons { get; set; }
 

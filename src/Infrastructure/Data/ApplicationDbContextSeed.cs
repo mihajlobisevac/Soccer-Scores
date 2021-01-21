@@ -134,6 +134,104 @@ namespace SoccerScores.Infrastructure.Data
 
                 context.ClubPlayers.AddRange(clubPlayers);
 
+                var match = new Match
+                {
+                    KickOff = new DateTime(2021, 1, 19),
+                    HomeTeam = clubs[0],
+                    AwayTeam = clubs[1],
+                    Season = seasons[0],
+                };
+
+                context.Matches.Add(match);
+
+                var incidents = new List<Incident>
+                {
+                    new Incident
+                    {
+                        HomeScore = 1,
+                        AwayScore = 0,
+                        Minute = 45,
+                        Type = IncidentType.Period,
+                        Class = IncidentClass.HT,
+                        IsHome = true,
+                        Match = match,
+                    },
+                    new Incident
+                    {
+                        HomeScore = 2,
+                        AwayScore = 1,
+                        Minute = 90,
+                        Type = IncidentType.Period,
+                        Class = IncidentClass.FT,
+                        IsHome = true,
+                        Match = match,
+                    },
+                    new Incident
+                    {
+                        HomeScore = 1,
+                        AwayScore = 0,
+                        Minute = 27,
+                        Type = IncidentType.Goal,
+                        Class = IncidentClass.None,
+                        IsHome = true,
+                        PrimaryPlayer = players[0],
+                        SecondaryPlayer = players[1],
+                        Match = match,
+                    },
+                    new Incident
+                    {
+                        HomeScore = 1,
+                        AwayScore = 1,
+                        Minute = 54,
+                        Type = IncidentType.Goal,
+                        Class = IncidentClass.None,
+                        IsHome = false,
+                        PrimaryPlayer = players[2],
+                        Match = match,
+                    },
+                    new Incident
+                    {
+                        HomeScore = 2,
+                        AwayScore = 1,
+                        Minute = 74,
+                        Type = IncidentType.Goal,
+                        Class = IncidentClass.Penalty,
+                        IsHome = true,
+                        PrimaryPlayer = players[0],
+                        SecondaryPlayer = players[1],
+                        Match = match,
+                    },
+                };
+
+                context.Incidents.AddRange(incidents);
+
+                var matchPlayers = new List<MatchPlayer>
+                {
+                    new MatchPlayer
+                    {
+                        IsHome = true,
+                        IsSubstitute = false,
+                        Player = players[0],
+                        Match = match,
+                    },
+                    new MatchPlayer
+                    {
+                        IsHome = true,
+                        IsSubstitute = false,
+                        Player = players[1],
+                        Match = match,
+                    },
+                    new MatchPlayer
+                    {
+                        IsHome = false,
+                        IsSubstitute = false,
+                        Player = players[2],
+                        Match = match,
+                    },
+                };
+
+                context.MatchPlayers.AddRange(matchPlayers);
+
                 await context.SaveChangesAsync();
             }
         }

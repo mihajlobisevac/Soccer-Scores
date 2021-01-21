@@ -14,12 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Incidents\" />
-    <Folder Include="Admin\Matches\" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Folder Include="Admin\Matches\Commands\" />
   </ItemGroup>
 
 </Project>
