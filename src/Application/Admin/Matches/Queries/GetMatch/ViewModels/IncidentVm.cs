@@ -4,7 +4,7 @@ using SoccerScores.Domain.Entities;
 
 namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch.ViewModels
 {
-    public class IncidentViewModel : IMapFrom<Incident>
+    public class IncidentVm : IMapFrom<Incident>
     {
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
@@ -12,12 +12,12 @@ namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch.ViewModels
         public string Type { get; set; }
         public string Class { get; set; }
         public bool IsHome { get; set; }
-        public PlayerViewModel PrimaryPlayer { get; set; }
-        public PlayerViewModel SecondaryPlayer { get; set; }
+        public PlayerVm PrimaryPlayer { get; set; }
+        public PlayerVm SecondaryPlayer { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Incident, IncidentViewModel>()
+            profile.CreateMap<Incident, IncidentVm>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
                 .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class.ToString()))
                 .ForMember(dest => dest.PrimaryPlayer, opt => opt.MapFrom(src => src.PrimaryPlayer))

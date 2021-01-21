@@ -5,7 +5,7 @@ using System;
 
 namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch.ViewModels
 {
-    public class SeasonViewModel : IMapFrom<Season>
+    public class SeasonVm : IMapFrom<Season>
     {
         public int Id { get; set; }
         public int CompetitionId { get; set; }
@@ -13,7 +13,7 @@ namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch.ViewModels
         
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Season, SeasonViewModel>()
+            profile.CreateMap<Season, SeasonVm>()
                 .ForMember(dest => dest.CompetitionId, opt => opt.MapFrom(src => src.Competition.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Competition.Name));
         }

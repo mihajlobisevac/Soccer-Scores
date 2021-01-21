@@ -4,7 +4,7 @@ using SoccerScores.Domain.Entities;
 
 namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch.ViewModels
 {
-    public class ClubViewModel : IMapFrom<Club>
+    public class ClubVm : IMapFrom<Club>
     {
         public int Id { get; set; }
         public string Name { get; set; }

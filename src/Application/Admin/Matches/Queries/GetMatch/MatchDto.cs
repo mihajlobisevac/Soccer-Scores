@@ -13,12 +13,12 @@ namespace SoccerScores.Application.Admin.Matches.Queries.GetMatch
 
         public DateTime KickOff { get; set; }
 
-        public ClubViewModel HomeTeam { get; set; }
-        public ClubViewModel AwayTeam { get; set; }
-        public SeasonViewModel Season { get; set; }
+        public ClubVm HomeTeam { get; set; }
+        public ClubVm AwayTeam { get; set; }
+        public SeasonVm Season { get; set; }
 
-        public ICollection<IncidentViewModel> Incidents { get; set; }
-        public ICollection<MatchPlayerViewModel> Players { get; set; }
+        public ICollection<IncidentVm> Incidents { get; set; }
+        public ICollection<MatchPlayerVm> Players { get; set; }
 
         public void Mapping(Profile profile)
         {
