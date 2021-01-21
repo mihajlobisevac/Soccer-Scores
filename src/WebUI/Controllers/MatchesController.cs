@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Admin.Matches.Commands.CreateMatch;
+using SoccerScores.Application.Admin.Matches.Commands.DeleteMatch;
 using SoccerScores.Application.Admin.Matches.Commands.UpdateMatch;
 using SoccerScores.Application.Admin.Matches.Queries.GetMatch;
 using System.Threading.Tasks;
@@ -33,6 +34,12 @@ namespace SoccerScores.WebUI.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteMatchCommand { Id = id });
 
+            return NoContent();
+        }
     }
 }
