@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Admin.Matches.Commands.CreateMatch;
+using SoccerScores.Application.Admin.Matches.Commands.UpdateMatch;
 using SoccerScores.Application.Admin.Matches.Queries.GetMatch;
 using System.Threading.Tasks;
 
@@ -18,5 +19,20 @@ namespace SoccerScores.WebUI.Controllers
         {
             return await Mediator.Send(command);
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, UpdateMatchCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+
     }
 }
