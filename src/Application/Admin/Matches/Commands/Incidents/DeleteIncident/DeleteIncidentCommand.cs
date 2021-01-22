@@ -5,7 +5,7 @@ using SoccerScores.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Matches.Commands.DeleteIncident
+namespace SoccerScores.Application.Admin.Matches.Commands.Incidents.DeleteIncident
 {
     public class DeleteIncidentCommand : IRequest
     {
