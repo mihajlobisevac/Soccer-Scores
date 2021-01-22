@@ -8,6 +8,12 @@ namespace SoccerScores.WebUI.Controllers
     public class IncidentsController : ApiControllerBase
     {
         [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateIncidentCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPost("batch")]
         public async Task<ActionResult<IEnumerable<int>>> Create(BatchCreateIncidentsCommand command)
         {
             return await Mediator.Send(command);
