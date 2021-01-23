@@ -10,8 +10,8 @@ namespace SoccerScores.Application.Admin.Seasons.Commands.CreateSeason
 {
     public class CreateSeasonCommand : IRequest<int>
     {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
         public int CompetitionId { get; set; }
     }
 
@@ -28,8 +28,8 @@ namespace SoccerScores.Application.Admin.Seasons.Commands.CreateSeason
         {
             var entity = new Season
             {
-                Start = request.Start,
-                End = request.End,
+                Start = DateTime.Parse(request.Start),
+                End = DateTime.Parse(request.End),
                 Competition = await context.Competitions.FindAsync(request.CompetitionId) ??
                     throw new NotFoundException(nameof(Competition), request.CompetitionId)
             };
