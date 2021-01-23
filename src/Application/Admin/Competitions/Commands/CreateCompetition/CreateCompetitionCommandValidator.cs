@@ -16,7 +16,7 @@ namespace SoccerScores.Application.Admin.Competitions.Commands.CreateCompetition
 
             RuleFor(x => x.Type)
                 .NotEmpty()
-                .Must(type => Enum.IsDefined(typeof(CompetitionType), type)).WithMessage("Competition type invalid.");
+                .Must(type => Enum.IsDefined(typeof(CompetitionType), type)).WithMessage("Competition type is invalid.");
 
             RuleFor(x => x.CountryId)
                 .NotEmpty()

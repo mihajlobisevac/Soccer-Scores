@@ -4,7 +4,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncidents
+namespace SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncident
 {
     public class CreateIncidentCommand : IRequest<int>
     {
