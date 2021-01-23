@@ -4,7 +4,7 @@ using SoccerScores.Application.Common.Interfaces;
 using SoccerScores.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncidents
+namespace SoccerScores.Application.Admin.Matches.Commands.Incidents
 {
     public static class HandleIncidentExceptions
     {
