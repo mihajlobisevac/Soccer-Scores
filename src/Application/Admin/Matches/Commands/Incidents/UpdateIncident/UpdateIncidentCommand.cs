@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Exceptions;
 using SoccerScores.Application.Common.Interfaces;
 using SoccerScores.Domain.Entities;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,30 +34,17 @@ namespace SoccerScores.Application.Admin.Matches.Commands.Incidents.UpdateIncide
                 .FirstOrDefaultAsync(x => x.Id == request.Id)
                 ?? throw new NotFoundException(nameof(Incident), request.Id);
 
-            entity.HomeScore = request.Incident.HomeScore;
-            entity.AwayScore = request.Incident.AwayScore;
-            entity.Minute = request.Incident.Minute;
-            entity.Type = (IncidentType)Enum.Parse(typeof(IncidentType), request.Incident.Type, false);
-            entity.Class = (IncidentClass)Enum.Parse(typeof(IncidentClass), request.Incident.Class, false);
-            entity.IsHome = request.Incident.IsHome;
+            var updatedEntity = await HandleIncidentExceptions.Handle(request.Incident, context, mapper);
 
-            entity.Match = await context.Matches.FindAsync(request.Incident.MatchId)
-                    ?? throw new NotFoundException(nameof(Match), request.Incident.MatchId);
-
-            entity.PrimaryPlayer = null;
-            entity.SecondaryPlayer = null;
-
-            if (request.Incident.PrimaryPlayerId != null)
-            {
-                entity.PrimaryPlayer = await context.Players.FindAsync(request.Incident.PrimaryPlayerId)
-                    ?? throw new NotFoundException(nameof(Player), request.Incident.PrimaryPlayerId);
-            }
-
-            if (request.Incident.SecondaryPlayerId != null)
-            {
-                entity.SecondaryPlayer = await context.Players.FindAsync(request.Incident.SecondaryPlayerId)
-                    ?? throw new NotFoundException(nameof(Player), request.Incident.SecondaryPlayerId);
-            }
+            entity.HomeScore = updatedEntity.HomeScore;
+            entity.AwayScore = updatedEntity.AwayScore;
+            entity.Minute = updatedEntity.Minute;
+            entity.Type = updatedEntity.Type;
+            entity.Class = updatedEntity.Class;
+            entity.IsHome = updatedEntity.IsHome;
+            entity.Match = updatedEntity.Match;
+            entity.PrimaryPlayer = updatedEntity.PrimaryPlayer;
+            entity.SecondaryPlayer = updatedEntity.SecondaryPlayer;
 
             await context.SaveChangesAsync(cancellationToken);
 
