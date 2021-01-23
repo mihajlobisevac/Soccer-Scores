@@ -27,12 +27,8 @@ namespace SoccerScores.Application.Admin.Clubs.Commands.CreateClub
 
         public async Task<int> Handle(CreateClubCommand request, CancellationToken cancellationToken)
         {
-            var city = await context.Cities.FindAsync(request.CityId);
-
-            if (city == null)
-            {
-                throw new NotFoundException(nameof(City), request.CityId);
-            }
+            var city = await context.Cities.FindAsync(request.CityId) 
+                ?? throw new NotFoundException(nameof(City), request.CityId);
 
             var entity = new Club
             {
