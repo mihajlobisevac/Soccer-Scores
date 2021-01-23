@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncidents;
+using SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncident;
 using SoccerScores.Application.Admin.Matches.Commands.Incidents.DeleteIncident;
 using SoccerScores.Application.Admin.Matches.Commands.Incidents.UpdateIncident;
 using System.Collections.Generic;
@@ -11,12 +11,6 @@ namespace SoccerScores.WebUI.Controllers
     {
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateIncidentCommand command)
-        {
-            return await Mediator.Send(command);
-        }
-
-        [HttpPost("batch")]
-        public async Task<ActionResult<IEnumerable<int>>> Create(BatchCreateIncidentsCommand command)
         {
             return await Mediator.Send(command);
         }
