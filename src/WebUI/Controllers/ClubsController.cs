@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Clubs.Queries.GetClub;
-using SoccerScores.Application.Admin.Clubs.Queries.GetClubWithPlayers;
-using SoccerScores.Application.Admin.Clubs.Commands.CreateClub;
-using SoccerScores.Application.Admin.Clubs.Commands.UpdateClub;
-using SoccerScores.Application.Admin.Clubs.Commands.DeleteClub;
+using SoccerScores.Application.Clubs.Queries.GetClub;
+using SoccerScores.Application.Clubs.Queries.GetClubWithPlayers;
+using SoccerScores.Application.Clubs.Commands.CreateClub;
+using SoccerScores.Application.Clubs.Commands.UpdateClub;
+using SoccerScores.Application.Clubs.Commands.DeleteClub;
 
 namespace SoccerScores.WebUI.Controllers
 {

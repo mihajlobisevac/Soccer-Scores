@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Countries.Queries;
-using SoccerScores.Application.Admin.Countries.Commands.CreateCountry;
-using SoccerScores.Application.Admin.Countries.Commands.DeleteCountry;
-using SoccerScores.Application.Admin.Countries.Commands.UpdateCountry;
+using SoccerScores.Application.Countries.Queries;
+using SoccerScores.Application.Countries.Commands.CreateCountry;
+using SoccerScores.Application.Countries.Commands.DeleteCountry;
+using SoccerScores.Application.Countries.Commands.UpdateCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {

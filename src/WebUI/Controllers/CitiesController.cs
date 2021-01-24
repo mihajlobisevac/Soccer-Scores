@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Cities.Queries;
-using SoccerScores.Application.Admin.Cities.Commands.CreateCity;
-using SoccerScores.Application.Admin.Cities.Commands.UpdateCity;
-using SoccerScores.Application.Admin.Cities.Commands.DeleteCity;
+using SoccerScores.Application.Cities.Queries;
+using SoccerScores.Application.Cities.Commands.CreateCity;
+using SoccerScores.Application.Cities.Commands.UpdateCity;
+using SoccerScores.Application.Cities.Commands.DeleteCity;
 
 namespace SoccerScores.WebUI.Controllers
 {

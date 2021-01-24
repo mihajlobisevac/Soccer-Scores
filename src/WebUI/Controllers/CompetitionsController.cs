@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Competitions.Queries;
-using SoccerScores.Application.Admin.Competitions.Commands.UpdateCompetition;
-using SoccerScores.Application.Admin.Competitions.Commands.CreateCompetition;
-using SoccerScores.Application.Admin.Competitions.Commands.DeleteCompetition;
+using SoccerScores.Application.Competitions.Queries;
+using SoccerScores.Application.Competitions.Commands.UpdateCompetition;
+using SoccerScores.Application.Competitions.Commands.CreateCompetition;
+using SoccerScores.Application.Competitions.Commands.DeleteCompetition;
 
 namespace SoccerScores.WebUI.Controllers
 {

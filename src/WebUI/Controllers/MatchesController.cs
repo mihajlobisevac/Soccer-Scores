@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoccerScores.Application.Admin.Matches.Commands.CreateMatch;
-using SoccerScores.Application.Admin.Matches.Commands.DeleteMatch;
-using SoccerScores.Application.Admin.Matches.Commands.UpdateMatch;
-using SoccerScores.Application.Admin.Matches.Queries.GetMatch;
+using SoccerScores.Application.Matches.Commands.CreateMatch;
+using SoccerScores.Application.Matches.Commands.DeleteMatch;
+using SoccerScores.Application.Matches.Commands.UpdateMatch;
+using SoccerScores.Application.Matches.Queries.GetMatch;
+using SoccerScores.Application.Matches.Queries.GetMatch.Models;
+using SoccerScores.Application.Matches.Queries.GetMatchesByDate;
+using SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SoccerScores.WebUI.Controllers
@@ -13,6 +17,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<MatchDto>> Get(int id)
         {
             return await Mediator.Send(new GetMatchQuery { Id = id });
+        }
+
+        [HttpGet("{year}-{month}-{day}")]
+        public async Task<ICollection<MatchByDateDto>> Get(int year, int month, int day)
+        {
+            return await Mediator.Send(new GetMatchesByDateQuery { Date = $"{year}/{month}/{day}" });
         }
 
         [HttpPost]
