@@ -13,9 +13,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
 {
     public class GetMatchesByDateQuery : IRequest<ICollection<MatchByDateDto>>
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public string Date { get; set; }
     }
 
     public class GetMatchesByDateQueryHandler : IRequestHandler<GetMatchesByDateQuery, ICollection<MatchByDateDto>>
@@ -31,10 +29,8 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
 
         public async Task<ICollection<MatchByDateDto>> Handle(GetMatchesByDateQuery request, CancellationToken cancellationToken)
         {
-            var date = new DateTime(request.Year, request.Month, request.Day);
-
             var entity = await context.Matches
-                .Where(x => x.KickOff == date)
+                .Where(x => x.KickOff.Date == DateTime.Parse(request.Date).Date)
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(y => y.Competition)

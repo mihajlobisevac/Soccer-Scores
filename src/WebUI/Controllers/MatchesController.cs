@@ -22,12 +22,7 @@ namespace SoccerScores.WebUI.Controllers
         [HttpGet("{year}-{month}-{day}")]
         public async Task<ICollection<MatchByDateDto>> Get(int year, int month, int day)
         {
-            return await Mediator.Send(new GetMatchesByDateQuery
-            {
-                Year = year,
-                Month = month,
-                Day = day,
-            });
+            return await Mediator.Send(new GetMatchesByDateQuery { Date = $"{year}/{month}/{day}" });
         }
 
         [HttpPost]
