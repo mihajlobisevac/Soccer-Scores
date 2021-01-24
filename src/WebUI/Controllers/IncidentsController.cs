@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoccerScores.Application.Admin.Matches.Commands.Incidents.CreateIncident;
-using SoccerScores.Application.Admin.Matches.Commands.Incidents.DeleteIncident;
-using SoccerScores.Application.Admin.Matches.Commands.Incidents.UpdateIncident;
+using SoccerScores.Application.Matches.Commands.Incidents.CreateIncident;
+using SoccerScores.Application.Matches.Commands.Incidents.DeleteIncident;
+using SoccerScores.Application.Matches.Commands.Incidents.UpdateIncident;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

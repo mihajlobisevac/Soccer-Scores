@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Admin.Seasons.Queries;
-using SoccerScores.Application.Admin.Seasons.Commands.CreateSeason;
-using SoccerScores.Application.Admin.Seasons.Commands.DeleteSeason;
+using SoccerScores.Application.Seasons.Queries;
+using SoccerScores.Application.Seasons.Commands.CreateSeason;
+using SoccerScores.Application.Seasons.Commands.DeleteSeason;
 
 namespace SoccerScores.WebUI.Controllers
 {

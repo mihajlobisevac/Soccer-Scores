@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoccerScores.Application.Admin.Players.Commands.CreatePlayer;
-using SoccerScores.Application.Admin.Players.Commands.DeletePlayer;
-using SoccerScores.Application.Admin.Players.Commands.UpdatePlayer;
-using SoccerScores.Application.Admin.Players.Queries.GetPlayer;
-using SoccerScores.Application.Admin.Players.Queries.GetPlayersByClub;
+using SoccerScores.Application.Players.Commands.CreatePlayer;
+using SoccerScores.Application.Players.Commands.DeletePlayer;
+using SoccerScores.Application.Players.Commands.UpdatePlayer;
+using SoccerScores.Application.Players.Queries.GetPlayer;
+using SoccerScores.Application.Players.Queries.GetPlayersByClub;
 using System.Threading.Tasks;
 
 namespace SoccerScores.WebUI.Controllers
