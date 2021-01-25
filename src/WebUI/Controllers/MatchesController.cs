@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Common.Models;
+using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Matches.Commands.CreateMatch;
 using SoccerScores.Application.Matches.Commands.DeleteMatch;
 using SoccerScores.Application.Matches.Commands.UpdateMatch;
@@ -28,9 +29,9 @@ namespace SoccerScores.WebUI.Controllers
         }
 
         [HttpGet("club/{id}")]
-        public async Task<ICollection<MatchByClubDto>> GetByClub(int id)
+        public async Task<PaginatedList<MatchByClubDto>> GetByClub(int id, bool futureMatches = false, int index = 1)
         {
-            return await Mediator.Send(new GetMatchesByClubQuery { ClubId = id });
+            return await Mediator.Send(new GetMatchesByClubQuery { ClubId = id, PageNumber = index, IsFutureMatches = futureMatches });
         }
 
         [HttpPost]

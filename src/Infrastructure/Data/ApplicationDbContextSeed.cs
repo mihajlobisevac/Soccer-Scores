@@ -148,12 +148,20 @@ namespace SoccerScores.Infrastructure.Data
                     new Match { KickOff = dates_a[3], HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[5], },
                     new Match { KickOff = dates_a[4], HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
                     new Match { KickOff = dates_a[5], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
+                    new Match { KickOff = dates_a[6], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[1], },
+                    new Match { KickOff = dates_a[7], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[2], },
+                    new Match { KickOff = dates_a[8], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[4], },
+                    new Match { KickOff = dates_a[9], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
                     new Match { KickOff = dates_b[0], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[4], },
                     new Match { KickOff = dates_b[1], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[5], },
                     new Match { KickOff = dates_b[2], HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[5], },
                     new Match { KickOff = dates_b[3], HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
                     new Match { KickOff = dates_b[4], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
                     new Match { KickOff = dates_b[5], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
+                    new Match { KickOff = dates_b[6], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[0], },
+                    new Match { KickOff = dates_b[7], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[2], },
+                    new Match { KickOff = dates_b[8], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[1], },
+                    new Match { KickOff = dates_b[9], HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
                 };
 
                 context.Matches.AddRange(matches);
