@@ -1,6 +1,7 @@
 ﻿using Domain.Enums;
 using FluentValidation;
 using SoccerScores.Application.Common.Interfaces;
+using SoccerScores.Application.Common.Shared;
 using System;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
                 .MaximumLength(100);
 
             RuleFor(x => x.DateOfBirth)
-                .Must(BeAValidDate).WithMessage("Invalid date/time format.");
+                .Must(CustomValidators.BeAValidDate).WithMessage("Invalid date/time format.");
 
             RuleFor(x => x.Position)
                 .Must(type => Enum.IsDefined(typeof(Position), type)).WithMessage("Position type is invalid.");
@@ -41,11 +42,6 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
             RuleFor(x => x.ClubId)
                 .Must(id => BeAValidClubIfNotNull(id)).WithMessage("Club does not exist.");
-        }
-
-        private bool BeAValidDate(string value)
-        {
-            return DateTime.TryParse(value, out _);
         }
 
         private bool BeAValidClubIfNotNull(int? id)

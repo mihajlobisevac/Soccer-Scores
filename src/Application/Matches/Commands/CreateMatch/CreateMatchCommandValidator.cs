@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SoccerScores.Application.Common.Interfaces;
+using SoccerScores.Application.Common.Shared;
 using System;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
         public CreateMatchCommandValidator(IApplicationDbContext context)
         {
             RuleFor(x => x.KickOff)
-                .Must(BeAValidDate).WithMessage("Invalid date/time format.");
+                .Must(CustomValidators.BeAValidDate).WithMessage("Invalid date/time format.");
 
             RuleFor(x => x.HomeTeamId)
                 .NotEmpty()
@@ -24,11 +25,6 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
             RuleFor(x => x.SeasonId)
                 .NotEmpty()
                 .Must(id => context.Seasons.Any(s => s.Id == id)).WithMessage("Competition season does not exist.");
-        }
-
-        private bool BeAValidDate(string value)
-        {
-            return DateTime.TryParse(value, out _);
         }
     }
 }
