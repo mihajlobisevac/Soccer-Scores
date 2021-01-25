@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Common.Models;
+using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Matches.Commands.CreateMatch;
 using SoccerScores.Application.Matches.Commands.DeleteMatch;
 using SoccerScores.Application.Matches.Commands.UpdateMatch;
 using SoccerScores.Application.Matches.Queries.GetMatch;
 using SoccerScores.Application.Matches.Queries.GetMatch.Models;
+using SoccerScores.Application.Matches.Queries.GetMatchesByClub;
+using SoccerScores.Application.Matches.Queries.GetMatchesByClub.Models;
 using SoccerScores.Application.Matches.Queries.GetMatchesByDate;
 using SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models;
 using System.Collections.Generic;
@@ -20,9 +23,15 @@ namespace SoccerScores.WebUI.Controllers
         }
 
         [HttpGet("{year}-{month}-{day}")]
-        public async Task<ICollection<MatchByDateDto>> Get(int year, int month, int day)
+        public async Task<ICollection<MatchByDateDto>> GetByDate(int year, int month, int day)
         {
             return await Mediator.Send(new GetMatchesByDateQuery { Date = $"{year}/{month}/{day}" });
+        }
+
+        [HttpGet("club/{id}")]
+        public async Task<PaginatedList<MatchByClubDto>> GetByClub(int id, bool futureMatches = false, int index = 1)
+        {
+            return await Mediator.Send(new GetMatchesByClubQuery { ClubId = id, PageNumber = index, IsFutureMatches = futureMatches });
         }
 
         [HttpPost]

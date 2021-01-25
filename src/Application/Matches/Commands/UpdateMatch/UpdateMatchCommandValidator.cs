@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SoccerScores.Application.Common.Interfaces;
+using SoccerScores.Application.Common.Shared;
 using System;
 using System.Linq;
 
@@ -14,12 +15,7 @@ namespace SoccerScores.Application.Matches.Commands.UpdateMatch
                 .Must(id => context.Matches.Any(m => m.Id == id)).WithMessage("Match does not exist.");
 
             RuleFor(x => x.KickOff)
-                .Must(BeAValidDate).WithMessage("Invalid date/time format.");
-        }
-
-        private bool BeAValidDate(string value)
-        {
-            return DateTime.TryParse(value, out _);
+                .Must(CustomValidators.BeAValidDate).WithMessage("Invalid date/time format.");
         }
     }
 }

@@ -29,14 +29,14 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
 
         public async Task<ICollection<MatchByDateDto>> Handle(GetMatchesByDateQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.Matches
+            var entities = await context.Matches
                 .Where(x => x.KickOff.Date == DateTime.Parse(request.Date).Date)
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(y => y.Competition)
                 .ToListAsync(cancellationToken);
 
-            return mapper.Map<ICollection<MatchByDateDto>>(entity);
+            return mapper.Map<ICollection<MatchByDateDto>>(entities);
         }
     }
 }
