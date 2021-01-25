@@ -9,6 +9,8 @@ using SoccerScores.Application.Matches.Queries.GetMatchesByClub;
 using SoccerScores.Application.Matches.Queries.GetMatchesByClub.Models;
 using SoccerScores.Application.Matches.Queries.GetMatchesByDate;
 using SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models;
+using SoccerScores.Application.Matches.Queries.GetMatchesBySeason;
+using SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,6 +34,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<PaginatedList<MatchByClubDto>> GetByClub(int id, bool futureMatches = false, int index = 1)
         {
             return await Mediator.Send(new GetMatchesByClubQuery { ClubId = id, PageNumber = index, IsFutureMatches = futureMatches });
+        }
+
+        [HttpGet("season/{id}")]
+        public async Task<PaginatedList<MatchBySeasonDto>> GetBySeason(int id, int index = 1)
+        {
+            return await Mediator.Send(new GetMatchesBySeasonQuery { SeasonId = id, PageNumber = index });
         }
 
         [HttpPost]
