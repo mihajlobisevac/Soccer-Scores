@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace SoccerScores.Domain.Entities
@@ -12,5 +13,10 @@ namespace SoccerScores.Domain.Entities
 
         public Country Country { get; set; }
         public ICollection<Season> Seasons { get; set; }
+
+        public object FirstOrDefaultAsync(int seasonId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

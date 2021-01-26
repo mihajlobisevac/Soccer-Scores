@@ -10,6 +10,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByClub.Models
         public int Id { get; set; }
 
         public DateTime KickOff { get; set; }
+        public int GameWeek { get; set; }
 
         public ClubVm HomeTeam { get; set; }
         public ClubVm AwayTeam { get; set; }

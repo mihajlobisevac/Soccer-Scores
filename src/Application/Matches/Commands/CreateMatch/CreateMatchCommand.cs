@@ -12,6 +12,7 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
     public class CreateMatchCommand : IRequest<int>
     {
         public string KickOff { get; set; }
+        public int GameWeek { get; set; }
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
         public int SeasonId { get; set; }
@@ -42,6 +43,7 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
             var entity = new Match
             {
                 KickOff = DateTime.Parse(request.KickOff),
+                GameWeek = request.GameWeek,
                 HomeTeam = homeTeam,
                 AwayTeam = awayTeam,
                 Season = season,
