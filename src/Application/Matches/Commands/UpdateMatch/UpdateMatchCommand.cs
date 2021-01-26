@@ -12,6 +12,7 @@ namespace SoccerScores.Application.Matches.Commands.UpdateMatch
     {
         public int Id { get; set; }
         public string KickOff { get; set; }
+        public int GameWeek { get; set; }
     }
 
     public class UpdateMatchCommandHandler : IRequestHandler<UpdateMatchCommand>
@@ -29,6 +30,7 @@ namespace SoccerScores.Application.Matches.Commands.UpdateMatch
                 ?? throw new NotFoundException(nameof(Match), request.Id);
 
             match.KickOff = DateTime.Parse(request.KickOff);
+            match.GameWeek = request.GameWeek;
 
             await context.SaveChangesAsync(cancellationToken);
 

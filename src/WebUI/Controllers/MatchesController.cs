@@ -37,9 +37,9 @@ namespace SoccerScores.WebUI.Controllers
         }
 
         [HttpGet("season/{id}")]
-        public async Task<PaginatedList<MatchBySeasonDto>> GetBySeason(int id, bool futureMatches = false, int index = 1)
+        public async Task<SeasonWithMatchesVm> GetBySeason(int id, int? gameWeek = null)
         {
-            return await Mediator.Send(new GetMatchesBySeasonQuery { SeasonId = id, PageNumber = index, IsFutureMatches = futureMatches });
+            return await Mediator.Send(new GetMatchesBySeasonQuery { SeasonId = id, SpecifiedGameWeek = gameWeek });
         }
 
         [HttpPost]

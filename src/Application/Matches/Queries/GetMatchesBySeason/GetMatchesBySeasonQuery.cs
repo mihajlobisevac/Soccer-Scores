@@ -1,26 +1,26 @@
-﻿using Application.Common.Mappings;
-using Application.Common.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
 using SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models;
-using System;
+using SoccerScores.Domain.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
 {
-    public class GetMatchesBySeasonQuery : IRequest<PaginatedList<MatchBySeasonDto>>
+    public class GetMatchesBySeasonQuery : IRequest<SeasonWithMatchesVm>
     {
         public int SeasonId { get; set; }
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 6;
-        public bool IsFutureMatches { get; set; }
+        public int? SpecifiedGameWeek { get; set; }
+
+        internal bool HasSpecifiedGameWeek => SpecifiedGameWeek != null;
     }
 
-    public class GetMatchesBySeasonQueryHandler : IRequestHandler<GetMatchesBySeasonQuery, PaginatedList<MatchBySeasonDto>>
+    public class GetMatchesBySeasonQueryHandler : IRequestHandler<GetMatchesBySeasonQuery, SeasonWithMatchesVm>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -31,30 +31,46 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
             this.mapper = mapper;
         }
 
-        public async Task<PaginatedList<MatchBySeasonDto>> Handle(GetMatchesBySeasonQuery request, CancellationToken cancellationToken)
+        public async Task<SeasonWithMatchesVm> Handle(GetMatchesBySeasonQuery request, CancellationToken cancellationToken)
         {
-            PaginatedList<MatchBySeasonDto> matches;
+            var season = mapper.Map<SeasonWithMatchesVm>(await GetSeason(request.SeasonId));
 
-            if (request.IsFutureMatches)
+            if (request.HasSpecifiedGameWeek)
             {
-                matches = await context.Matches
-                    .Where(x => x.KickOff >= DateTime.Now)
-                    .Where(x => x.Season.Id == request.SeasonId)
-                    .OrderBy(x => x.KickOff)
-                    .ProjectTo<MatchBySeasonDto>(mapper.ConfigurationProvider)
-                    .PaginatedListAsync(request.PageNumber, request.PageSize);
+                season.Matches = await GetMatchesByGameWeek(request);
+                season.GameWeek = (int)request.SpecifiedGameWeek;
 
-                return matches;
+                return season;
             }
 
-            matches = await context.Matches
-                .Where(x => x.KickOff < DateTime.Now)
-                .Where(x => x.Season.Id == request.SeasonId)
-                .OrderByDescending(x => x.KickOff)
-                .ProjectTo<MatchBySeasonDto>(mapper.ConfigurationProvider)
-                .PaginatedListAsync(request.PageNumber, request.PageSize);
+            season.Matches = await GetLatestMatches(request);
+            season.GameWeek = LatestGameWeek(request);
 
-            return matches;
+            return season;
         }
+
+        private async Task<List<MatchBySeasonDto>> GetMatchesByGameWeek(GetMatchesBySeasonQuery request)
+            => await context.Matches
+                .Where(x => x.Season.Id == request.SeasonId)
+                .Where(x => x.GameWeek == request.SpecifiedGameWeek)
+                .ProjectTo<MatchBySeasonDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+        private async Task<List<MatchBySeasonDto>> GetLatestMatches(GetMatchesBySeasonQuery request)
+            => await context.Matches
+                .Where(x => x.Season.Id == request.SeasonId)
+                .Where(x => x.GameWeek == LatestGameWeek(request))
+                .ProjectTo<MatchBySeasonDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+        private int LatestGameWeek(GetMatchesBySeasonQuery request)
+            => context.Matches
+                .Where(x => x.Season.Id == request.SeasonId)
+                .Max(x => x.GameWeek);
+
+        private async Task<Season> GetSeason(int id)
+            => await context.Seasons
+                .Include(x => x.Competition)
+                .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

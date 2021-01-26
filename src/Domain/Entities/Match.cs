@@ -8,6 +8,7 @@ namespace SoccerScores.Domain.Entities
         public int Id { get; set; }
 
         public DateTime KickOff { get; set; }
+        public int GameWeek { get; set; }
 
         public Club HomeTeam { get; set; }
         public Club AwayTeam { get; set; }
