@@ -1,5 +1,5 @@
-﻿using Application.Common.Mappings;
-using Application.Common.Models;
+﻿using SoccerScores.Application.Common.Mappings;
+using SoccerScores.Application.Common.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;

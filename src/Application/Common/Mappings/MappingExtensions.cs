@@ -1,11 +1,8 @@
-﻿using Application.Common.Models;
-using System;
-using System.Collections.Generic;
+﻿using SoccerScores.Application.Common.Models;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Common.Mappings
+namespace SoccerScores.Application.Common.Mappings
 {
     public static class MappingExtensions
     {

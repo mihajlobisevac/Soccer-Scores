@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using SoccerScores.Application.Seasons.Queries;
+using SoccerScores.Application.Leagues.Queries.Models;
+using SoccerScores.Application.Leagues.Queries.GetLeagueTable;
 using SoccerScores.Application.Seasons.Commands.CreateSeason;
 using SoccerScores.Application.Seasons.Commands.DeleteSeason;
 
@@ -18,6 +20,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<SeasonDto>> Get(int id)
         {
             return await Mediator.Send(new GetSeasonQuery { Id = id });
+        }
+
+        [HttpGet("season/{id}/table")]
+        public async Task<ActionResult<LeagueTable>> GetTable(int id)
+        {
+            return await Mediator.Send(new GetLeagueTableQuery { SeasonId = id });
         }
 
         [HttpPost]

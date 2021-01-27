@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
 {
-    public class GetMatchesByDateQuery : IRequest<ICollection<MatchByDateDto>>
+    public class GetMatchesByDateQuery : IRequest<IEnumerable<MatchByDateDto>>
     {
         public string Date { get; set; }
     }
 
-    public class GetMatchesByDateQueryHandler : IRequestHandler<GetMatchesByDateQuery, ICollection<MatchByDateDto>>
+    public class GetMatchesByDateQueryHandler : IRequestHandler<GetMatchesByDateQuery, IEnumerable<MatchByDateDto>>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -27,7 +27,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
             this.mapper = mapper;
         }
 
-        public async Task<ICollection<MatchByDateDto>> Handle(GetMatchesByDateQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<MatchByDateDto>> Handle(GetMatchesByDateQuery request, CancellationToken cancellationToken)
         {
             var entities = await context.Matches
                 .Where(x => x.KickOff.Date == DateTime.Parse(request.Date).Date)
@@ -36,7 +36,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
                 .Include(x => x.Season).ThenInclude(y => y.Competition)
                 .ToListAsync(cancellationToken);
 
-            return mapper.Map<ICollection<MatchByDateDto>>(entities);
+            return mapper.Map<IEnumerable<MatchByDateDto>>(entities);
         }
     }
 }

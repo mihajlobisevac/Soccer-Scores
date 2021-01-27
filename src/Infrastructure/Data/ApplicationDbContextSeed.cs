@@ -19,6 +19,7 @@ namespace SoccerScores.Infrastructure.Data
                     new Country { Name = "Germany", Flag = "https://restcountries.eu/data/deu.svg" },
                     new Country { Name = "Serbia", Flag = "https://restcountries.eu/data/srb.svg" },
                     new Country { Name = "Spain", Flag = "https://restcountries.eu/data/esp.svg" },
+                    new Country { Name = "Europe", Flag = "https://restcountries.eu/data/esp.svg" },
                 };
 
                 context.Countries.AddRange(countries);
@@ -42,6 +43,7 @@ namespace SoccerScores.Infrastructure.Data
                     new Competition { Name = "Bundesliga", Type = CompetitionType.League, Country = countries[1] },
                     new Competition { Name = "Super Liga", Type = CompetitionType.League, Country = countries[2] },
                     new Competition { Name = "La Liga", Type = CompetitionType.League, Country = countries[3] },
+                    new Competition { Name = "UEFA Champions League", Type = CompetitionType.Cup, Country = countries[4] },
                 };
 
                 context.Competitions.AddRange(competitions);
@@ -54,6 +56,7 @@ namespace SoccerScores.Infrastructure.Data
                     new Season { Start = new DateTime(2010, 9, 12), End = new DateTime(2011, 5, 14), Competition = competitions[1] },
                     new Season { Start = new DateTime(2014, 9, 12), End = new DateTime(2015, 5, 14), Competition = competitions[2] },
                     new Season { Start = new DateTime(2007, 9, 12), End = new DateTime(2008, 5, 14), Competition = competitions[3] },
+                    new Season { Start = new DateTime(1992, 9, 12), End = new DateTime(2008, 5, 14), Competition = competitions[4] },
                 };
 
                 context.Seasons.AddRange(seasons);
