@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Application.Common.Models
+namespace SoccerScores.Application.Common.Models
 {
     public class PaginatedList<T>
     {

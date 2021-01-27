@@ -13,10 +13,5 @@ namespace SoccerScores.Domain.Entities
 
         public Country Country { get; set; }
         public ICollection<Season> Seasons { get; set; }
-
-        public object FirstOrDefaultAsync(int seasonId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
