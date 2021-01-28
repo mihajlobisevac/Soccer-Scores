@@ -28,11 +28,7 @@ namespace SoccerScores.Application.Matches.Commands.Incidents.UpdateIncident
 
         public async Task<Unit> Handle(UpdateIncidentCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Incidents
-                .Include(x => x.PrimaryPlayer)
-                .Include(x => x.SecondaryPlayer)
-                .FirstOrDefaultAsync(x => x.Id == request.Id)
-                ?? throw new NotFoundException(nameof(Incident), request.Id);
+            var entity = await GetIncident(request);
 
             var updatedEntity = await HandleIncidentExceptions.Handle(request.Incident, context, mapper);
 
@@ -49,6 +45,21 @@ namespace SoccerScores.Application.Matches.Commands.Incidents.UpdateIncident
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Incident> GetIncident(UpdateIncidentCommand request)
+        {
+            var incident = await context.Incidents
+                .Include(x => x.PrimaryPlayer)
+                .Include(x => x.SecondaryPlayer)
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+            if (incident is null)
+            {
+                throw new NotFoundException(nameof(Incident), request.Id);
+            }
+
+            return incident;
         }
     }
 }
