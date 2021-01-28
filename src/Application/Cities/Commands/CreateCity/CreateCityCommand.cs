@@ -27,8 +27,7 @@ namespace SoccerScores.Application.Cities.Commands.CreateCity
             var entity = new City
             {
                 Name = request.Name,
-                Country = await context.Countries.FindAsync(request.CountryId) ??
-                    throw new NotFoundException(nameof(Country), request.CountryId)
+                Country = await GetCountry(request.CountryId)
             };
 
             context.Cities.Add(entity);
@@ -36,6 +35,18 @@ namespace SoccerScores.Application.Cities.Commands.CreateCity
             await context.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
+        }
+
+        private async Task<Country> GetCountry(int id)
+        {
+            var country = await context.Countries.FindAsync(id);
+
+            if (country is null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return country;
         }
     }
 }
