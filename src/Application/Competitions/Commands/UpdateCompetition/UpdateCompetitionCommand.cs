@@ -24,14 +24,25 @@ namespace SoccerScores.Application.Competitions.Commands.UpdateCompetition
 
         public async Task<Unit> Handle(UpdateCompetitionCommand request, CancellationToken cancellationToken)
         {
-            var city = await context.Competitions.FindAsync(request.Id)
-                ?? throw new NotFoundException(nameof(Competition), request.Id);
+            var competition = await GetCompetition(request.Id);
 
-            city.Name = request.Name;
+            competition.Name = request.Name;
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Competition> GetCompetition(int id)
+        {
+            var competition = await context.Competitions.FindAsync(id);
+
+            if (competition is null)
+            {
+                throw new NotFoundException(nameof(Competition), id);
+            }
+
+            return competition;
         }
     }
 }
