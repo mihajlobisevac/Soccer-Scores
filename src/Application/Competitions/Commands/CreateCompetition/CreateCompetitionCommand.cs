@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Application.Common.Extensions;
+using Domain.Enums;
 using MediatR;
 using SoccerScores.Application.Common.Exceptions;
 using SoccerScores.Application.Common.Interfaces;
@@ -30,9 +31,8 @@ namespace SoccerScores.Application.Competitions.Commands.CreateCompetition
             var entity = new Competition
             {
                 Name = request.Name,
-                Type = (CompetitionType) Enum.Parse(typeof(CompetitionType), request.Type, false),
-                Country = await context.Countries.FindAsync(request.CountryId) 
-                    ?? throw new NotFoundException(nameof(Country), request.CountryId)
+                Type = request.Type.ToEnum<CompetitionType>(),
+                Country = await GetCountry(request.CountryId)
             };
 
             context.Competitions.Add(entity);
@@ -40,6 +40,18 @@ namespace SoccerScores.Application.Competitions.Commands.CreateCompetition
             await context.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
+        }
+
+        private async Task<Country> GetCountry(int id)
+        {
+            var country = await context.Countries.FindAsync(id);
+
+            if (country is null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return country;
         }
     }
 }

@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,15 +26,15 @@ namespace SoccerScores.Application.Players.Queries.GetPlayer
 
         public async Task<PlayerDto> Handle(GetPlayerQuery request, CancellationToken cancellationToken)
         {
-            var hasClub = await context.ClubPlayers.AnyAsync(x => x.Player.Id == request.Id);
+            bool playerHasClub = context.ClubPlayers.Any(x => x.Player.Id == request.Id);
 
-            if (hasClub)
+            if (playerHasClub)
             {
                 var playerWithClub = await context.ClubPlayers
-                .Include(x => x.Club)
-                .Include(x => x.Player).ThenInclude(y => y.Nationality)
-                .Include(x => x.Player).ThenInclude(y => y.PlaceOfBirth)
-                .FirstOrDefaultAsync(x => x.Player.Id == request.Id, cancellationToken);
+                    .Include(x => x.Club)
+                    .Include(x => x.Player).ThenInclude(y => y.Nationality)
+                    .Include(x => x.Player).ThenInclude(y => y.PlaceOfBirth)
+                    .FirstOrDefaultAsync(x => x.Player.Id == request.Id);
 
                 return mapper.Map<PlayerDto>(playerWithClub);
             }
@@ -41,7 +42,7 @@ namespace SoccerScores.Application.Players.Queries.GetPlayer
             var player = await context.Players
                 .Include(x => x.Nationality)
                 .Include(x => x.PlaceOfBirth)
-                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             return mapper.Map<PlayerDto>(player);
         }

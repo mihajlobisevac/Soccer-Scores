@@ -46,7 +46,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
         private bool BeAValidClubIfNotNull(int? id)
         {
-            if (id == null || id == 0)
+            if (id is null || id == 0)
             {
                 return true;
             }

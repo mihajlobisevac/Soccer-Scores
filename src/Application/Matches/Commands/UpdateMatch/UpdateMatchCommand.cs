@@ -26,8 +26,7 @@ namespace SoccerScores.Application.Matches.Commands.UpdateMatch
 
         public async Task<Unit> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
         {
-            var match = await context.Matches.FindAsync(request.Id) 
-                ?? throw new NotFoundException(nameof(Match), request.Id);
+            var match = await GetMatch(request.Id);
 
             match.KickOff = DateTime.Parse(request.KickOff);
             match.GameWeek = request.GameWeek;
@@ -35,6 +34,18 @@ namespace SoccerScores.Application.Matches.Commands.UpdateMatch
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Match> GetMatch(int id)
+        {
+            var match = await context.Matches.FindAsync(id);
+
+            if (match is null)
+            {
+                throw new NotFoundException(nameof(Match), id);
+            }
+
+            return match;
         }
     }
 }

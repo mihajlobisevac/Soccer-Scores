@@ -24,18 +24,25 @@ namespace SoccerScores.Application.Cities.Commands.UpdateCity
 
         public async Task<Unit> Handle(UpdateCityCommand request, CancellationToken cancellationToken)
         {
-            var city = await context.Cities.FindAsync(request.Id);
-
-            if (city == null)
-            {
-                throw new NotFoundException(nameof(City), request.Id);
-            }
+            var city = await GetCity(request.Id);
 
             city.Name = request.Name;
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<City> GetCity(int id)
+        {
+            var city = await context.Cities.FindAsync(id);
+
+            if (city is null)
+            {
+                throw new NotFoundException(nameof(City), id);
+            }
+
+            return city;
         }
     }
 }

@@ -31,22 +31,13 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
 
         public async Task<int> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
-            var homeTeam = await context.Clubs.FindAsync(request.HomeTeamId)
-                ?? throw new NotFoundException(nameof(Club), request.HomeTeamId);
-
-            var awayTeam = await context.Clubs.FindAsync(request.AwayTeamId)
-                ?? throw new NotFoundException(nameof(Club), request.AwayTeamId);
-
-            var season = await context.Seasons.FindAsync(request.SeasonId)
-                ?? throw new NotFoundException(nameof(Season), request.SeasonId);
-
             var entity = new Match
             {
                 KickOff = DateTime.Parse(request.KickOff),
                 GameWeek = request.GameWeek,
-                HomeTeam = homeTeam,
-                AwayTeam = awayTeam,
-                Season = season,
+                HomeTeam = await GetClub(request.HomeTeamId),
+                AwayTeam = await GetClub(request.AwayTeamId),
+                Season = await GetSeason(request.SeasonId),
             };
 
             context.Matches.Add(entity);
@@ -54,6 +45,30 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
             await context.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
+        }
+
+        private async Task<Club> GetClub(int id)
+        {
+            var club = await context.Clubs.FindAsync(id);
+
+            if (club is null)
+            {
+                throw new NotFoundException(nameof(Club), id);
+            }
+
+            return club;
+        }
+
+        private async Task<Season> GetSeason(int id)
+        {
+            var season = await context.Seasons.FindAsync(id);
+
+            if (season is null)
+            {
+                throw new NotFoundException(nameof(Season), id);
+            }
+
+            return season;
         }
     }
 }

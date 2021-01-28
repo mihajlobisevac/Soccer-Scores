@@ -28,21 +28,41 @@ namespace SoccerScores.Application.Clubs.Commands.UpdateClub
 
         public async Task<Unit> Handle(UpdateClubCommand request, CancellationToken cancellationToken)
         {
-            var club = await context.Clubs.FindAsync(request.Id)
-                ?? throw new NotFoundException(nameof(Club), request.Id);
-
-            var city = await context.Cities.FindAsync(request.CityId)
-                ?? throw new NotFoundException(nameof(City), request.CityId);
+            var club = await GetClub(request.Id);
 
             club.Name = request.Name;
             club.Crest = request.Crest;
             club.Venue = request.Venue;
             club.YearFounded = request.YearFounded;
-            club.City = city;
+            club.City = await GetCity(request.CityId);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Club> GetClub(int id)
+        {
+            var club = await context.Clubs.FindAsync(id);
+
+            if (club is null)
+            {
+                throw new NotFoundException(nameof(Club), id);
+            }
+
+            return club;
+        }
+
+        private async Task<City> GetCity(int id)
+        {
+            var city = await context.Cities.FindAsync(id);
+
+            if (city is null)
+            {
+                throw new NotFoundException(nameof(City), id);
+            }
+
+            return city;
         }
     }
 }

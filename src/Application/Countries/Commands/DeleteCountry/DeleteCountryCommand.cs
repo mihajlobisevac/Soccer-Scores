@@ -23,18 +23,25 @@ namespace SoccerScores.Application.Countries.Commands.DeleteCountry
 
         public async Task<Unit> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Countries.FindAsync(request.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Country), request.Id);
-            }
+            var entity = await GetCountry(request.Id);
 
             context.Countries.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Country> GetCountry(int id)
+        {
+            var country = await context.Countries.FindAsync(id);
+
+            if (country is null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return country;
         }
     }
 }

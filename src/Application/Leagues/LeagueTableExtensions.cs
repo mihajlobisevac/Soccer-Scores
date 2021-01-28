@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
+namespace SoccerScores.Application.Leagues
 {
     internal static class LeagueTableExtensions
     {

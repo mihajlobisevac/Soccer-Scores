@@ -23,18 +23,25 @@ namespace SoccerScores.Application.Clubs.Commands.DeleteClub
 
         public async Task<Unit> Handle(DeleteClubCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Clubs.FindAsync(request.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Club), request.Id);
-            }
+            var entity = await GetClub(request.Id);
 
             context.Clubs.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Club> GetClub(int id)
+        {
+            var club = await context.Clubs.FindAsync(id);
+
+            if (club is null)
+            {
+                throw new NotFoundException(nameof(Club), id);
+            }
+
+            return club;
         }
     }
 }

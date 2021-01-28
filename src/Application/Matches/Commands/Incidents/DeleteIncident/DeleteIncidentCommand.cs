@@ -23,14 +23,25 @@ namespace SoccerScores.Application.Matches.Commands.Incidents.DeleteIncident
 
         public async Task<Unit> Handle(DeleteIncidentCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Incidents.FindAsync(request.Id)
-                ?? throw new NotFoundException(nameof(Incident), request.Id);
+            var entity = await GetIncident(request.Id);
 
             context.Incidents.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Incident> GetIncident(int id)
+        {
+            var incident = await context.Incidents.FindAsync(id);
+
+            if (incident is null)
+            {
+                throw new NotFoundException(nameof(Incident), id);
+            }
+
+            return incident;
         }
     }
 }

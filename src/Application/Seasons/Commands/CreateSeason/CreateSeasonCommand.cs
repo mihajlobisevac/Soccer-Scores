@@ -30,8 +30,7 @@ namespace SoccerScores.Application.Seasons.Commands.CreateSeason
             {
                 Start = DateTime.Parse(request.Start),
                 End = DateTime.Parse(request.End),
-                Competition = await context.Competitions.FindAsync(request.CompetitionId) ??
-                    throw new NotFoundException(nameof(Competition), request.CompetitionId)
+                Competition = await GetCompetition(request.CompetitionId)
             };
 
             context.Seasons.Add(entity);
@@ -39,6 +38,18 @@ namespace SoccerScores.Application.Seasons.Commands.CreateSeason
             await context.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
+        }
+
+        private async Task<Competition> GetCompetition(int id)
+        {
+            var competition = await context.Competitions.FindAsync(id);
+
+            if (competition is null)
+            {
+                throw new NotFoundException(nameof(Competition), id);
+            }
+
+            return competition;
         }
     }
 }
