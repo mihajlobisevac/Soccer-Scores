@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Application.Common.Extensions;
+using Domain.Enums;
 using MediatR;
 using SoccerScores.Application.Common.Exceptions;
 using SoccerScores.Application.Common.Interfaces;
@@ -37,21 +38,16 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
         public async Task<int> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
         {
-            var nationality = await context.Countries.FindAsync(request.NationalityId) 
-                ?? throw new NotFoundException(nameof(Country), request.NationalityId);
-
-            var placeOfBirth = await context.Cities.FindAsync(request.PlaceOfBirthId)
-                ?? throw new NotFoundException(nameof(City), request.PlaceOfBirthId);
-
-            var club = await context.Clubs.FindAsync(request.ClubId);
+            var nationality = await GetCountry(request.NationalityId);
+            var placeOfBirth = await GetCity(request.PlaceOfBirthId);
 
             var entity = new Player
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 DateOfBirth = DateTime.Parse(request.DateOfBirth),
-                Position = (Position) Enum.Parse(typeof(Position), request.Position, false),
-                Foot = (Foot) Enum.Parse(typeof(Foot), request.Foot, false),
+                Position = request.Position.ToEnum<Position>(),
+                Foot = request.Foot.ToEnum<Foot>(),
                 Height = request.Height,
                 Weight = request.Weight,
                 Nationality = nationality,
@@ -60,21 +56,49 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
             context.Players.Add(entity);
 
+            await HandleClubPlayer(entity, request);
+            await context.SaveChangesAsync(cancellationToken);
+
+            return entity.Id;
+        }
+
+        public async Task<Country> GetCountry(int id)
+        {
+            var country = await context.Countries.FindAsync(id);
+
+            if (country is null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return country;
+        }
+
+        public async Task<City> GetCity(int id)
+        {
+            var city = await context.Cities.FindAsync(id);
+
+            if (city is null)
+            {
+                throw new NotFoundException(nameof(City), id);
+            }
+
+            return city;
+        }
+
+        private async Task HandleClubPlayer(Player entity, CreatePlayerCommand request)
+        {
+            var club = await context.Clubs.FindAsync(request.ClubId);
+
             if (club is not null)
             {
-                var clubPlayer = new ClubPlayer
+                context.ClubPlayers.Add(new ClubPlayer
                 {
                     ShirtNumber = request.ShirtNumber,
                     Player = entity,
                     Club = club,
-                };
-
-                context.ClubPlayers.Add(clubPlayer);
+                });
             }
-
-            await context.SaveChangesAsync(cancellationToken);
-
-            return entity.Id;
         }
     }
 }

@@ -96,34 +96,26 @@ namespace SoccerScores.Application.Players.Commands.UpdatePlayer
             return city;
         }
 
-        private async Task<Club> GetClub(int id)
-        {
-            var club = await context.Clubs.FindAsync(id);
-
-            if (club is null)
-            {
-                throw new NotFoundException(nameof(Club), id);
-            }
-
-            return club;
-        }
-
+        private async Task<Club> GetClub(int id) => await context.Clubs.FindAsync(id);
         private async Task<ClubPlayer> GetClubPlayer(int playerId) => await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == playerId);
 
         private async Task UpdateClubPlayer(UpdatePlayerCommand request, Player player)
         {
             var club = await GetClub(request.ClubId);
 
-            var clubPlayer = await GetClubPlayer(request.Id);
+            if (club is not null)
+            {
+                var clubPlayer = await GetClubPlayer(request.Id);
 
-            if (clubPlayer is not null)
-            {
-                clubPlayer.Club = club;
-                clubPlayer.ShirtNumber = request.ShirtNumber;
-            }
-            else
-            {
-                AddPlayerToClub(player, club, request);
+                if (clubPlayer is not null)
+                {
+                    clubPlayer.Club = club;
+                    clubPlayer.ShirtNumber = request.ShirtNumber;
+                }
+                else
+                {
+                    AddPlayerToClub(player, club, request);
+                }
             }
         }
 
