@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scores.UI", "Scores.UI\Scores.UI.csproj", "{7A39544F-3801-4BCF-AAA4-18A949A26801}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scores.Database", "Scores.Database\Scores.Database.csproj", "{6EB26E57-67A7-41F6-9C4B-FDBB5B39C274}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scores.Application", "Scores.Application\Scores.Application.csproj", "{0AC75A50-E2F5-4FE4-B643-19AE418676F6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scores.Domain", "Scores.Domain\Scores.Domain.csproj", "{FB48DC4C-2543-433C-BA1D-C8C5398F8FE4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82165EFC-3C72-4D64-98D6-F864ED8CD83D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{D696042C-F54E-4428-B709-392ACDCDA55A}"
@@ -19,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{645D4C0C-FD4E-4D41-96ED-6F835A3DACEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{714D420E-6969-49E3-87A2-66E2DAA170A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI.csproj", "{714D420E-6969-49E3-87A2-66E2DAA170A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,22 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A39544F-3801-4BCF-AAA4-18A949A26801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A39544F-3801-4BCF-AAA4-18A949A26801}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A39544F-3801-4BCF-AAA4-18A949A26801}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A39544F-3801-4BCF-AAA4-18A949A26801}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EB26E57-67A7-41F6-9C4B-FDBB5B39C274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EB26E57-67A7-41F6-9C4B-FDBB5B39C274}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EB26E57-67A7-41F6-9C4B-FDBB5B39C274}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EB26E57-67A7-41F6-9C4B-FDBB5B39C274}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AC75A50-E2F5-4FE4-B643-19AE418676F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AC75A50-E2F5-4FE4-B643-19AE418676F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AC75A50-E2F5-4FE4-B643-19AE418676F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AC75A50-E2F5-4FE4-B643-19AE418676F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB48DC4C-2543-433C-BA1D-C8C5398F8FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB48DC4C-2543-433C-BA1D-C8C5398F8FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB48DC4C-2543-433C-BA1D-C8C5398F8FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB48DC4C-2543-433C-BA1D-C8C5398F8FE4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D696042C-F54E-4428-B709-392ACDCDA55A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D696042C-F54E-4428-B709-392ACDCDA55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D696042C-F54E-4428-B709-392ACDCDA55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
