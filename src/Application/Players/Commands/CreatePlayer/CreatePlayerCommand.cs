@@ -60,7 +60,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
             context.Players.Add(entity);
 
-            if (club != null)
+            if (club is not null)
             {
                 var clubPlayer = new ClubPlayer
                 {

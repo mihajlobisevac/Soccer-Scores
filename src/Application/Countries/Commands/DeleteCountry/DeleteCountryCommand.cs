@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Countries.Commands.DeleteCountry
         {
             var entity = await context.Countries.FindAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new NotFoundException(nameof(Country), request.Id);
             }

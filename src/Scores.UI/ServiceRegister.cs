@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var definedTypes = serviceType.Assembly.DefinedTypes;
 
             var services = definedTypes
-                .Where(x => x.GetTypeInfo().GetCustomAttribute<Service>() != null);
+                .Where(x => x.GetTypeInfo().GetCustomAttribute<Service>() is not null);
 
             foreach (var service in services)
             {

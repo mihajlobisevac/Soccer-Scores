@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Competitions.Commands.DeleteCompetition
         {
             var entity = await context.Competitions.FindAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new NotFoundException(nameof(Competition), request.Id);
             }

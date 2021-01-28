@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Seasons.Commands.DeleteSeason
         {
             var entity = await context.Seasons.FindAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new NotFoundException(nameof(City), request.Id);
             }

@@ -29,7 +29,7 @@ namespace SoccerScores.Application.Players.Commands.DeletePlayer
 
             var clubPlayer = await context.ClubPlayers.FirstOrDefaultAsync(x => x.Player.Id == request.Id);
 
-            if (clubPlayer != null)
+            if (clubPlayer is not null)
             {
                 context.ClubPlayers.Remove(clubPlayer);
             }

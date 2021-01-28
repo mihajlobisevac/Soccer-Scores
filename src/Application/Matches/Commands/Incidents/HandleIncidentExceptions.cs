@@ -18,13 +18,13 @@ namespace SoccerScores.Application.Matches.Commands.Incidents
             entity.Match = await context.Matches.FindAsync(incidentDto.MatchId)
                     ?? throw new NotFoundException(nameof(Match), incidentDto.MatchId);
 
-            if (incidentDto.PrimaryPlayerId != null)
+            if (incidentDto.PrimaryPlayerId is not null)
             {
                 entity.PrimaryPlayer = await context.Players.FindAsync(incidentDto.PrimaryPlayerId)
                     ?? throw new NotFoundException(nameof(Player), incidentDto.PrimaryPlayerId);
             }
 
-            if (incidentDto.SecondaryPlayerId != null)
+            if (incidentDto.SecondaryPlayerId is not null)
             {
                 entity.SecondaryPlayer = await context.Players.FindAsync(incidentDto.SecondaryPlayerId)
                     ?? throw new NotFoundException(nameof(Player), incidentDto.SecondaryPlayerId);

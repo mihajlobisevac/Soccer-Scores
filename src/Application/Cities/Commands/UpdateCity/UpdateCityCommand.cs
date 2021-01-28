@@ -26,7 +26,7 @@ namespace SoccerScores.Application.Cities.Commands.UpdateCity
         {
             var city = await context.Cities.FindAsync(request.Id);
 
-            if (city == null)
+            if (city is null)
             {
                 throw new NotFoundException(nameof(City), request.Id);
             }

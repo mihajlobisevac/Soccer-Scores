@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Clubs.Commands.DeleteClub
         {
             var entity = await context.Clubs.FindAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new NotFoundException(nameof(Club), request.Id);
             }

@@ -17,7 +17,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
         public int SeasonId { get; set; }
         public int? SpecifiedGameWeek { get; set; }
 
-        internal bool HasSpecifiedGameWeek => SpecifiedGameWeek != null;
+        internal bool HasSpecifiedGameWeek => SpecifiedGameWeek is not null;
     }
 
     public class GetMatchesBySeasonQueryHandler : IRequestHandler<GetMatchesBySeasonQuery, SeasonWithMatchesVm>

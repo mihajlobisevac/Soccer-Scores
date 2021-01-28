@@ -25,7 +25,7 @@ namespace SoccerScores.Application.Cities.Commands.DeleteCity
         {
             var entity = await context.Cities.FindAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new NotFoundException(nameof(City), request.Id);
             }
