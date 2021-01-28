@@ -23,14 +23,25 @@ namespace SoccerScores.Application.Matches.Commands.DeleteMatch
 
         public async Task<Unit> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Matches.FindAsync(request.Id)
-                ?? throw new NotFoundException(nameof(Match), request.Id);
+            var entity = await GetMatch(request.Id);
 
             context.Matches.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Match> GetMatch(int id)
+        {
+            var match = await context.Matches.FindAsync(id);
+
+            if (match is null)
+            {
+                throw new NotFoundException(nameof(Match), id);
+            }
+
+            return match;
         }
     }
 }
