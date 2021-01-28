@@ -27,16 +27,13 @@ namespace SoccerScores.Application.Clubs.Commands.CreateClub
 
         public async Task<int> Handle(CreateClubCommand request, CancellationToken cancellationToken)
         {
-            var city = await context.Cities.FindAsync(request.CityId) 
-                ?? throw new NotFoundException(nameof(City), request.CityId);
-
             var entity = new Club
             {
                 Name = request.Name,
                 Crest = request.Crest,
                 Venue = request.Venue,
                 YearFounded = request.YearFounded,
-                City = city,
+                City = await GetCity(request.CityId),
             };
 
             context.Clubs.Add(entity);
@@ -44,6 +41,18 @@ namespace SoccerScores.Application.Clubs.Commands.CreateClub
             await context.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
+        }
+
+        private async Task<City> GetCity(int id)
+        {
+            var city = await context.Cities.FindAsync(id);
+
+            if (city is null)
+            {
+                throw new NotFoundException(nameof(City), id);
+            }
+
+            return city;
         }
     }
 }
