@@ -23,18 +23,25 @@ namespace SoccerScores.Application.Seasons.Commands.DeleteSeason
 
         public async Task<Unit> Handle(DeleteSeasonCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Seasons.FindAsync(request.Id);
-
-            if (entity is null)
-            {
-                throw new NotFoundException(nameof(City), request.Id);
-            }
+            var entity = await GetSeason(request.Id);
 
             context.Seasons.Remove(entity);
 
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Season> GetSeason(int id)
+        {
+            var season = await context.Seasons.FindAsync(id);
+
+            if (season is null)
+            {
+                throw new NotFoundException(nameof(Season), id);
+            }
+
+            return season;
         }
     }
 }

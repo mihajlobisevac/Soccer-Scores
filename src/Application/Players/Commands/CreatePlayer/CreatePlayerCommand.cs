@@ -62,7 +62,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
             return entity.Id;
         }
 
-        public async Task<Country> GetCountry(int id)
+        private async Task<Country> GetCountry(int id)
         {
             var country = await context.Countries.FindAsync(id);
 
@@ -74,7 +74,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
             return country;
         }
 
-        public async Task<City> GetCity(int id)
+        private async Task<City> GetCity(int id)
         {
             var city = await context.Cities.FindAsync(id);
 
