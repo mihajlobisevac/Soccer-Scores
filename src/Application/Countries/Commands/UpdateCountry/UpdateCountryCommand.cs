@@ -26,12 +26,7 @@ namespace SoccerScores.Application.Countries.Commands.UpdateCountry
 
         public async Task<Unit> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = await context.Countries.FindAsync(request.Id);
-
-            if (entity is null)
-            {
-                throw new NotFoundException(nameof(Country), request.Id);
-            }
+            var entity = await GetCountry(request.Id);
 
             entity.Name = request.Name;
             entity.Flag = request.Flag;
@@ -39,6 +34,18 @@ namespace SoccerScores.Application.Countries.Commands.UpdateCountry
             await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private async Task<Country> GetCountry(int id)
+        {
+            var country = await context.Countries.FindAsync(id);
+
+            if (country is null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return country;
         }
     }
 }
