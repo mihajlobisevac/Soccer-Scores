@@ -3,6 +3,7 @@ using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
+using SoccerScores.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,44 +30,20 @@ namespace SoccerScores.Application.Fixtures.Queries
 
         public async Task<IEnumerable<CompetitionVm>> Handle(GetFixturesQuery request, CancellationToken cancellationToken)
         {
-            var matches = await context.Matches
+            var matches = await GetMatches(request);
+
+            return matches
+                .GroupByCompetition()
+                .ToCompetitionVm(mapper);
+        }
+
+        private async Task<IEnumerable<Match>> GetMatches(GetFixturesQuery request)
+            => await context.Matches
                 .Where(x => x.KickOff.Date == DateTime.Parse(request.Date).Date)
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(y => y.Competition).ThenInclude(z => z.Country)
                 .Include(x => x.Incidents.Where(y => y.Class == IncidentClass.FT))
-                .ToListAsync(cancellationToken);
-
-            var groupedMatches = matches
-                .GroupBy(x => x.Season.Competition.Id)
-                .Select(group => group.ToList())
-                .ToList();
-
-            var compList = new List<CompetitionVm>();
-            int uniqueCompetition = -1;
-
-            for (int i = 0; i < groupedMatches.Count; i++)
-            {
-                foreach (var match in groupedMatches[i])
-                {
-                    if (uniqueCompetition != match.Season.Competition.Id)
-                    {
-                        uniqueCompetition = match.Season.Competition.Id;
-
-                        compList.Add(new CompetitionVm
-                        {
-                            Id = match.Season.Id,
-                            Name = match.Season.Competition.Name,
-                            Flag = match.Season.Competition.Country.Flag,
-                            Matches = new List<MatchViewModel>()
-                        });
-                    }
-
-                    compList[i].Matches.Add(mapper.Map<MatchViewModel>(match));
-                }
-            }
-
-            return compList;
-        }
+                .ToListAsync();
     }
 }
