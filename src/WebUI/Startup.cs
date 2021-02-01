@@ -22,8 +22,8 @@ namespace SoccerScores.WebUI
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
-            services.AddSpaStaticFiles(configuration: options => { options.RootPath = "wwwroot"; });
             services.AddControllers();
+            services.AddRazorPages();
 
             services.AddSwaggerDocument();
         }
@@ -42,18 +42,14 @@ namespace SoccerScores.WebUI
 
             app.UseRouting();
 
+            app.UseAuthorization();
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            app.UseSpaStaticFiles();
-            app.UseSpa(configuration: builder =>
+            app.UseEndpoints(endpoints =>
             {
-                if (env.IsDevelopment())
-                {
-                    builder.UseProxyToSpaDevelopmentServer("http://localhost:8080");
-                }
+                endpoints.MapRazorPages();
             });
         }
     }

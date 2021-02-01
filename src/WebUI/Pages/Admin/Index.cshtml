@@ -1,0 +1,28 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<h5 class="title are-medium has-text-light" style="margin-bottom:.75rem;">Category</h5>
+
+<p class="has-text-lighter">
+    Please select which category you wish to manage.
+</p>
+
+<div class="my-5">
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Matches">Matches</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Events">Events</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Clubs">Clubs</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Players">Players</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Venues">Venues</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Cities">Cities</a>
+    <a class="button is-outlined is-dark has-text-light has-text-weight-bold is-medium is-fullwidth"
+       asp-page="/Admin/Countries">Countries</a>
+</div>

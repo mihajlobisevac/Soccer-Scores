@@ -1,0 +1,54 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.IndexModel
+@{
+    ViewData["Title"] = "Fixtures";
+}
+
+<div class="title-dates">
+    <p>Matches</p>
+    <button>@DateTime.Now.ToString("MM/dd/yy")</button>
+</div>
+
+@foreach (var fixture in Model.Fixtures)
+{
+    <div class="matches-container">
+
+        <a asp-page="/Standings" asp-route-id="1">
+            <div class="matches-comp">
+                <div class="matches-comp-flag">
+                    <img src="Country.Flag" alt="flag" />
+                </div>
+                <div class="matches-comp-name">Tournament.Name</div>
+            </div>
+        </a>
+
+        @foreach (var match in Model.Fixtures) @*matches*@
+        {
+            var result = match;
+
+            <div class="match-container">
+                <a class="match-home-team" asp-page="/Club" asp-route-id="1">
+                    HomeTeam.Name
+                </a>
+
+                @if (result is null)
+                {
+                    <a class="match-result" asp-page="/Match" asp-route-id="1">
+                        KickOff
+                    </a>
+                }
+                else
+                {
+                    <a class="match-result" asp-page="/Match" asp-route-id="1">
+                        HomeScore:AwayScore
+                    </a>
+                }
+
+                <a class="match-away-team" asp-page="/Club" asp-route-id="1">
+                    AwayTeam.Name
+                </a>
+            </div>
+        }
+
+    </div>
+}
