@@ -21,6 +21,14 @@
                 .then(() => {
                     this.loading = false;
                 });
+        },
+        matchIsFinished(result) {
+            if (typeof (result) !== 'undefined' || result !== null) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     },
     computed: {

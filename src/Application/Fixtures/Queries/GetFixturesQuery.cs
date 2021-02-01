@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
@@ -33,42 +34,39 @@ namespace SoccerScores.Application.Fixtures.Queries
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(y => y.Competition).ThenInclude(z => z.Country)
+                .Include(x => x.Incidents.Where(y => y.Class == IncidentClass.FT))
                 .ToListAsync(cancellationToken);
 
-            var compsWithMatches = matches
+            var groupedMatches = matches
                 .GroupBy(x => x.Season.Competition.Id)
                 .Select(group => group.ToList())
                 .ToList();
 
-            var entities = new List<CompetitionVm>();
+            var compList = new List<CompetitionVm>();
             int uniqueCompetition = -1;
 
-            for (int i = 0; i < compsWithMatches.Count; i++)
+            for (int i = 0; i < groupedMatches.Count; i++)
             {
-                foreach (var match in compsWithMatches[i])
+                foreach (var match in groupedMatches[i])
                 {
                     if (uniqueCompetition != match.Season.Competition.Id)
                     {
                         uniqueCompetition = match.Season.Competition.Id;
 
-                        var compWithMatches = new CompetitionVm
+                        compList.Add(new CompetitionVm
                         {
                             Id = match.Season.Id,
                             Name = match.Season.Competition.Name,
                             Flag = match.Season.Competition.Country.Flag,
-                            Matches = new List<MatchViewModel> { mapper.Map<MatchViewModel>(matches[i]) }
-                        };
+                            Matches = new List<MatchViewModel>()
+                        });
+                    }
 
-                        entities.Add(compWithMatches);
-                    }
-                    else
-                    {
-                        entities[i].Matches.Add(mapper.Map<MatchViewModel>(matches[i]));
-                    }
+                    compList[i].Matches.Add(mapper.Map<MatchViewModel>(match));
                 }
             }
 
-            return entities;
+            return compList;
         }
     }
 }

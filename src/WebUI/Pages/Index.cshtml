@@ -9,6 +9,7 @@
     </div>
 
     <div v-for="(c, index) in competitions" class="matches-container">
+
         <a href="#">
             <div class="matches-comp">
                 <div class="matches-comp-flag">
@@ -23,23 +24,19 @@
                 {{m.homeTeam.name}}
             </a>
 
-            @*<div v-if="">
-
-            </div>
-            <div v-else="">
-                <a class="match-result" asp-page="/Match" asp-route-id="1">
-                    1:1
-                </a>
-            </div>*@
-
-            <a class="match-result" asp-page="/Match" asp-route-id="1">
+            <a v-if="m.result === null"
+               class="match-result" asp-page="/Match" asp-route-id="1">
                 {{m.kickOff.substring(11, 16)}}
+            </a>
+            <a v-else="" class="match-result" asp-page="/Match" asp-route-id="1">
+                {{m.result.homeScore}}:{{m.result.awayScore}}
             </a>
 
             <a class="match-away-team" asp-page="/Club" asp-route-id="1">
                 {{m.awayTeam.name}}
             </a>
         </div>
+
     </div>
 </div>
 
