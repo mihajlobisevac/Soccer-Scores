@@ -32,7 +32,7 @@ namespace SoccerScores.Application.Fixtures.Queries
                 .Where(x => x.KickOff.Date == DateTime.Parse(request.Date).Date)
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
-                .Include(x => x.Season).ThenInclude(y => y.Competition)
+                .Include(x => x.Season).ThenInclude(y => y.Competition).ThenInclude(z => z.Country)
                 .ToListAsync(cancellationToken);
 
             var compsWithMatches = matches
@@ -55,6 +55,7 @@ namespace SoccerScores.Application.Fixtures.Queries
                         {
                             Id = match.Season.Id,
                             Name = match.Season.Competition.Name,
+                            Flag = match.Season.Competition.Country.Flag,
                             Matches = new List<MatchViewModel> { mapper.Map<MatchViewModel>(matches[i]) }
                         };
 

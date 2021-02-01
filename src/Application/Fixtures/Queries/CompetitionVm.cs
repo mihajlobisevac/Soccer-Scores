@@ -10,12 +10,14 @@ namespace SoccerScores.Application.Fixtures.Queries
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Flag { get; set; }
         public List<MatchViewModel> Matches { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Season, CompetitionVm>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Competition.Name));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Competition.Name))
+                .ForMember(dest => dest.Flag, opt => opt.MapFrom(src => src.Competition.Country.Flag));
         }
     }
 
