@@ -23,6 +23,7 @@ namespace SoccerScores.WebUI
             services.AddInfrastructure(Configuration);
 
             services.AddControllers();
+            services.AddMvc();
             services.AddRazorPages();
 
             services.AddSwaggerDocument();
@@ -40,6 +41,9 @@ namespace SoccerScores.WebUI
                 app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -50,6 +54,7 @@ namespace SoccerScores.WebUI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
