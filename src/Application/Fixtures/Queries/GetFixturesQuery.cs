@@ -43,7 +43,8 @@ namespace SoccerScores.Application.Fixtures.Queries
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(y => y.Competition).ThenInclude(z => z.Country)
-                .Include(x => x.Incidents.Where(y => y.Class == IncidentClass.FT))
+                .Include(x => x.Incidents.Where(y => y.Class == IncidentClass.FT)).ThenInclude(z => z.PrimaryPlayer)
+                .Include(x => x.Incidents.Where(y => y.Class == IncidentClass.FT)).ThenInclude(z => z.SecondaryPlayer)
                 .ToListAsync();
     }
 }

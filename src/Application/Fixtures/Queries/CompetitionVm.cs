@@ -33,6 +33,7 @@ namespace SoccerScores.Application.Fixtures.Queries
         public ClubViewModel AwayTeam { get; set; }
 
         public ResultViewModel Result { get; set; }
+        public IEnumerable<PlayerViewModel> Players { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -48,6 +49,24 @@ namespace SoccerScores.Application.Fixtures.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public string Crest { get; set; }
+    }
+
+    public class PlayerViewModel : IMapFrom<MatchPlayer>
+    {
+        public int Id { get; set; }
+        public bool IsHome { get; set; }
+        public bool IsSubstitute { get; set; }
+        public string ShirtNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<MatchPlayer, PlayerViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Player.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Player.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Player.LastName));
+        }
     }
 
     public class ResultViewModel : IMapFrom<Incident>

@@ -20,19 +20,19 @@
         </a>
 
         <div v-for="(m, index) in c.matches" class="match-container">
-            <a class="match-home-team" asp-page="/Club" asp-route-id="1">
+            <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
                 {{m.homeTeam.name}}
             </a>
 
             <a v-if="m.result === null"
-               class="match-result" asp-page="/Match" asp-route-id="1">
+               class="match-result" v-bind:href="'/match/'+ m.id">
                 {{m.kickOff.substring(11, 16)}}
             </a>
-            <a v-else="" class="match-result" asp-page="/Match" asp-route-id="1">
+            <a v-else="" class="match-result" v-bind:href="'/match/'+ m.id">
                 {{m.result.homeScore}}:{{m.result.awayScore}}
             </a>
 
-            <a class="match-away-team" asp-page="/Club" asp-route-id="1">
+            <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
                 {{m.awayTeam.name}}
             </a>
         </div>

@@ -169,6 +169,42 @@ namespace SoccerScores.Infrastructure.Data
 
                 context.Matches.AddRange(matches);
 
+                var matchPlayers = new List<MatchPlayer>
+                {
+                    new MatchPlayer
+                    {
+                        IsHome = true,
+                        IsSubstitute = false,
+                        ShirtNumber = 10,
+                        Player = players[0],
+                        Match = matches[0],
+                    },
+                    new MatchPlayer
+                    {
+                        IsHome = true,
+                        IsSubstitute = false,
+                        ShirtNumber = 17,
+                        Player = players[1],
+                        Match = matches[0],
+                    },
+                    new MatchPlayer
+                    {
+                        IsHome = false,
+                        IsSubstitute = false,
+                        ShirtNumber = 9,
+                        Player = players[2],
+                        Match = matches[0],
+                    },
+                    new MatchPlayer
+                    {
+                        IsHome = true,
+                        IsSubstitute = true,
+                        ShirtNumber = 99,
+                        Player = players[0],
+                        Match = matches[0],
+                    },
+                };
+
                 var incidents = new List<Incident>
                 {
                     new Incident
@@ -199,8 +235,8 @@ namespace SoccerScores.Infrastructure.Data
                         Type = IncidentType.Goal,
                         Class = IncidentClass.None,
                         IsHome = true,
-                        PrimaryPlayer = players[0],
-                        SecondaryPlayer = players[1],
+                        PrimaryPlayer = matchPlayers[0],
+                        SecondaryPlayer = matchPlayers[1],
                         Match = matches[0],
                     },
                     new Incident
@@ -211,7 +247,7 @@ namespace SoccerScores.Infrastructure.Data
                         Type = IncidentType.Goal,
                         Class = IncidentClass.None,
                         IsHome = false,
-                        PrimaryPlayer = players[2],
+                        PrimaryPlayer = matchPlayers[2],
                         Match = matches[0],
                     },
                     new Incident
@@ -222,38 +258,13 @@ namespace SoccerScores.Infrastructure.Data
                         Type = IncidentType.Goal,
                         Class = IncidentClass.Penalty,
                         IsHome = true,
-                        PrimaryPlayer = players[0],
-                        SecondaryPlayer = players[1],
+                        PrimaryPlayer = matchPlayers[0],
+                        SecondaryPlayer = matchPlayers[1],
                         Match = matches[0],
                     },
                 };
 
                 context.Incidents.AddRange(incidents);
-
-                var matchPlayers = new List<MatchPlayer>
-                {
-                    new MatchPlayer
-                    {
-                        IsHome = true,
-                        IsSubstitute = false,
-                        Player = players[0],
-                        Match = matches[0],
-                    },
-                    new MatchPlayer
-                    {
-                        IsHome = true,
-                        IsSubstitute = false,
-                        Player = players[1],
-                        Match = matches[0],
-                    },
-                    new MatchPlayer
-                    {
-                        IsHome = false,
-                        IsSubstitute = false,
-                        Player = players[2],
-                        Match = matches[0],
-                    },
-                };
 
                 context.MatchPlayers.AddRange(matchPlayers);
 
