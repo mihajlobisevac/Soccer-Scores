@@ -6,7 +6,7 @@
     <div v-if="matchModel === null">
         Not found
     </div>
-    <div v-else="">
+    <div v-else>
         <a v-bind:href="'/standings/'+ season.id">
             <div class="result-match-info">
                 {{season.name}} | {{matchModel.kickOff.substring(0, 10)}} | KO {{matchModel.kickOff.substring(11, 16)}}
@@ -128,35 +128,13 @@
 </div>
 
 @section Scripts {
-    <script>
+<script>
     var app = new Vue({
         el: '#app',
         data: {
             matchId: @Model.MatchId,
             loading: false,
             matchModel: null,
-            //matchModel: {
-            //    id: 0,
-            //    kickOff: "DateTime",
-            //    gameWeek: 1,
-            //    homeTeam: {
-            //        id: 0,
-            //        name: "Home Team",
-            //        crest: "Crest",
-            //    },
-            //    awayTeam: {
-            //        id: 0,
-            //        name: "Away Team",
-            //        crest: "Crest",
-            //    },
-            //    season: {
-            //        id: 0,
-            //        competitionId: 0,
-            //        name: "Competition",
-            //    },
-            //    incidents: [],
-            //    players: [],
-            //},
         },
         mounted() {
             this.getMatch(this.matchId)
@@ -166,18 +144,7 @@
                 this.loading = true;
                 axios.get('/api/matches/' + id)
                     .then(res => {
-                        console.log(res);
-                        var match = res.data;
-                        this.matchModel = {
-                            id: match.id,
-                            kickOff: match.kickOff,
-                            gameWeek: match.gameWeek,
-                            homeTeam: match.homeTeam,
-                            awayTeam: match.awayTeam,
-                            season: match.season,
-                            incidents: match.incidents,
-                            players: match.players,
-                        }
+                        this.matchModel = res.data
                     })
                     .catch(err => {
                         console.log(err);
@@ -237,5 +204,5 @@
             },
         }
     });
-    </script>
+</script>
 }

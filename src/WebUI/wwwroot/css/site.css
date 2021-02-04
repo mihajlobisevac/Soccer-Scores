@@ -1,8 +1,8 @@
 ﻿﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
-:root {
-}
+/* :root {
+} */
 
 *, *::after, *::before {
     box-sizing: inherit;
@@ -11,6 +11,10 @@
 html {
     box-sizing: border-box;
     color: var(--clr-gray);
+}
+
+:focus {
+    outline: 2px solid var(--clr-dwhite);
 }
 
 body {
@@ -320,8 +324,8 @@ nav {
 }
 
 
-.club-section-container {
-}
+/* .club-section-container {
+} */
 
     .club-section-container h5 {
         font-size: 1.6rem;
@@ -490,3 +494,26 @@ nav {
     padding: 0 0 0 1.2em;
     color: var(--clr-lgray);
 }
+
+/*===============================================================================================================================*/
+
+.btn-prev-next {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.1em;
+}
+
+    .btn-prev-next button {
+        font-weight: 600;
+        font-size:.95rem;
+
+        color: var(--clr-gray);
+        background: var(--clr-dwhite);
+
+        padding: .25em .5em;
+        border-radius: 999px;
+    }
+
+    .btn-prev-next button:disabled {
+        color: var(--clr-lgray);
+    }

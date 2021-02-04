@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Enums;
 using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System;
@@ -40,7 +41,7 @@ namespace SoccerScores.Application.Fixtures.Queries
             profile.CreateMap<Match, MatchViewModel>()
                 .ForMember(dest => dest.HomeTeam, opt => opt.MapFrom(src => src.HomeTeam))
                 .ForMember(dest => dest.AwayTeam, opt => opt.MapFrom(src => src.AwayTeam))
-                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.Incidents.FirstOrDefault()));
+                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.Incidents.FirstOrDefault(x => x.Class == IncidentClass.FT)));
         }
     }
 

@@ -5,12 +5,11 @@ namespace SoccerScores.WebUI.Pages
 {
     public class ClubModel : PageModel
     {
-        public string Club { get; set; }
-        public List<string> Matches { get; set; } = new List<string>();
-        public List<string> Squad { get; set; } = new List<string>();
+        public int ClubId { get; set; }
 
         public void OnGet(int id)
         {
+            ClubId = id;
         }
     }
 }

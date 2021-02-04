@@ -44,6 +44,8 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByClub
                     .ProjectTo<MatchByClubDto>(mapper.ConfigurationProvider)
                     .PaginatedListAsync(request.PageNumber, request.PageSize);
 
+                matches.Items.ForEach(x => x.IsHome = request.ClubId == x.HomeTeam.Id);
+
                 return matches;
             }
 
@@ -53,6 +55,8 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByClub
                 .OrderByDescending(x => x.KickOff)
                 .ProjectTo<MatchByClubDto>(mapper.ConfigurationProvider)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
+
+            matches.Items.ForEach(x => x.IsHome = request.ClubId == x.HomeTeam.Id);
 
             return matches;
         }

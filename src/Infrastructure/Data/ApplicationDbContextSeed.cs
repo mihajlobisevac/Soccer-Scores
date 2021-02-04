@@ -78,7 +78,7 @@ namespace SoccerScores.Infrastructure.Data
                         FirstName = "Lionel",
                         LastName = "Messi",
                         DateOfBirth = new DateTime(1987, 6, 24),
-                        Position = Position.Attacker,
+                        Position = Position.Midfielder,
                         Foot = Foot.Left,
                         Height = 170,
                         Weight = 72,
@@ -89,7 +89,7 @@ namespace SoccerScores.Infrastructure.Data
                     {
                         FirstName = "Ansu",
                         LastName = "Fati",
-                        DateOfBirth = new DateTime(2001, 6, 24),
+                        DateOfBirth = new DateTime(2002, 10, 31),
                         Position = Position.Attacker,
                         Foot = Foot.Right,
                         Height = 178,
