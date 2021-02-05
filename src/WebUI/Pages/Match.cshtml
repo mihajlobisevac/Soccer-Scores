@@ -1,0 +1,107 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.MatchModel
+@{
+}
+
+<a asp-page="/Standings" asp-route-id="@Model.Match">
+    <div class="result-match-info">
+        League | 10/10/10 | KO 21:00
+    </div>
+</a>
+
+<div class="result-container">
+    <a asp-page="/Club" asp-route-id="@Model.Match">
+        <div class="result-home-team">
+            <img src="/FC_Barcelona.svg" alt="club image" />
+        </div>
+    </a>
+    <div class="result-ft">
+        HomeScore - AwayScore
+    </div>
+    <a asp-page="/Club" asp-route-id="@Model.Match">
+        <div class="result-away-team">
+            <img src="/Real_Madrid_CF.svg" alt="club image" />
+        </div>
+    </a>
+
+    <a asp-page="/Club" asp-route-id="@Model.Match">
+        <div class="result-team-name">
+            HomeTeam
+        </div>
+    </a>
+    <div></div>
+    <a asp-page="/Club" asp-route-id="@Model.Match">
+        <div class="result-team-name">
+            AwayTeam
+        </div>
+    </a>
+</div>
+
+<div class="matches-container">
+    <div class="match-container">
+        <div class="match-home-team">
+            homeGoal
+        </div>
+        <div class="match-result">HomeScore - AwayScore</div>
+        <div class="match-away-team">
+            awayGoal
+        </div>
+    </div>
+</div>
+
+<h5 style="margin-bottom: 0.5em">Lineups</h5>
+<div class="lineups-container">
+    <div class="lineups-player">
+        <a asp-page="/Player" asp-route-id="1">
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: var(--clr-Goalkeeper)">
+                    <span>17</span>
+                </div>
+                <div class="squad-player-name">
+                    FirstName FirstName
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="lineups-player">
+        <a asp-page="/Player" asp-route-id="1">
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: var(--clr-Defender)">
+                    <span>15</span>
+                </div>
+                <div class="squad-player-name">
+                    FirstName FirstName
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="lineups-substitutes" style="margin-top: 0.5em">
+    Substitutes
+</div>
+<div class="lineups-container">
+    <div class="lineups-player">
+        <a asp-page="/Player" asp-route-id="1">
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: var(--clr-gray)">
+                    <span>11</span>
+                </div>
+                <div class="squad-player-name">
+                    FirstName FirstName
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="lineups-player">
+        <a asp-page="/Player" asp-route-id="1">
+            <div class="squad-player">
+                <div class="squad-player-number" style="background: var(--clr-gray)">
+                    <span>11</span>
+                </div>
+                <div class="squad-player-name">
+                    FirstName FirstName
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

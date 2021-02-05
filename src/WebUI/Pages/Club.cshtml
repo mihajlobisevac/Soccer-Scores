@@ -1,0 +1,104 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.ClubModel
+@{
+}
+
+<div class="club-container">
+    <img src="/FC_Barcelona.svg" alt="club image" />
+    <div class="club-info">
+        <h5>Club.Name</h5>
+        <div class="club-info-table">
+            <div class="club-info-e">Country</div>
+            <div class="club-info-i">City.Country</div>
+            <div class="club-info-e">City</div>
+            <div class="club-info-i">City.Name</div>
+            <div class="club-info-e">Founded</div>
+            <div class="club-info-i">YearFounded</div>
+            <div class="club-info-e">Venue</div>
+            <div class="club-info-i">Venue</div>
+        </div>
+    </div>
+</div>
+
+<div class="club-section-container">
+    <h5>Matches</h5>
+
+    @foreach (var match in Model.Matches)
+    {
+        var result = match;
+        var playingHome = true;
+
+        <div class="match-container">
+            <a class="match-home-team" asp-page="/Club" asp-route-id="1">
+                HomeTeam.Name
+            </a>
+
+            @if (result is null)
+            {
+                <a class="match-result" asp-page="/Match" asp-route-id="1">
+                    KickOff
+                </a>
+            }
+            else
+            {
+                //string resultColor;
+
+                if (playingHome)
+                {
+                    //resultColor = result.HomeScore > result.AwayScore ? "var(--clr-win)" : "";
+                    //resultColor = result.HomeScore < result.AwayScore ? "var(--clr-loss)" : resultColor;
+                    //resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
+                }
+                else
+                {
+                    //resultColor = result.HomeScore > result.AwayScore ? "var(--clr-loss)" : "";
+                    //resultColor = result.HomeScore < result.AwayScore ? "var(--clr-win)" : resultColor;
+                    //resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
+                }
+
+                <a class="match-result" style="background: var(--clr-win)"
+                   asp-page="/Match" asp-route-id="1">
+                    HomeScore:AwayScore
+                </a>
+            }
+
+            <a class="match-away-team" asp-page="/Club" asp-route-id="1">
+                AwayTeam.Name
+            </a>
+        </div>
+    }
+
+    <h5>Squad</h5>
+
+
+    <div class="squad-container">
+        @foreach (var player in Model.Squad)
+        {
+            <a asp-page="/Player" asp-route-id="1">
+                <div class="squad-player">
+                    <div class="squad-player-number" style="background: var(--clr-Goalkeeper)">
+                        <span>
+                            12
+                        </span>
+                    </div>
+                    <div class="squad-name-dob">
+                        <div class="squad-player-name">
+                            FirstName LastName
+                        </div>
+                        <div class="squad-player-dob">
+                            @{
+                                var today = DateTime.Now;
+                                var dob = new DateTime(1988, 12, 12);
+
+                                int age = dob.Month > today.Month || dob.Month == today.Month && dob.Day > today.Day
+                                    ? today.Year - dob.Year - 1 : today.Year - dob.Year;
+                            }
+
+                            @age years old
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>

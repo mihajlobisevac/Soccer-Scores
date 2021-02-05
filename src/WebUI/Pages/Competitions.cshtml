@@ -1,0 +1,24 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.CompetitionsModel
+@{
+}
+
+<div class="title-dates">
+    <p>Competitions</p>
+</div>
+
+@foreach (var country in Model.Countries)
+{
+    <div class="matches-container">
+        <div class="matches-comp">
+            <div class="matches-comp-flag">
+                <img src="CountryFlag" alt="flag" />
+            </div>
+            <div class="matches-comp-name">Coutnry Name</div>
+        </div>
+        @foreach (var tourney in Model.Countries) @*country.Tournaments*@
+        {
+            <a asp-page="/Standings" asp-route-id="1"><div class="competition-name">tourney.Name</div></a>
+        }
+    </div>
+}
