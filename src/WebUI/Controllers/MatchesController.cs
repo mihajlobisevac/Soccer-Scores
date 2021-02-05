@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerScores.Application.Common.Models;
+using SoccerScores.Application.Fixtures.Queries;
 using SoccerScores.Application.Matches.Commands.CreateMatch;
 using SoccerScores.Application.Matches.Commands.DeleteMatch;
 using SoccerScores.Application.Matches.Commands.UpdateMatch;
@@ -18,6 +19,12 @@ namespace SoccerScores.WebUI.Controllers
 {
     public class MatchesController : ApiControllerBase
     {
+        [HttpGet("fixtures")]
+        public async Task<IEnumerable<CompetitionVm>> GetFixtures()
+        {
+            return await Mediator.Send(new GetFixturesQuery());
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<MatchDto>> Get(int id)
         {

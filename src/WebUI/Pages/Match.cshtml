@@ -1,107 +1,208 @@
 ﻿@page "{id}"
 @model SoccerScores.WebUI.Pages.MatchModel
-@{
+@{ }
+
+<div id="app">
+    <div v-if="matchModel === null">
+        Match not found
+    </div>
+    <div v-else>
+        <a v-bind:href="'/standings/'+ season.id">
+            <div class="result-match-info">
+                {{season.name}} | {{matchModel.kickOff.substring(0, 10)}} | KO {{matchModel.kickOff.substring(11, 16)}}
+            </div>
+        </a>
+
+        <div class="result-container">
+            <a v-bind:href="'/club/'+ homeTeam.id">
+                <div class="result-home-team">
+                    <img v-bind:src="homeTeam.crest" alt="crest" />
+                </div>
+            </a>
+
+            <div v-if="matchIsFinished" class="result-ft">
+                {{hScore}} - {{aScore}}
+            </div>
+            <div v-else="" class="result-ft">
+                {{matchModel.kickOff.substring(11, 16)}}
+            </div>
+
+            <a v-bind:href="'/club/'+ awayTeam.id">
+                <div class="result-away-team">
+                    <img v-bind:src="awayTeam.crest" alt="crest" />
+                </div>
+            </a>
+
+            <a v-bind:href="'/club/'+ homeTeam.id">
+                <div class="result-team-name">
+                    {{homeTeam.name}}
+                </div>
+            </a>
+            <div></div>
+            <a v-bind:href="'/club/'+ awayTeam.id">
+                <div class="result-team-name">
+                    {{awayTeam.name}}
+                </div>
+            </a>
+        </div>
+
+        <div class="matches-container">
+            <div v-for="(g, index) in goals" class="match-container">
+                <div class="match-home-team">
+                    <a v-if="g.primaryPlayer !== null && g.isHome === true"
+                       v-bind:href="'/player/'+ g.primaryPlayer.player.id">
+                        {{g.primaryPlayer.player.firstName.substring(0, 1)}}.
+                        {{g.primaryPlayer.player.lastName}}
+                        {{g.minute}}'
+                    </a>
+                </div>
+                <div class="match-result">{{g.homeScore}} - {{g.awayScore}}</div>
+                <div class="match-away-team">
+                    <a v-if="g.primaryPlayer !== null && g.isHome === false"
+                       v-bind:href="'/player/'+ g.primaryPlayer.player.id">
+                        {{g.minute}}'
+                        {{g.primaryPlayer.player.firstName.substring(0, 1)}}.
+                        {{g.primaryPlayer.player.lastName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h5 style="margin-bottom: 0.5em">Lineups</h5>
+        <div class="lineups-container">
+            <div class="lineups-player">
+                <a v-for="(p, index) in homeStarters" v-bind:href="'/player/'+ p.player.id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-orange)">
+                            <span>{{p.shirtNumber}}</span>
+                        </div>
+                        <div class="squad-player-name">
+                            {{p.player.firstName}} {{p.player.lastName}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="lineups-player">
+                <a v-for="(p, index) in awayStarters" v-bind:href="'/player/'+ p.player.id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-orange)">
+                            <span>{{p.shirtNumber}}</span>
+                        </div>
+                        <div class="squad-player-name">
+                            {{p.player.firstName}} {{p.player.lastName}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="lineups-substitutes" style="margin-top: 0.5em">
+            Substitutes
+        </div>
+        <div class="lineups-container">
+            <div class="lineups-player">
+                <a v-for="(p, index) in homeSubstitutes" v-bind:href="'/player/'+ p.player.id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-lgray)">
+                            <span>{{p.shirtNumber}}</span>
+                        </div>
+                        <div class="squad-player-name">
+                            {{p.player.firstName}} {{p.player.lastName}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="lineups-player">
+                <a v-for="(p, index) in awaySubstitutes" v-bind:href="'/player/'+ p.player.id">
+                    <div class="squad-player">
+                        <div class="squad-player-number" style="background: var(--clr-lgray)">
+                            <span>{{p.shirtNumber}}</span>
+                        </div>
+                        <div class="squad-player-name">
+                            {{p.player.firstName}} {{p.player.lastName}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            matchId: @Model.MatchId,
+            loading: false,
+            matchModel: null,
+        },
+        mounted() {
+            this.getMatch(this.matchId)
+        },
+        methods: {
+            getMatch(id) {
+                this.loading = true;
+                axios.get('/api/matches/' + id)
+                    .then(res => {
+                        this.matchModel = res.data
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                    .then(() => {
+                        this.loading = false;
+                    });
+            },
+        },
+        computed: {
+            hScore: function () {
+                try {
+                    return this.matchModel
+                        .incidents
+                        .find(i => i.class === 'FT')
+                        .homeScore
+                } catch (e) {
+                    return null
+                }
+            },
+            aScore: function () {
+                try {
+                    return this.matchModel
+                        .incidents
+                        .find(i => i.class === 'FT')
+                        .awayScore
+                } catch (e) {
+                    return null
+                }
+            },
+            homeTeam: function () {
+                return this.matchModel.homeTeam
+            },
+            awayTeam: function () {
+                return this.matchModel.awayTeam
+            },
+            season: function () {
+                return this.matchModel.season
+            },
+            goals: function () {
+                return this.matchModel.incidents.filter(i => i.type === 'Goal')
+            },
+            matchIsFinished: function () {
+                return this.hScore !== null && this.aScore !== null
+            },
+            homeStarters: function () {
+                return this.matchModel.players.filter(p => p.isHome === true && p.isSubstitute === false)
+            },
+            awayStarters: function () {
+                return this.matchModel.players.filter(p => p.isHome === false && p.isSubstitute === false)
+            },
+            homeSubstitutes: function () {
+                return this.matchModel.players.filter(p => p.isHome === true && p.isSubstitute === true)
+            },
+            awaySubstitutes: function () {
+                return this.matchModel.players.filter(p => p.isHome === false && p.isSubstitute === true)
+            },
+        }
+    });
+</script>
 }
-
-<a asp-page="/Standings" asp-route-id="@Model.Match">
-    <div class="result-match-info">
-        League | 10/10/10 | KO 21:00
-    </div>
-</a>
-
-<div class="result-container">
-    <a asp-page="/Club" asp-route-id="@Model.Match">
-        <div class="result-home-team">
-            <img src="/FC_Barcelona.svg" alt="club image" />
-        </div>
-    </a>
-    <div class="result-ft">
-        HomeScore - AwayScore
-    </div>
-    <a asp-page="/Club" asp-route-id="@Model.Match">
-        <div class="result-away-team">
-            <img src="/Real_Madrid_CF.svg" alt="club image" />
-        </div>
-    </a>
-
-    <a asp-page="/Club" asp-route-id="@Model.Match">
-        <div class="result-team-name">
-            HomeTeam
-        </div>
-    </a>
-    <div></div>
-    <a asp-page="/Club" asp-route-id="@Model.Match">
-        <div class="result-team-name">
-            AwayTeam
-        </div>
-    </a>
-</div>
-
-<div class="matches-container">
-    <div class="match-container">
-        <div class="match-home-team">
-            homeGoal
-        </div>
-        <div class="match-result">HomeScore - AwayScore</div>
-        <div class="match-away-team">
-            awayGoal
-        </div>
-    </div>
-</div>
-
-<h5 style="margin-bottom: 0.5em">Lineups</h5>
-<div class="lineups-container">
-    <div class="lineups-player">
-        <a asp-page="/Player" asp-route-id="1">
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-Goalkeeper)">
-                    <span>17</span>
-                </div>
-                <div class="squad-player-name">
-                    FirstName FirstName
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="lineups-player">
-        <a asp-page="/Player" asp-route-id="1">
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-Defender)">
-                    <span>15</span>
-                </div>
-                <div class="squad-player-name">
-                    FirstName FirstName
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
-<div class="lineups-substitutes" style="margin-top: 0.5em">
-    Substitutes
-</div>
-<div class="lineups-container">
-    <div class="lineups-player">
-        <a asp-page="/Player" asp-route-id="1">
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-gray)">
-                    <span>11</span>
-                </div>
-                <div class="squad-player-name">
-                    FirstName FirstName
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="lineups-player">
-        <a asp-page="/Player" asp-route-id="1">
-            <div class="squad-player">
-                <div class="squad-player-number" style="background: var(--clr-gray)">
-                    <span>11</span>
-                </div>
-                <div class="squad-player-name">
-                    FirstName FirstName
-                </div>
-            </div>
-        </a>
-    </div>
-</div>

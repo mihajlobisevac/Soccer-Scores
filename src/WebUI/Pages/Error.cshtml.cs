@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Scores.UI.Pages
+namespace SoccerScores.WebUI.Pages
 {
     public class ErrorModel : PageModel
     {

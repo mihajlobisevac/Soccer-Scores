@@ -30,8 +30,8 @@ namespace SoccerScores.Application.Matches.Queries.GetMatch
                 .Include(x => x.HomeTeam)
                 .Include(x => x.AwayTeam)
                 .Include(x => x.Season).ThenInclude(x => x.Competition)
-                .Include(x => x.Incidents).ThenInclude(x => x.PrimaryPlayer)
-                .Include(x => x.Incidents).ThenInclude(x => x.SecondaryPlayer)
+                .Include(x => x.Incidents).ThenInclude(x => x.PrimaryPlayer).ThenInclude(y => y.Player)
+                .Include(x => x.Incidents).ThenInclude(x => x.SecondaryPlayer).ThenInclude(y => y.Player)
                 .Include(x => x.Players)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 

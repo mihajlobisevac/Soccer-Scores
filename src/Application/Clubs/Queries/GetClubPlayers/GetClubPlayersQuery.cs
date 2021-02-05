@@ -9,50 +9,42 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Clubs.Queries.GetClubWithPlayers
+namespace SoccerScores.Application.Clubs.Queries.GetClubPlayers
 {
-    public class GetClubWithPlayersQuery : IRequest<ClubWithPlayersDto>
+    public class GetClubPlayersQuery : IRequest<IEnumerable<ClubPlayerDto>>
     {
-        public int Id { get; set; }
+        public int ClubId { get; set; }
     }
 
-    public class GetClubWithPlayersQueryHandler : IRequestHandler<GetClubWithPlayersQuery, ClubWithPlayersDto>
+    public class GetClubPlayersQueryHandler : IRequestHandler<GetClubPlayersQuery, IEnumerable<ClubPlayerDto>>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
 
-        public GetClubWithPlayersQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetClubPlayersQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
-        public async Task<ClubWithPlayersDto> Handle(GetClubWithPlayersQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ClubPlayerDto>> Handle(GetClubPlayersQuery request, CancellationToken cancellationToken)
         {
             var club = await GetClub(request);
             var players = await GetPlayers(club);
 
-            var clubWithPlayers = mapper.Map<ClubWithPlayersDto>(club);
-
-            clubWithPlayers.Players = players;
-
-            return clubWithPlayers;
+            return players;
         }
 
         private async Task<List<ClubPlayerDto>> GetPlayers(Club club)
-        {
-            return await context.ClubPlayers
+            => await context.ClubPlayers
                 .Where(x => x.Club == club)
                 .ProjectTo<ClubPlayerDto>(mapper.ConfigurationProvider)
                 .ToListAsync();
-        }
 
-        private async Task<Club> GetClub(GetClubWithPlayersQuery request)
-        {
-            return await context.Clubs
+        private async Task<Club> GetClub(GetClubPlayersQuery request)
+            => await context.Clubs
                 .Include(x => x.City)
                 .ThenInclude(x => x.Country)
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
-        }
+                .FirstOrDefaultAsync(x => x.Id == request.ClubId);
     }
 }

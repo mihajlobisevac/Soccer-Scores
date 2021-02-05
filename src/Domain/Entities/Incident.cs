@@ -14,7 +14,7 @@ namespace SoccerScores.Domain.Entities
         public bool IsHome { get; set; }
 
         public Match Match { get; set; }
-        public Player PrimaryPlayer { get; set; }
-        public Player SecondaryPlayer { get; set; }
+        public MatchPlayer PrimaryPlayer { get; set; }
+        public MatchPlayer SecondaryPlayer { get; set; }
     }
 }
