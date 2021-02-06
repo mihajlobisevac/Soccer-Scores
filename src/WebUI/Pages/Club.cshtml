@@ -136,7 +136,7 @@
                     <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
                         {{m.result.homeScore}} : {{m.result.awayScore}}
                     </a>
-                    <a v-else="m.won === false" class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
                         {{m.result.homeScore}} : {{m.result.awayScore}}
                     </a>
 
@@ -186,183 +186,170 @@
 </div>
 
 @section Scripts {
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            clubId: @Model.ClubId,
-            loading: false,
-            clubModel: null,
-            players: [],
-            previousMatches: [],
-            upcomingMatches: [],
-        },
-        mounted() {
-            this.getClub(this.clubId)
-            this.getPlayers(this.clubId)
-            this.getPreviousMatches(this.clubId, 1)
-            this.getUpcomingMatches(this.clubId, 1)
-        },
-        methods: {
-            getClub(id) {
-                this.loading = true;
-                axios.get('/api/clubs/' + id)
-                    .then(res => {
-                        this.clubModel = res.data
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                    .then(() => {
-                        this.loading = false;
-                    });
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                clubId: @Model.ClubId,
+                loading: false,
+                clubModel: null,
+                players: [],
+                previousMatches: [],
+                upcomingMatches: [],
             },
-            getPlayers(clubId) {
-                this.loading = true;
-                axios.get('/api/clubs/' + clubId + '/players')
-                    .then(res => {
-                        this.players = res.data
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                    .then(() => {
-                        this.loading = false;
-                    });
+            mounted() {
+                this.getClub(this.clubId)
+                this.getPlayers(this.clubId)
+                this.getPreviousMatches(this.clubId, 1)
+                this.getUpcomingMatches(this.clubId, 1)
             },
-            getPreviousMatches(clubId, i) {
-                this.loading = true;
-                axios.get('/api/matches/club/' + clubId, {
-                    params: {
-                        futureMatches: false,
-                        index: i,
-                    },
-                })
-                    .then(res => {
-                        this.previousMatches = res.data
+            methods: {
+                getClub(id) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + id)
+                        .then(res => {
+                            this.clubModel = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getPlayers(clubId) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + clubId + '/players')
+                        .then(res => {
+                            this.players = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getPreviousMatches(clubId, i) {
+                    this.loading = true;
+                    axios.get('/api/matches/club/' + clubId, {
+                        params: {
+                            futureMatches: false,
+                            index: i,
+                        },
                     })
-                    .catch(err => {
-                        console.log(err);
+                        .then(res => {
+                            this.previousMatches = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getUpcomingMatches(clubId, i) {
+                    this.loading = true;
+                    axios.get('/api/matches/club/' + clubId, {
+                        params: {
+                            futureMatches: true,
+                            index: i,
+                        },
                     })
-                    .then(() => {
-                        this.loading = false;
-                    });
+                        .then(res => {
+                            this.upcomingMatches = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                }
             },
-            getUpcomingMatches(clubId, i) {
-                this.loading = true;
-                axios.get('/api/matches/club/' + clubId, {
-                    params: {
-                        futureMatches: true,
-                        index: i,
-                    },
-                })
-                    .then(res => {
-                        this.upcomingMatches = res.data
+            computed: {
+                computedPlayers: function () {
+                    var cptPlayers = []
+
+                    this.players.forEach(function(p){
+                        year = p.dateOfBirth.substring(0, 4)
+                        month = p.dateOfBirth.substring(5, 7)
+                        day = p.dateOfBirth.substring(8, 10)
+
+                        var calcAge = function() {
+                            now = new Date();
+                            age = now.getFullYear() - year;
+
+                            if (now.getMonth() < (month - 1)) age--;
+                            if (((month - 1) == now.getMonth()) && (now.getDate() < day)) age--;
+
+                            return age;
+                        }
+
+                        p.age = calcAge()
                     })
-                    .catch(err => {
-                        console.log(err);
+
+                    return this.players
+                },
+                goalkeepers: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Goalkeeper')
+                },
+                defenders: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Defender')
+                },
+                midfielders: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Midfielder')
+                },
+                attackers: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Attacker')
+                },
+                computedPrevMatches: function() {
+                    this.previousMatches.items.forEach(function(m) {
+                        if(m.result !== null) {
+                            if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                m.won = true
+                            } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                m.won = false
+                            } else { 
+                                m.won = null 
+                            }
+                        }
                     })
-                    .then(() => {
-                        this.loading = false;
-                    });
+
+                    return this.previousMatches
+                },
+                computedUpcMatches: function() {
+                    this.upcomingMatches.items.forEach(function(m) {
+                        if(m.result !== null) {
+                            if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                m.won = true
+                            } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                m.won = false
+                            } else { 
+                                m.won = null 
+                            }
+                        }
+                    })
+
+                    return this.upcomingMatches
+                },
+                pmPageDown: function() {
+                    return this.previousMatches.pageIndex - 1
+                },
+                pmPageUp: function() {
+                    return this.previousMatches.pageIndex + 1
+                },
+                umPageDown: function() {
+                    return this.upcomingMatches.pageIndex - 1
+                },
+                umPageUp: function() {
+                    return this.upcomingMatches.pageIndex + 1
+                },
             }
-        },
-        computed: {
-            computedPlayers: function () {
-                var cptPlayers = []
-
-                this.players.forEach(function(p){
-                    year = p.dateOfBirth.substring(0, 4)
-                    month = p.dateOfBirth.substring(5, 7)
-                    day = p.dateOfBirth.substring(8, 10)
-
-                    var calcAge = function() {
-                        now = new Date();
-                        age = now.getFullYear() - year;
-
-                        if (now.getMonth() < (month - 1)) age--;
-                        if (((month - 1) == now.getMonth()) && (now.getDate() < day)) age--;
-
-                        return age;
-                    }
-
-                    cptPlayers.push({
-                        id: p.id,
-                        firstName: p.firstName,
-                        lastName: p.lastName,
-                        dateOfBirth: p.dateOfBirth,
-                        position: p.position,
-                        foot: p.foot,
-                        height: p.height,
-                        weight: p.weight,
-                        nationality: p.nationality,
-                        placeOfBirth: p.placeOfBirth,
-                        shirtNumber: p.shirtNumber,
-                        age: calcAge()
-                    })
-                })
-
-                return cptPlayers
-            },
-            goalkeepers: function() {
-                return this.computedPlayers.filter(p => p.position === 'Goalkeeper')
-            },
-            defenders: function() {
-                return this.computedPlayers.filter(p => p.position === 'Defender')
-            },
-            midfielders: function() {
-                return this.computedPlayers.filter(p => p.position === 'Midfielder')
-            },
-            attackers: function() {
-                return this.computedPlayers.filter(p => p.position === 'Attacker')
-            },
-            computedPrevMatches: function() {
-                this.previousMatches.items.forEach(function(m) {
-                    if(m.result !== null) {
-                        if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                            m.won = true
-                        } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                            m.won = false
-                        } else { 
-                            m.won = null 
-                        }
-                    }
-                })
-
-                return this.previousMatches
-            },
-            computedUpcMatches: function() {
-                this.upcomingMatches.items.forEach(function(m) {
-                    if(m.result !== null) {
-                        if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                            m.won = true
-                        } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                            m.won = false
-                        } else { 
-                            m.won = null 
-                        }
-                    }
-                })
-
-                return this.upcomingMatches
-            },
-            pmPageDown: function() {
-                return this.previousMatches.pageIndex - 1
-            },
-            pmPageUp: function() {
-                return this.previousMatches.pageIndex + 1
-            },
-            umPageDown: function() {
-                return this.upcomingMatches.pageIndex - 1
-            },
-            umPageUp: function() {
-                return this.upcomingMatches.pageIndex + 1
-            },
-        }
-    });
-</script>
+        });
+    </script>
 }

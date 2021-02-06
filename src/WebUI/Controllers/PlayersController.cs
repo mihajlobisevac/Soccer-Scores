@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SoccerScores.Application.Common.Models;
 using SoccerScores.Application.Players.Commands.CreatePlayer;
 using SoccerScores.Application.Players.Commands.DeletePlayer;
 using SoccerScores.Application.Players.Commands.UpdatePlayer;
 using SoccerScores.Application.Players.Queries.GetPlayer;
+using SoccerScores.Application.Players.Queries.GetPlayerMatches;
 using SoccerScores.Application.Players.Queries.GetPlayersByClub;
 using System.Threading.Tasks;
 
@@ -14,6 +16,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<PlayerDto>> Get(int id)
         {
             return await Mediator.Send(new GetPlayerQuery { Id = id });
+        }
+
+        [HttpGet("{playerId}/matches")]
+        public async Task<PaginatedList<PlayerMatchDto>> GetMatches(int playerId)
+        {
+            return await Mediator.Send(new GetPlayerMatchesQuery { PlayerId = playerId });
         }
 
         [HttpGet("club/{id}")]
