@@ -5,11 +5,11 @@ namespace SoccerScores.WebUI.Pages
 {
     public class PlayerModel : PageModel
     {
-        public string Player { get; set; }
-        public IEnumerable<string> Matches { get; set; } = new List<string>();
+        public int PlayerId { get; set; }
 
         public void OnGet(int id)
         {
+            PlayerId = id;
         }
     }
 }
