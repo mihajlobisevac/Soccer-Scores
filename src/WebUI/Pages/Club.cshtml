@@ -4,8 +4,8 @@
 }
 
 <div id="app">
-    <div v-if="clubModel === null">
-        Not found
+    <div v-if="loading === true">
+        Loading...
     </div>
     <div v-else>
         <div class="club-container">
@@ -104,82 +104,84 @@
                 </a>
             </div>
 
-            <div v-if="this.previousMatches !== null">
-                <h5>Results</h5>
-                <div class="btn-prev-next">
-                    <button v-if="this.previousMatches.hasNextPage" 
-                        v-on:click="getPreviousMatches(clubId, pmPageUp)">
-                        Previous
-                    </button>
-                    <button v-else disabled>
-                        Previous
-                    </button>
-                    <button v-if="this.previousMatches.hasPreviousPage" 
-                        v-on:click="getPreviousMatches(clubId, pmPageDown)">
-                        Next
-                    </button>
-                    <button v-else disabled>
-                        Next
-                    </button>
-                </div>
-                <div v-for="(m, index) in computedPrevMatches.items" class="match-container">
-                    <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
-                        {{m.homeTeam.name}}
-                    </a>
+            <h5>Results</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.previousMatches.hasNextPage" 
+                    v-on:click="getPreviousMatches(clubId, pmPageUp)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.previousMatches.hasPreviousPage" 
+                    v-on:click="getPreviousMatches(clubId, pmPageDown)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in computedPrevMatches.items" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
 
-                    <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
-                        {{m.kickOff.substring(11,16)}}
-                    </a>
-                    <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
-                    <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
-                    <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
 
-                    <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
-                        {{m.awayTeam.name}}
-                    </a>
-                </div>
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
             </div>
 
-            <div v-if="this.upcomingMatches !== null">
-                <h5>Upcoming Matches</h5>
-                <div class="btn-prev-next">
-                    <button v-if="this.upcomingMatches.hasPreviousPage"
-                        v-on:click="getUpcomingMatches(clubId, umPageDown)">
-                        Previous
-                    </button>
-                    <button v-else disabled>
-                        Previous
-                    </button>
-                    <button v-if="this.upcomingMatches.hasNextPage" 
-                        v-on:click="getUpcomingMatches(clubId, umPageUp)">
-                        Next
-                    </button>
-                    <button v-else disabled>
-                        Next
-                    </button>
-                </div>
-                <div v-for="(m, index) in computedUpcMatches.items" class="match-container">
-                    <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
-                        {{m.homeTeam.name}}
-                    </a>
+            <h5>Upcoming Matches</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.upcomingMatches.hasPreviousPage"
+                    v-on:click="getUpcomingMatches(clubId, umPageDown)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.upcomingMatches.hasNextPage" 
+                    v-on:click="getUpcomingMatches(clubId, umPageUp)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in computedUpcMatches.items" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
 
-                    <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
-                        {{m.kickOff.substring(11,16)}}
-                    </a>
-                    <a v-else class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
 
-                    <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
-                        {{m.awayTeam.name}}
-                    </a>
-                </div>
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
             </div>
         </div>
     </div>    
@@ -191,7 +193,7 @@
             el: '#app',
             data: {
                 clubId: @Model.ClubId,
-                loading: false,
+                loading: true,
                 clubModel: null,
                 players: [],
                 previousMatches: [],
@@ -269,8 +271,6 @@
             },
             computed: {
                 computedPlayers: function () {
-                    var cptPlayers = []
-
                     this.players.forEach(function(p){
                         year = p.dateOfBirth.substring(0, 4)
                         month = p.dateOfBirth.substring(5, 7)
@@ -304,36 +304,40 @@
                     return this.computedPlayers.filter(p => p.position === 'Attacker')
                 },
                 computedPrevMatches: function() {
-                    this.previousMatches.items.forEach(function(m) {
-                        if(m.result !== null) {
-                            if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                                m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                                m.won = true
-                            } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                                m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                                m.won = false
-                            } else { 
-                                m.won = null 
+                    if(this.previousMatches && this.previousMatches.items) {
+                        this.previousMatches.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
 
                     return this.previousMatches
                 },
                 computedUpcMatches: function() {
-                    this.upcomingMatches.items.forEach(function(m) {
-                        if(m.result !== null) {
-                            if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                                m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                                m.won = true
-                            } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                                m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                                m.won = false
-                            } else { 
-                                m.won = null 
+                    if(this.upcomingMatches && this.upcomingMatches.items) {
+                        this.upcomingMatches.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
 
                     return this.upcomingMatches
                 },

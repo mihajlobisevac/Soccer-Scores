@@ -3,17 +3,21 @@
 @{ }
 
 <div id="app">
-    <div v-if="playerExists === false">
-        Not found
+    <div v-if="loading === true">
+        Loading...
     </div>
     <div v-else>
         <div class="player-container">
             <h4>{{player.firstName}} {{player.lastName}}</h4>
-            <img src="/FC_Barcelona.svg" alt="club image" />
+            <a v-bind:href="'/club/'+ player.club.id">
+                <img v-bind:src="player.club.crest" alt="club image" />
+            </a>
         </div>
 
         <div class="club-info" style="padding-left: 0.1em;margin-bottom: 1.5em;">
             <div class="club-info-table">
+                <div class="club-info-e">Club</div>
+                <div class="club-info-i">{{player.club.name}}</div>
                 <div class="club-info-e">Nationality</div>
                 <div class="club-info-i">{{player.nationality}}</div>
                 <div class="club-info-e">City of Birth</div>
@@ -31,30 +35,46 @@
             </div>
         </div>
 
-        <h5>Matches</h5>
-
         <div v-if="matchesExist === true">
+            <h5>Matches</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.matchesModel.hasNextPage" 
+                    v-on:click="getMatches(playerId, pageUp)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.matchesModel.hasPreviousPage"
+                    v-on:click="getMatches(playerId, pageDown)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
             <div v-for="(m, index) in matches" class="match-container">
-            <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
-                {{m.homeTeam.name}}
-            </a>
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
 
-            <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
-                {{m.kickOff.substring(0,11)}}
-            </a>
-            <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
-                {{m.result.homeScore}} : {{m.result.awayScore}}
-            </a>
-            <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
-                {{m.result.homeScore}} : {{m.result.awayScore}}
-            </a>
-            <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
-                {{m.result.homeScore}} : {{m.result.awayScore}}
-            </a>
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
 
-            <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
-                {{m.awayTeam.name}}
-            </a>
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -65,13 +85,13 @@
             el: '#app',
             data: {
                 playerId: @Model.PlayerId,
-                loading: false,
+                loading: true,
                 playerModel: null,
                 matchesModel: null,
             },
             mounted() {
                 this.getPlayer(this.playerId)
-                this.getMatches(this.playerId)
+                this.getMatches(this.playerId, 1)
             },
             methods: {
                 getPlayer(id) {
@@ -87,9 +107,13 @@
                             this.loading = false;
                         });
                 },
-                getMatches(playerId) {
+                getMatches(playerId, i) {
                     this.loading = true;
-                    axios.get('/api/players/' + playerId + '/matches')
+                    axios.get('/api/players/' + playerId + '/matches', {
+                        params: {
+                            index: i,
+                        },
+                    })
                         .then(res => {
                             this.matchesModel = res.data
                         })
@@ -108,6 +132,12 @@
                 matchesExist: function () {
                     return this.matchesModel !== null && this.matchesModel.items !== null
                 },
+                pageDown: function() {
+                    return this.matchesModel.pageIndex - 1
+                },
+                pageUp: function() {
+                    return this.matchesModel.pageIndex + 1
+                },
                 player: function () {
                     return this.playerModel
                 },
@@ -115,24 +145,26 @@
                     return this.playerModel.club.id
                 },
                 matches: function () {
-                    var $v = this
+                    let _app = this
 
-                    this.matchesModel.items.forEach(function(m) {
-                        if(m.result !== null) {
-                            if($v.playerClub == m.homeTeam.id && m.result.homeScore > m.result.awayScore ||
-                                $v.playerClub == m.awayTeam.id && m.result.homeScore < m.result.awayScore) {
-                                m.won = true
-                            } else if($v.playerClub == m.homeTeam.id && m.result.homeScore < m.result.awayScore ||
-                                $v.playerClub == m.awayTeam.id && m.result.homeScore > m.result.awayScore) {
-                                m.won = false
-                            } else { 
-                                m.won = null 
+                    if(_app.matchesModel && _app.matchesModel.items) {
+                        _app.matchesModel.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(_app.playerClub == m.homeTeam.id && m.result.homeScore > m.result.awayScore ||
+                                    _app.playerClub == m.awayTeam.id && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(_app.playerClub == m.homeTeam.id && m.result.homeScore < m.result.awayScore ||
+                                    _app.playerClub == m.awayTeam.id && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
 
-                    return this.matchesModel.items
-                }
+                    return _app.matchesModel.items
+                },
             }
         });
     </script>

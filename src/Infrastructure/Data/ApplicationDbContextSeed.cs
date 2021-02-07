@@ -171,38 +171,25 @@ namespace SoccerScores.Infrastructure.Data
 
                 var matchPlayers = new List<MatchPlayer>
                 {
-                    new MatchPlayer
-                    {
-                        IsHome = true,
-                        IsSubstitute = false,
-                        ShirtNumber = 10,
-                        Player = players[0],
-                        Match = matches[0],
-                    },
-                    new MatchPlayer
-                    {
-                        IsHome = true,
-                        IsSubstitute = false,
-                        ShirtNumber = 17,
-                        Player = players[1],
-                        Match = matches[0],
-                    },
-                    new MatchPlayer
-                    {
-                        IsHome = false,
-                        IsSubstitute = false,
-                        ShirtNumber = 9,
-                        Player = players[2],
-                        Match = matches[0],
-                    },
-                    new MatchPlayer
-                    {
-                        IsHome = true,
-                        IsSubstitute = true,
-                        ShirtNumber = 99,
-                        Player = players[0],
-                        Match = matches[0],
-                    },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[0], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 17, Player = players[1], Match = matches[0], },
+                    new MatchPlayer { IsHome = false, IsSubstitute = false, ShirtNumber = 9, Player = players[2], Match = matches[0], },
+
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[1], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 17, Player = players[1], Match = matches[1], },
+                    new MatchPlayer { IsHome = false, IsSubstitute = false, ShirtNumber = 9, Player = players[2], Match = matches[1], },
+
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[2], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 17, Player = players[1], Match = matches[2], },
+                    new MatchPlayer { IsHome = false, IsSubstitute = false, ShirtNumber = 9, Player = players[2], Match = matches[2], },
+
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[3], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[4], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[5], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[6], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[7], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[8], },
+                    new MatchPlayer { IsHome = true, IsSubstitute = false, ShirtNumber = 10, Player = players[0], Match = matches[9], },
                 };
 
                 var incidents = new List<Incident>

@@ -19,9 +19,9 @@ namespace SoccerScores.WebUI.Controllers
         }
 
         [HttpGet("{playerId}/matches")]
-        public async Task<PaginatedList<PlayerMatchDto>> GetMatches(int playerId)
+        public async Task<PaginatedList<PlayerMatchDto>> GetMatches(int playerId, int index = 1)
         {
-            return await Mediator.Send(new GetPlayerMatchesQuery { PlayerId = playerId });
+            return await Mediator.Send(new GetPlayerMatchesQuery { PlayerId = playerId, PageNumber = index });
         }
 
         [HttpGet("club/{id}")]

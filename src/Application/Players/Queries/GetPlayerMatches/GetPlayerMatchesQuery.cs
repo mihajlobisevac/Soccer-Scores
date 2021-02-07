@@ -36,7 +36,6 @@ namespace SoccerScores.Application.Players.Queries.GetPlayerMatches
             PaginatedList<PlayerMatchDto> matches;
 
             matches = await context.Matches
-                .Where(x => x.KickOff <= DateTime.Now)
                 .Where(x => x.Players.Any(p => p.Player.Id == request.PlayerId))
                 .OrderByDescending(x => x.KickOff)
                 .ProjectTo<PlayerMatchDto>(mapper.ConfigurationProvider)
