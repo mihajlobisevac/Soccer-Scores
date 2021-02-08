@@ -11,14 +11,15 @@ namespace SoccerScores.Application.Seasons.Queries
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Competition { get; set; }
+        public string Country { get; set; }
+        public string Flag { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Season, SeasonDto>()
-                .ForMember(
-                    dest => dest.Competition,
-                    opt => opt.MapFrom(src => src.Competition.Name)
-                );
+                .ForMember(dest => dest.Competition, opt => opt.MapFrom(src => src.Competition.Name))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Competition.Country.Name))
+                .ForMember(dest => dest.Flag, opt => opt.MapFrom(src => src.Competition.Country.Flag));
         }
     }
 }

@@ -10,7 +10,7 @@
 
     <div v-for="(c, index) in competitions" class="matches-container">
 
-        <a href="#">
+        <a v-bind:href="c.type + '/' + c.id">
             <div class="matches-comp">
                 <div class="matches-comp-flag">
                     <img v-bind:src="c.flag" alt="flag" />

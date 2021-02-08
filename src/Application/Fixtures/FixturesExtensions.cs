@@ -26,13 +26,7 @@ namespace SoccerScores.Application.Fixtures
                     {
                         uniqueCompetition = match.Season.Competition.Id;
 
-                        compList.Add(new CompetitionVm
-                        {
-                            Id = match.Season.Id,
-                            Name = match.Season.Competition.Name,
-                            Flag = match.Season.Competition.Country.Flag,
-                            Matches = new List<MatchViewModel>()
-                        });
+                        compList.Add(mapper.Map<CompetitionVm>(match.Season));
                     }
 
                     compList[i].Matches.Add(mapper.Map<MatchViewModel>(match));

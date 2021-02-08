@@ -145,11 +145,11 @@ namespace SoccerScores.Infrastructure.Data
 
                 var matches = new List<Match> 
                 {
-                    new Match { KickOff = dates_a[0], GameWeek = 1, HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
+                    new Match { KickOff = dates_a[0], GameWeek = 4, HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
                     new Match { KickOff = dates_a[1], GameWeek = 2, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
                     new Match { KickOff = dates_a[0], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[4], },
                     new Match { KickOff = dates_a[0], GameWeek = 1, HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[5], },
-                    new Match { KickOff = dates_a[0], GameWeek = 1, HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
+                    new Match { KickOff = dates_a[0], GameWeek = 4, HomeTeam = clubs[0], AwayTeam = clubs[1], Season = seasons[0], },
                     new Match { KickOff = dates_a[5], GameWeek = 2, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
                     new Match { KickOff = dates_a[6], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[1], },
                     new Match { KickOff = dates_a[7], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[2], },
