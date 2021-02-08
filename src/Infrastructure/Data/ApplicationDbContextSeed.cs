@@ -44,6 +44,7 @@ namespace SoccerScores.Infrastructure.Data
                     new Competition { Name = "Super Liga", Type = CompetitionType.League, Country = countries[2] },
                     new Competition { Name = "La Liga", Type = CompetitionType.League, Country = countries[3] },
                     new Competition { Name = "UEFA Champions League", Type = CompetitionType.Cup, Country = countries[4] },
+                    new Competition { Name = "Championship", Type = CompetitionType.League, Country = countries[0] },
                 };
 
                 context.Competitions.AddRange(competitions);

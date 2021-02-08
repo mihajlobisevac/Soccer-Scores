@@ -5,7 +5,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Competitions.Queries
+namespace SoccerScores.Application.Competitions.Queries.GetCompetition
 {
     public class GetCompetitionQuery : IRequest<CompetitionDto>
     {

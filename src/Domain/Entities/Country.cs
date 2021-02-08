@@ -10,5 +10,6 @@ namespace SoccerScores.Domain.Entities
         public string Flag { get; set; }
 
         public ICollection<City> Cities { get; set; }
+        public ICollection<Competition> Competitions { get; set; }
     }
 }
