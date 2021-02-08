@@ -26,7 +26,7 @@ namespace SoccerScores.Application.Seasons.Queries
         public async Task<SeasonDto> Handle(GetSeasonQuery request, CancellationToken cancellationToken)
         {
             var entity = await context.Seasons
-                .Include(x => x.Competition)
+                .Include(x => x.Competition).ThenInclude(y => y.Country)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             return mapper.Map<SeasonDto>(entity);

@@ -4,8 +4,8 @@
 }
 
 <div id="app">
-    <div v-if="clubModel === null">
-        Not found
+    <div v-if="loading === true">
+        Loading...
     </div>
     <div v-else>
         <div class="club-container">
@@ -104,265 +104,256 @@
                 </a>
             </div>
 
-            <div v-if="this.previousMatches !== null">
-                <h5>Results</h5>
-                <div class="btn-prev-next">
-                    <button v-if="this.previousMatches.hasNextPage" 
-                        v-on:click="getPreviousMatches(clubId, pmPageUp)">
-                        Previous
-                    </button>
-                    <button v-else disabled>
-                        Previous
-                    </button>
-                    <button v-if="this.previousMatches.hasPreviousPage" 
-                        v-on:click="getPreviousMatches(clubId, pmPageDown)">
-                        Next
-                    </button>
-                    <button v-else disabled>
-                        Next
-                    </button>
-                </div>
-                <div v-for="(m, index) in computedPrevMatches.items" class="match-container">
-                    <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
-                        {{m.homeTeam.name}}
-                    </a>
+            <h5>Results</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.previousMatches.hasNextPage" 
+                    v-on:click="getPreviousMatches(clubId, pmPageUp)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.previousMatches.hasPreviousPage" 
+                    v-on:click="getPreviousMatches(clubId, pmPageDown)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in computedPrevMatches.items" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
 
-                    <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
-                        {{m.kickOff.substring(11,16)}}
-                    </a>
-                    <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
-                    <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
-                    <a v-else="m.won === false" class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
 
-                    <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
-                        {{m.awayTeam.name}}
-                    </a>
-                </div>
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
             </div>
 
-            <div v-if="this.upcomingMatches !== null">
-                <h5>Upcoming Matches</h5>
-                <div class="btn-prev-next">
-                    <button v-if="this.upcomingMatches.hasPreviousPage"
-                        v-on:click="getUpcomingMatches(clubId, umPageDown)">
-                        Previous
-                    </button>
-                    <button v-else disabled>
-                        Previous
-                    </button>
-                    <button v-if="this.upcomingMatches.hasNextPage" 
-                        v-on:click="getUpcomingMatches(clubId, umPageUp)">
-                        Next
-                    </button>
-                    <button v-else disabled>
-                        Next
-                    </button>
-                </div>
-                <div v-for="(m, index) in computedUpcMatches.items" class="match-container">
-                    <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
-                        {{m.homeTeam.name}}
-                    </a>
+            <h5>Upcoming Matches</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.upcomingMatches.hasPreviousPage"
+                    v-on:click="getUpcomingMatches(clubId, umPageDown)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.upcomingMatches.hasNextPage" 
+                    v-on:click="getUpcomingMatches(clubId, umPageUp)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in computedUpcMatches.items" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
 
-                    <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
-                        {{m.kickOff.substring(11,16)}}
-                    </a>
-                    <a v-else class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
-                        {{m.result.homeScore}} : {{m.result.awayScore}}
-                    </a>
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
 
-                    <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
-                        {{m.awayTeam.name}}
-                    </a>
-                </div>
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
             </div>
         </div>
     </div>    
 </div>
 
 @section Scripts {
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            clubId: @Model.ClubId,
-            loading: false,
-            clubModel: null,
-            players: [],
-            previousMatches: [],
-            upcomingMatches: [],
-        },
-        mounted() {
-            this.getClub(this.clubId)
-            this.getPlayers(this.clubId)
-            this.getPreviousMatches(this.clubId, 1)
-            this.getUpcomingMatches(this.clubId, 1)
-        },
-        methods: {
-            getClub(id) {
-                this.loading = true;
-                axios.get('/api/clubs/' + id)
-                    .then(res => {
-                        this.clubModel = res.data
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                    .then(() => {
-                        this.loading = false;
-                    });
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                clubId: @Model.ClubId,
+                loading: true,
+                clubModel: null,
+                players: [],
+                previousMatches: [],
+                upcomingMatches: [],
             },
-            getPlayers(clubId) {
-                this.loading = true;
-                axios.get('/api/clubs/' + clubId + '/players')
-                    .then(res => {
-                        this.players = res.data
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                    .then(() => {
-                        this.loading = false;
-                    });
+            mounted() {
+                this.getClub(this.clubId)
+                this.getPlayers(this.clubId)
+                this.getPreviousMatches(this.clubId, 1)
+                this.getUpcomingMatches(this.clubId, 1)
             },
-            getPreviousMatches(clubId, i) {
-                this.loading = true;
-                axios.get('/api/matches/club/' + clubId, {
-                    params: {
-                        futureMatches: false,
-                        index: i,
-                    },
-                })
-                    .then(res => {
-                        this.previousMatches = res.data
+            methods: {
+                getClub(id) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + id)
+                        .then(res => {
+                            this.clubModel = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getPlayers(clubId) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + clubId + '/players')
+                        .then(res => {
+                            this.players = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getPreviousMatches(clubId, i) {
+                    this.loading = true;
+                    axios.get('/api/matches/club/' + clubId, {
+                        params: {
+                            futureMatches: false,
+                            index: i,
+                        },
                     })
-                    .catch(err => {
-                        console.log(err);
+                        .then(res => {
+                            this.previousMatches = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getUpcomingMatches(clubId, i) {
+                    this.loading = true;
+                    axios.get('/api/matches/club/' + clubId, {
+                        params: {
+                            futureMatches: true,
+                            index: i,
+                        },
                     })
-                    .then(() => {
-                        this.loading = false;
-                    });
+                        .then(res => {
+                            this.upcomingMatches = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                }
             },
-            getUpcomingMatches(clubId, i) {
-                this.loading = true;
-                axios.get('/api/matches/club/' + clubId, {
-                    params: {
-                        futureMatches: true,
-                        index: i,
-                    },
-                })
-                    .then(res => {
-                        this.upcomingMatches = res.data
+            computed: {
+                computedPlayers: function () {
+                    this.players.forEach(function(p){
+                        year = p.dateOfBirth.substring(0, 4)
+                        month = p.dateOfBirth.substring(5, 7)
+                        day = p.dateOfBirth.substring(8, 10)
+
+                        var calcAge = function() {
+                            now = new Date();
+                            age = now.getFullYear() - year;
+
+                            if (now.getMonth() < (month - 1)) age--;
+                            if (((month - 1) == now.getMonth()) && (now.getDate() < day)) age--;
+
+                            return age;
+                        }
+
+                        p.age = calcAge()
                     })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                    .then(() => {
-                        this.loading = false;
-                    });
+
+                    return this.players
+                },
+                goalkeepers: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Goalkeeper')
+                },
+                defenders: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Defender')
+                },
+                midfielders: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Midfielder')
+                },
+                attackers: function() {
+                    return this.computedPlayers.filter(p => p.position === 'Attacker')
+                },
+                computedPrevMatches: function() {
+                    if(this.previousMatches && this.previousMatches.items) {
+                        this.previousMatches.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
+                            }
+                        })
+                    }
+
+                    return this.previousMatches
+                },
+                computedUpcMatches: function() {
+                    if(this.upcomingMatches && this.upcomingMatches.items) {
+                        this.upcomingMatches.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
+                                    m.isHome == false && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
+                            }
+                        })
+                    }
+
+                    return this.upcomingMatches
+                },
+                pmPageDown: function() {
+                    return this.previousMatches.pageIndex - 1
+                },
+                pmPageUp: function() {
+                    return this.previousMatches.pageIndex + 1
+                },
+                umPageDown: function() {
+                    return this.upcomingMatches.pageIndex - 1
+                },
+                umPageUp: function() {
+                    return this.upcomingMatches.pageIndex + 1
+                },
             }
-        },
-        computed: {
-            computedPlayers: function () {
-                var cptPlayers = []
-
-                this.players.forEach(function(p){
-                    year = p.dateOfBirth.substring(0, 4)
-                    month = p.dateOfBirth.substring(5, 7)
-                    day = p.dateOfBirth.substring(8, 10)
-
-                    var calcAge = function() {
-                        now = new Date();
-                        age = now.getFullYear() - year;
-
-                        if (now.getMonth() < (month - 1)) age--;
-                        if (((month - 1) == now.getMonth()) && (now.getDate() < day)) age--;
-
-                        return age;
-                    }
-
-                    cptPlayers.push({
-                        id: p.id,
-                        firstName: p.firstName,
-                        lastName: p.lastName,
-                        dateOfBirth: p.dateOfBirth,
-                        position: p.position,
-                        foot: p.foot,
-                        height: p.height,
-                        weight: p.weight,
-                        nationality: p.nationality,
-                        placeOfBirth: p.placeOfBirth,
-                        shirtNumber: p.shirtNumber,
-                        age: calcAge()
-                    })
-                })
-
-                return cptPlayers
-            },
-            goalkeepers: function() {
-                return this.computedPlayers.filter(p => p.position === 'Goalkeeper')
-            },
-            defenders: function() {
-                return this.computedPlayers.filter(p => p.position === 'Defender')
-            },
-            midfielders: function() {
-                return this.computedPlayers.filter(p => p.position === 'Midfielder')
-            },
-            attackers: function() {
-                return this.computedPlayers.filter(p => p.position === 'Attacker')
-            },
-            computedPrevMatches: function() {
-                this.previousMatches.items.forEach(function(m) {
-                    if(m.result !== null) {
-                        if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                            m.won = true
-                        } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                            m.won = false
-                        } else { 
-                            m.won = null 
-                        }
-                    }
-                })
-
-                return this.previousMatches
-            },
-            computedUpcMatches: function() {
-                this.upcomingMatches.items.forEach(function(m) {
-                    if(m.result !== null) {
-                        if(m.isHome == true && m.result.homeScore > m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore < m.result.awayScore) {
-                            m.won = true
-                        } else if(m.isHome == true && m.result.homeScore < m.result.awayScore ||
-                            m.isHome == false && m.result.homeScore > m.result.awayScore) {
-                            m.won = false
-                        } else { 
-                            m.won = null 
-                        }
-                    }
-                })
-
-                return this.upcomingMatches
-            },
-            pmPageDown: function() {
-                return this.previousMatches.pageIndex - 1
-            },
-            pmPageUp: function() {
-                return this.previousMatches.pageIndex + 1
-            },
-            umPageDown: function() {
-                return this.upcomingMatches.pageIndex - 1
-            },
-            umPageUp: function() {
-                return this.upcomingMatches.pageIndex + 1
-            },
-        }
-    });
-</script>
+        });
+    </script>
 }

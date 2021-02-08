@@ -16,13 +16,13 @@ namespace SoccerScores.WebUI.Controllers
             return await Mediator.Send(new GetSeasonsByCompetitionQuery { CompetitionId = id });
         }
 
-        [HttpGet("season/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<SeasonDto>> Get(int id)
         {
             return await Mediator.Send(new GetSeasonQuery { Id = id });
         }
 
-        [HttpGet("season/{id}/table")]
+        [HttpGet("{id}/league/table")]
         public async Task<ActionResult<LeagueTable>> GetTable(int id)
         {
             return await Mediator.Send(new GetLeagueTableQuery { SeasonId = id });

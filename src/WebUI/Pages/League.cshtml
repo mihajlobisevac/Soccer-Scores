@@ -1,0 +1,187 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.LeagueModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else>
+        <div class="player-container">
+            <h4>{{season.competition}}</h4>
+            <div class="matches-comp">
+                <div class="matches-comp-flag" style="width:3em;height:3em;margin:0">
+                    <img v-bind:src="season.flag" alt="flag" />
+                </div>
+            </div>
+        </div>
+
+        <div class="title-dates">
+            Season <button>{{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}</button>
+        </div>
+
+        <template v-if="matchesExists === true">
+            <h5>Matches</h5>
+            <div class="game-week">
+                Game Week {{leagueMatches.gameWeek}}
+            </div>
+            <div class="btn-prev-next">
+                <button v-if="hasPreviousWeek"
+                    v-on:click="getLeagueMatches(seasonId, pageDown)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="hasNextWeek"
+                    v-on:click="getLeagueMatches(seasonId, pageUp)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-if="matchesExists === true" v-for="(m, index) in matches" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
+
+                <a v-if="m.result === null"
+                class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11, 16)}}
+                </a>
+                <a v-else="" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}}:{{m.result.awayScore}}
+                </a>
+
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
+            </div>
+        </template>
+
+        <template v-if="tableExists === true">
+            <h5>Standings</h5>
+            <div class="standings-container">
+                <div></div>
+                <div class="st-light">Team</div>
+                <div class="st-light st-center">P</div>
+                <div class="st-light st-center">W</div>
+                <div class="st-light st-center">D</div>
+                <div class="st-light st-center">L</div>
+                <div class="st-light st-center">Pts</div>
+
+                <template v-for="(c, index) in clubs">
+                    <div class="st-light st-center">{{index+1}}</div>
+                    <a v-bind:href="'/club/' + c.id"><div class="st-strong">{{c.name}}</div></a>
+                    <div class="st-light st-center">{{c.played}}</div>
+                    <div class="st-light st-center">{{c.wins}}</div>
+                    <div class="st-light st-center">{{c.draws}}</div>
+                    <div class="st-light st-center">{{c.losses}}</div>
+                    <div class="st-strong st-center">{{c.points}}</div>
+                </template>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                seasonId: @Model.SeasonId,
+                loading: true,
+                season: null,
+                leagueTable: null,
+                leagueMatches: null,
+                latestWeek: null,
+            },
+            mounted() {
+                this.getSeason(this.seasonId)
+                this.getLeagueTable(this.seasonId)
+                this.getLeagueMatches(this.seasonId)
+            },
+            methods: {
+                getSeason(id) {
+                    this.loading = true;
+                    axios.get('/api/seasons/' + id)
+                        .then(res => {
+                            this.season = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getLeagueTable(id) {
+                    this.loading = true;
+                    axios.get('/api/seasons/' + id + '/league/table')
+                        .then(res => {
+                            this.leagueTable = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getLeagueMatches(id, gw) {
+                    this.loading = true;
+                    axios.get('/api/matches/season/' + id, {
+                        params: {
+                            gameWeek: gw,
+                        },
+                    })
+                        .then(res => {
+                            this.leagueMatches = res.data
+                            console.log(gw)
+                            if(this.leagueMatches && !gw) {
+                                this.latestWeek = res.data.gameWeek
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+                tableExists: function () {
+                    return this.leagueTable !== null && this.leagueTable !== "undefined"
+                },
+                matchesExists: function () {
+                    return this.leagueMatches !== null && this.leagueMatches !== "undefined"
+                },
+                clubs: function (){
+                    if(this.tableExists === true) {
+                        return this.leagueTable.clubs
+                    } else return []
+                },
+                matches: function (){
+                    if(this.matchesExists === true) {
+                        return this.leagueMatches.matches
+                    } else return []
+                },
+                hasPreviousWeek: function () {
+                    return this.leagueMatches.gameWeek > 1
+                },
+                hasNextWeek: function () {
+                    return this.leagueMatches.gameWeek < this.latestWeek 
+                },
+                pageDown: function () {
+                    return this.leagueMatches.gameWeek - 1
+                },
+                pageUp: function () {
+                    return this.leagueMatches.gameWeek + 1
+                },
+            }
+        });
+    </script>
+}

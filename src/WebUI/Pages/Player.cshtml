@@ -2,72 +2,170 @@
 @model SoccerScores.WebUI.Pages.PlayerModel
 @{ }
 
-<div class="player-container">
-    <h4>FirstName LastName</h4>
-    <img src="/FC_Barcelona.svg" alt="club image" />
-</div>
-
-<div class="club-info" style="padding-left: 0.1em;margin-bottom: 1.5em;">
-    <div class="club-info-table">
-        <div class="club-info-e">Nationality</div>
-        <div class="club-info-i">Model.Player.Nationality.Name</div>
-        <div class="club-info-e">City of Birth</div>
-        <div class="club-info-i">Model.Player.CityOfBirth.Name</div>
-        <div class="club-info-e">Date of Birth</div>
-        <div class="club-info-i">Model.Player.DoB.ToString("dd/MM/yyyy")</div>
-        <div class="club-info-e">Height</div>
-        <div class="club-info-i">Model.Player.Height cm</div>
-        <div class="club-info-e">Weight</div>
-        <div class="club-info-i">Model.Player.Weight cm</div>
-        <div class="club-info-e">Position</div>
-        <div class="club-info-i">Model.Player.Position</div>
-        <div class="club-info-e">Foot</div>
-        <div class="club-info-i">Model.Player.Foot</div>
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
     </div>
-</div>
-
-<h5>Matches</h5>
-
-@foreach (var match in Model.Matches)
-{
-    var result = match; /*match.Incidents.FirstOrDefault(x => x.Class == "FT")*/
-    bool playingHome = true; /*match.HomeTeam.Id == Model.Player.Club.Id ? true : false*/
-
-    <div class="match-container">
-        <a class="match-home-team" asp-page="/Club" asp-route-id="@match">
-            HomeTeam
-        </a>
-
-        @if (result is null)
-        {
-            <a class="match-result" asp-page="/Match" asp-route-id="@match">
-                @match @*.KickOff.ToString("HH:mm")*@
-            </a> 
-        }
-        else
-        {
-            string resultColor = "#F0F0F0";
-
-            if (playingHome)
-            {
-                //resultColor = result.HomeScore > result.AwayScore ? "var(--clr-win)" : "";
-                //resultColor = result.HomeScore < result.AwayScore ? "var(--clr-loss)" : resultColor;
-                //resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
-            }
-            else
-            {
-                //resultColor = result.HomeScore > result.AwayScore ? "var(--clr-loss)" : "";
-                //resultColor = result.HomeScore < result.AwayScore ? "var(--clr-win)" : resultColor;
-                //resultColor = result.HomeScore == result.AwayScore ? "var(--clr-draw)" : resultColor;
-            }
-
-            <a class="match-result" style="background: @resultColor"
-               asp-page="/Match" asp-route-id="@match">
-                HomeScore:AwayScore
+    <div v-else>
+        <div class="player-container">
+            <h4>{{player.firstName}} {{player.lastName}}</h4>
+            <a v-bind:href="'/club/'+ player.club.id">
+                <img v-bind:src="player.club.crest" alt="club image" />
             </a>
-        }
-        <a class="match-away-team" asp-page="/Club" asp-route-id="@match">
-            AwayTeam
-        </a>
+        </div>
+
+        <div class="club-info" style="padding-left: 0.1em;margin-bottom: 1.5em;">
+            <div class="club-info-table">
+                <div class="club-info-e">Club</div>
+                <div class="club-info-i">{{player.club.name}}</div>
+                <div class="club-info-e">Nationality</div>
+                <div class="club-info-i">{{player.nationality}}</div>
+                <div class="club-info-e">City of Birth</div>
+                <div class="club-info-i">{{player.placeOfBirth}}</div>
+                <div class="club-info-e">Date of Birth</div>
+                <div class="club-info-i">{{player.dateOfBirth.substring(0, 10)}}</div>
+                <div class="club-info-e">Height</div>
+                <div class="club-info-i">{{player.height}}</div>
+                <div class="club-info-e">Weight</div>
+                <div class="club-info-i">{{player.weight}}</div>
+                <div class="club-info-e">Position</div>
+                <div class="club-info-i">{{player.position}}</div>
+                <div class="club-info-e">Foot</div>
+                <div class="club-info-i">{{player.foot}}</div>
+            </div>
+        </div>
+
+        <div v-if="matchesExist === true">
+            <h5>Matches</h5>
+            <div class="btn-prev-next">
+                <button v-if="this.matchesModel.hasNextPage" 
+                    v-on:click="getMatches(playerId, pageUp)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="this.matchesModel.hasPreviousPage"
+                    v-on:click="getMatches(playerId, pageDown)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in matches" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id">
+                    {{m.homeTeam.name}}
+                </a>
+
+                <a v-if="m.result === null" class="match-result" v-bind:href="'/match/'+ m.id">
+                    {{m.kickOff.substring(11,16)}}
+                </a>
+                <a v-else-if="m.won === true" class="match-result" style="background: var(--clr-win)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else-if="m.won === false" class="match-result" style="background: var(--clr-loss)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+                <a v-else class="match-result" style="background: var(--clr-draw)" v-bind:href="'/match/'+ m.id">
+                    {{m.result.homeScore}} : {{m.result.awayScore}}
+                </a>
+
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id">
+                    {{m.awayTeam.name}}
+                </a>
+            </div>
+        </div>
     </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                playerId: @Model.PlayerId,
+                loading: true,
+                playerModel: null,
+                matchesModel: null,
+            },
+            mounted() {
+                this.getPlayer(this.playerId)
+                this.getMatches(this.playerId, 1)
+            },
+            methods: {
+                getPlayer(id) {
+                    this.loading = true;
+                    axios.get('/api/players/' + id)
+                        .then(res => {
+                            this.playerModel = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getMatches(playerId, i) {
+                    this.loading = true;
+                    axios.get('/api/players/' + playerId + '/matches', {
+                        params: {
+                            index: i,
+                        },
+                    })
+                        .then(res => {
+                            this.matchesModel = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+                playerExists: function (){
+                    return this.playerModel !== null && this.playerModel !== "undefined"
+                },
+                matchesExist: function () {
+                    return this.matchesModel !== null && this.matchesModel.items !== null
+                },
+                pageDown: function() {
+                    return this.matchesModel.pageIndex - 1
+                },
+                pageUp: function() {
+                    return this.matchesModel.pageIndex + 1
+                },
+                player: function () {
+                    return this.playerModel
+                },
+                playerClub: function () {
+                    return this.playerModel.club.id
+                },
+                matches: function () {
+                    let _app = this
+
+                    if(_app.matchesModel && _app.matchesModel.items) {
+                        _app.matchesModel.items.forEach(function(m) {
+                            if(m.result !== null) {
+                                if(_app.playerClub == m.homeTeam.id && m.result.homeScore > m.result.awayScore ||
+                                    _app.playerClub == m.awayTeam.id && m.result.homeScore < m.result.awayScore) {
+                                    m.won = true
+                                } else if(_app.playerClub == m.homeTeam.id && m.result.homeScore < m.result.awayScore ||
+                                    _app.playerClub == m.awayTeam.id && m.result.homeScore > m.result.awayScore) {
+                                    m.won = false
+                                } else { 
+                                    m.won = null 
+                                }
+                            }
+                        })
+                    }
+
+                    return _app.matchesModel.items
+                },
+            }
+        });
+    </script>
 }

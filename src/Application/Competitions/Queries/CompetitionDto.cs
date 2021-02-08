@@ -9,16 +9,13 @@ namespace SoccerScores.Application.Competitions.Queries
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public CompetitionType Type { get; set; }
+        public string Type { get; set; }
         public string Country { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Competition, CompetitionDto>()
-                .ForMember(
-                    dest => dest.Country,
-                    opt => opt.MapFrom(src => src.Country.Name)
-                );
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Name));
         }
     }
 }
