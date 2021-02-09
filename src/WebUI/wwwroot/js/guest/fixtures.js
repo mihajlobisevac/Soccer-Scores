@@ -12,15 +12,14 @@
             this.loading = true;
             axios.get('/api/matches/fixtures')
                 .then(res => {
-                    console.log(res);
-                    this.competitions = res.data;
+                    this.competitions = res.data
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log(err)
                 })
                 .then(() => {
-                    this.loading = false;
-                });
+                    this.loading = false
+                })
         }
     },
     computed: {

@@ -18,10 +18,7 @@ namespace SoccerScores.Application.Countries.Queries
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Country, CountryDto>()
-                .ForMember(
-                    dest => dest.Cities, 
-                    opt => opt.MapFrom(src => src.Cities.Select(c => c.Name))
-                );
+                .ForMember(dest => dest.Cities, opt => opt.MapFrom(src => src.Cities.Select(c => c.Name)));
         }
     }
 }

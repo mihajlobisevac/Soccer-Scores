@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Domain.Enums;
 using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 
-namespace SoccerScores.Application.Competitions.Queries
+namespace SoccerScores.Application.Competitions.Queries.GetCompetition
 {
     public class CompetitionDto : IMapFrom<Competition>
     {

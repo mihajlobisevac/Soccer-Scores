@@ -3,22 +3,27 @@
 @{
 }
 
-<div class="title-dates">
-    <p>Competitions</p>
-</div>
+<div id="app">
+    <div class="title-dates">
+        <p>Competitions</p>
+    </div>
 
-@foreach (var country in Model.Countries)
-{
-    <div class="matches-container">
+    <div v-for="(country, index) in countries" class="matches-container">
         <div class="matches-comp">
             <div class="matches-comp-flag">
-                <img src="CountryFlag" alt="flag" />
+                <img v-bind:src="country.flag" alt="flag" />
             </div>
-            <div class="matches-comp-name">Coutnry Name</div>
+            <div class="matches-comp-name">{{country.name}}</div>
         </div>
-        @foreach (var tourney in Model.Countries) @*country.Tournaments*@
-        {
-            <a asp-page="/Standings" asp-route-id="1"><div class="competition-name">tourney.Name</div></a>
-        }
+        <template v-for="(competition, index) in country.competitions" >
+            <a v-if="competition.latestSeason" v-bind:href="competition.type + '/' + competition.latestSeason.id">
+                <div class="competition-name">{{competition.name}}</div>
+            </a>
+            <div v-else class="competition-name-disabled">{{competition.name}}</div>
+        </template>
     </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/guest/competitions.js"></script>
 }
