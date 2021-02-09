@@ -27,12 +27,14 @@ namespace SoccerScores.Application.Competitions.Queries.GetCompetitions
 
         public async Task<IEnumerable<CountryWithCompetitionsDto>> Handle(GetCompetitionsQuery request, CancellationToken cancellationToken)
         {
-            return await context.Countries
+            var countries = await context.Countries
                 .Where(x => x.Competitions.Any())
-                .Include(x => x.Competitions)
+                .Include(x => x.Competitions).ThenInclude(y => y.Seasons)
                 .OrderBy(x => x.Name)
                 .ProjectTo<CountryWithCompetitionsDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
+
+            return countries;
         }
     }
 }

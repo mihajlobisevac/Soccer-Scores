@@ -1,6 +1,9 @@
-﻿using SoccerScores.Application.Common.Mappings;
+﻿using AutoMapper;
+using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SoccerScores.Application.Competitions.Queries.GetCompetitions
 {
@@ -19,5 +22,19 @@ namespace SoccerScores.Application.Competitions.Queries.GetCompetitions
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
+        public SeasonViewModel LatestSeason { get; set; }
+
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Competition, CompetitionViewModel>()
+                .ForMember(dest => dest.LatestSeason, opt => 
+                    opt.MapFrom(src => src.Seasons.OrderBy(x => x.Start).FirstOrDefault()));
+        }
+    }
+
+    public class SeasonViewModel : IMapFrom<Season>
+    {
+        public int Id { get; set; }
     }
 }
