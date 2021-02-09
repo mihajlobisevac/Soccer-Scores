@@ -32,18 +32,5 @@ var app = new Vue({
         },
     },
     computed: {
-        // countriesWithCompetitions: function () {
-        //     let countries = this.countries
-            
-        //     if(countries) {
-        //         countries.forEach(country => {
-        //             country.competitions.forEach(c => {
-        //                 c.latestSeason = 1
-        //             })
-        //         })
-        //     }
-
-        //     return countries
-        // },
     }
 });
