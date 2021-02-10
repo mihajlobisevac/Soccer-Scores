@@ -7,7 +7,7 @@
         Match not found
     </div>
     <div v-else>
-        <a v-bind:href="'/standings/'+ season.id">
+        <a v-bind:href="'/' + season.type + '/' + season.id">
             <div class="result-match-info">
                 {{season.name}} | {{matchModel.kickOff.substring(0, 10)}} | KO {{matchModel.kickOff.substring(11, 16)}}
             </div>
