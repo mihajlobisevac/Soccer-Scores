@@ -537,3 +537,41 @@ nav {
     .btn-prev-next button:disabled {
         color: var(--clr-lgray);
     }
+
+/*===============================================================================================================================*/
+
+.input-form * {
+    margin: 0 0 1em 0;
+}
+
+.input-form h5 {
+    margin: 1em 0 1em 0;
+    font-weight: 500;
+    color: var(--clr-gray);
+}
+
+.input-form input {
+    padding: 0.5em 1em;
+    border: 1px solid var(--clr-dwhite);
+    width: calc(100% - 2em - 2px);
+}
+
+.confirm-discard {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirm-discard * {
+    padding: 0.5em 1em;
+    margin: 0 0.5em 0 0;
+}
+
+.btn-confirm {
+    color: var(--clr-dwhite);
+    background: var(--clr-gray);
+}
+
+.btn-discard {
+    color: var(--clr-gray);
+    background: var(--clr-dwhite);
+}

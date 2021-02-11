@@ -1,0 +1,54 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Countries.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <h5>Edit Country {{country.id}}</h5>
+        <div>Name</div>
+        <input v-model="country.name" />
+        <div>Flag</div>
+        <input v-model="country.flag" />
+        <div class="confirm-discard">
+            <button class="btn-confirm">Confirm</button>
+            <button class="btn-discard">Discard</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                countryId: @Model.CountryId,
+                loading: true,
+                country: null,
+            },
+            mounted() {
+                this.getCountry(this.countryId)
+            },
+            methods: {
+                getCountry(id) {
+                    this.loading = true;
+                    axios.get('/api/countries/' + id)
+                        .then(res => {
+                            this.country = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
