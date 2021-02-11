@@ -14,8 +14,8 @@
         <div>Flag</div>
         <input v-model="country.flag" />
         <div class="confirm-discard">
-            <button class="btn-confirm">Confirm</button>
-            <button class="btn-discard">Discard</button>
+            <button v-on:click="updateCountry(countryId)" class="btn-confirm">Confirm</button>
+            <button v-on:click="getCountry(countryId)" class="btn-discard">Discard</button>
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@
             data: {
                 countryId: @Model.CountryId,
                 loading: true,
-                country: null,
+                countryModel: null,
             },
             mounted() {
                 this.getCountry(this.countryId)
@@ -38,6 +38,19 @@
                     axios.get('/api/countries/' + id)
                         .then(res => {
                             this.country = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                updateCountry(id) {
+                    this.loading = true;
+                    axios.put('/api/countries/' + id, this.country)
+                        .then(res => {
+                            console.log(res);
                         })
                         .catch(err => {
                             console.log(err);
