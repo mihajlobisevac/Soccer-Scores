@@ -1,0 +1,27 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Countries.IndexModel
+@{
+}
+
+<div id="app">
+    <div>Countries panel</div>
+    
+    <div v-for="(c, index) in countries" class="matches-container">
+        <div class="matches-comp">
+            <div class="matches-comp-flag">
+                <img v-bind:src="c.flag" alt="flag" />
+            </div>
+            <div class="matches-comp-name">{{c.id}} | {{c.name}}</div>
+            <a v-bind:href="'countries/edit/' + c.id" style="margin-left:1em">
+                Edit
+            </a>
+            <a style="margin-left:1em;color:var(--clr-dwhite)">
+                Delete
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin/countries.js"></script>
+}

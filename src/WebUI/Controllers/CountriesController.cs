@@ -4,13 +4,14 @@ using SoccerScores.Application.Countries.Queries;
 using SoccerScores.Application.Countries.Commands.CreateCountry;
 using SoccerScores.Application.Countries.Commands.DeleteCountry;
 using SoccerScores.Application.Countries.Commands.UpdateCountry;
+using System.Collections.Generic;
 
 namespace SoccerScores.WebUI.Controllers
 {
     public class CountriesController : ApiControllerBase
     {
         [HttpGet("all")]
-        public async Task<ActionResult<CountriesVm>> Get()
+        public async Task<IEnumerable<CountryDto>> Get()
         {
             return await Mediator.Send(new GetCountriesQuery());
         }

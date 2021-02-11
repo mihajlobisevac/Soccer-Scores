@@ -3,16 +3,17 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SoccerScores.Application.Countries.Queries
 {
-    public class GetCountriesQuery : IRequest<CountriesVm>
+    public class GetCountriesQuery : IRequest<IEnumerable<CountryDto>>
     {
     }
 
-    public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, CountriesVm>
+    public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, IEnumerable<CountryDto>>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -23,14 +24,11 @@ namespace SoccerScores.Application.Countries.Queries
             this.mapper = mapper;
         }
 
-        public async Task<CountriesVm> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<CountryDto>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
         {
-            return new CountriesVm
-            {
-                Countries = await context.Countries
-                    .ProjectTo<CountryDto>(mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken)
-            };
+            return await context.Countries
+                .ProjectTo<CountryDto>(mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
         }
     }
 }

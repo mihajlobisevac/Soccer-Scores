@@ -6,22 +6,24 @@
     <title>@ViewData["Title"] - Scores.UI</title>
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
-<body style="margin: 1em">
-    <header>
-        <a asp-page="/Admin/Index">Admin Panel</a>
-        <nav>
-            <a asp-page="/Admin/Countries">Countries</a>
-            <a asp-page="/Admin/Cities">Cities</a>
-            <a asp-page="/Admin/Competitions">Competitions</a>
-            <a asp-page="/Admin/Clubs">Clubs</a>
-            <a asp-page="/Admin/Players">Players</a>
-            <a asp-page="/Admin/Matches">Matches</a>
-        </nav>
-    </header>
+<body>
+    <div class="main-container">
+        <header>
+            <a asp-page="/Admin/Index">Admin Panel</a>
+            <nav>
+                <a asp-page="/Admin/Countries/Index">Countries</a>
+                <a asp-page="/Admin/Cities">Cities</a>
+                <a asp-page="/Admin/Competitions">Competitions</a>
+                <a asp-page="/Admin/Clubs">Clubs</a>
+                <a asp-page="/Admin/Players">Players</a>
+                <a asp-page="/Admin/Matches">Matches</a>
+            </nav>
+        </header>
 
-    <main>
-        @RenderBody()
-    </main>
+        <main>
+            @RenderBody()
+        </main>
+    </div>
 
     <script src="~/js/site.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>

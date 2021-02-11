@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,9 +24,7 @@ namespace SoccerScores.Application.Countries.Queries
 
         public async Task<CountryDto> Handle(GetCountryQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.Countries
-                .Include(x => x.Cities)
-                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var entity = await context.Countries.FindAsync(request.Id);
 
             return mapper.Map<CountryDto>(entity);
         }
