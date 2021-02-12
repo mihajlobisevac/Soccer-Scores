@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model SoccerScores.WebUI.Pages.Admin.Countries.EditModel
+@model SoccerScores.WebUI.Pages.Admin.Cities.EditModel
 @{
 }
 
@@ -8,14 +8,12 @@
         Loading...
     </div>
     <div v-else class="input-form">
-        <h5>Edit Country {{country.id}}</h5>
+        <h5>Edit City {{city.id}}</h5>
         <div>Name</div>
-        <input v-model="country.name" />
-        <div>Flag</div>
-        <input v-model="country.flag" />
+        <input v-model="city.name" />
         <div class="confirm-discard">
-            <button v-on:click="updateCountry(countryId)" class="btn-confirm">Confirm</button>
-            <button v-on:click="getCountry(countryId)" class="btn-discard">Discard</button>
+            <button v-on:click="updateCity(cityId)" class="btn-confirm">Confirm</button>
+            <button v-on:click="getCity(cityId)" class="btn-discard">Discard</button>
         </div>
     </div>
 </div>
@@ -25,19 +23,19 @@
         var app = new Vue({
             el: '#app',
             data: {
-                countryId: @Model.CountryId,
+                cityId: @Model.CityId,
                 loading: true,
-                country: null,
+                city: null,
             },
             mounted() {
-                this.getCountry(this.countryId)
+                this.getCity(this.cityId)
             },
             methods: {
-                getCountry(id) {
+                getCity(id) {
                     this.loading = true;
-                    axios.get('/api/countries/' + id)
+                    axios.get('/api/cities/' + id)
                         .then(res => {
-                            this.country = res.data
+                            this.city = res.data
                         })
                         .catch(err => {
                             console.log(err);
@@ -46,9 +44,9 @@
                             this.loading = false;
                         });
                 },
-                updateCountry(id) {
+                updateCity(id) {
                     this.loading = true;
-                    axios.put('/api/countries/' + id, this.country)
+                    axios.put('/api/cities/' + id, this.city)
                         .then(res => {
                             console.log(res);
                         })

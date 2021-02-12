@@ -561,7 +561,7 @@ nav {
     justify-content: flex-end;
 }
 
-.confirm-discard * {
+.btn-confirm, .btn-discard {
     padding: 0.5em 1em;
     margin: 0 0.5em 0 0;
 }
@@ -574,4 +574,35 @@ nav {
 .btn-discard {
     color: var(--clr-gray);
     background: var(--clr-dwhite);
+}
+
+.btn-edit, .btn-delete, .btn-disabled {
+    border-radius: 4px;
+    padding: 0.25em 0.5em;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.btn-edit {
+    color: var(--clr-lgray);
+    background: var(--clr-dwhite);
+}
+
+    .btn-edit:hover {
+        color: var(--clr-gray);
+    }
+
+.btn-delete {
+    color: var(--clr-lgray);
+    background: var(--clr-white);
+    border: 1px solid var(--clr-dwhite);
+}
+
+    .btn-delete:hover {
+        color: var(--clr-gray);
+    }
+
+.btn-disabled {
+    color: var(--clr-dwhite);
+    border: 1px solid var(--clr-dwhite);
 }
