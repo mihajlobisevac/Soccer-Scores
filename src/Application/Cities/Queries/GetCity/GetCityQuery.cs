@@ -5,7 +5,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Cities.Queries
+namespace SoccerScores.Application.Cities.Queries.GetCity
 {
     public class GetCityQuery : IRequest<CityDto>
     {

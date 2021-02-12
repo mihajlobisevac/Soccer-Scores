@@ -1,0 +1,34 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Cities.IndexModel
+@{
+}
+
+<div id="app">
+    <div>Cities panel</div>
+
+    <template v-if="loading === false" v-for="(country, index) in countries">
+        <div class="matches-container">
+            <div class="matches-comp">
+                <div class="matches-comp-flag">
+                    <img v-bind:src="country.flag" alt="flag" />
+                </div>
+                <div class="matches-comp-name">{{country.name}}</div>
+            </div>
+        </div>
+        <div v-for="(city, index) in country.cities" class="matches-container">
+            <div class="matches-comp">
+                <a v-bind:href="'cities/edit/' + city.id" class="btn-edit" style="margin-left:1em">
+                    Edit
+                </a>
+                <a class="btn-disabled" style="margin-left:1em">
+                    Delete
+                </a>
+                <div style="margin:0 0 0 1em">{{city.id}} | {{city.name}}</div>
+            </div>
+        </div>
+    </template>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin/cities.js"></script>
+}

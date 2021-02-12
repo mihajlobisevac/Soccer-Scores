@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Cities.Queries;
+using SoccerScores.Application.Cities.Queries.GetCity;
+using SoccerScores.Application.Cities.Queries.GetCities;
 using SoccerScores.Application.Cities.Commands.CreateCity;
 using SoccerScores.Application.Cities.Commands.UpdateCity;
 using SoccerScores.Application.Cities.Commands.DeleteCity;
+using System.Collections.Generic;
 
 namespace SoccerScores.WebUI.Controllers
 {
     public class CitiesController : ApiControllerBase
     {
         [HttpGet("all")]
-        public async Task<ActionResult<CitiesVm>> Get()
+        public async Task<IEnumerable<CountryWithCitiesDto>> Get()
         {
             return await Mediator.Send(new GetCitiesQuery());
         }
