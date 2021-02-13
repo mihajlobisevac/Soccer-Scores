@@ -1,0 +1,65 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Countries.CreateModel
+@{
+}
+
+<div id="app">
+    <div v-if="created === false" class="input-form">
+        <h5>Create Country</h5>
+        <div>Name</div>
+        <input v-model="country.name" />
+        <div>Flag</div>
+        <input v-model="country.flag" />
+        <div class="confirm-discard">
+            <button v-on:click="createCountry()" class="btn-confirm">Confirm</button>
+            <button v-on:click="discardCountry()" class="btn-discard">Discard</button>
+        </div>
+    </div>
+    <div v-if="created === true">
+        <div class="basic-message">Successfully created {{country.name}}</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                created: false,
+                country: {
+                    name: "",
+                    flag: "",
+                },
+            },
+            mounted() {
+            },
+            methods: {
+                createCountry() {
+                    axios.post('/api/countries/', this.country)
+                        .then(res => {
+                            this.created = true
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                discardCountry() {
+                    this.country = {
+                        name: "",
+                        flag: "",
+                    }
+                },
+                createNew() {
+                    discardCountry()
+                    this.created = false
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
