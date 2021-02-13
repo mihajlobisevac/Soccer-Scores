@@ -4,10 +4,13 @@
 }
 
 <div id="app">
-    <div>Cities panel</div>
+    <div class="basic-message">Cities Panel</div>
+    <a href="cities/create" class="btn-confirm" style="font-size:0.9rem">
+        Create New
+    </a>
 
     <template v-if="loading === false" v-for="(country, index) in countries">
-        <div class="matches-container">
+        <div class="matches-container" style="margin:2em 0 0 0">
             <div class="matches-comp">
                 <div class="matches-comp-flag">
                     <img v-bind:src="country.flag" alt="flag" />
@@ -15,8 +18,8 @@
                 <div class="matches-comp-name">{{country.name}}</div>
             </div>
         </div>
-        <div v-for="(city, index) in country.cities" class="matches-container">
-            <div class="matches-comp">
+        <div v-for="(city, index) in country.cities" class="matches-container" style="margin-bottom:0">
+            <div class="matches-comp" style="margin-top:0">
                 <a v-bind:href="'cities/edit/' + city.id" class="btn-edit" style="margin-left:1em">
                     Edit
                 </a>

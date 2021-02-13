@@ -556,6 +556,13 @@ nav {
     width: calc(100% - 2em - 2px);
 }
 
+.input-form select {
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border: 1px solid var(--clr-dwhite);
+    width: 100%;
+}
+
 .confirm-discard {
     display: flex;
     justify-content: flex-end;
