@@ -1,11 +1,11 @@
 ﻿@page
-@model SoccerScores.WebUI.Pages.Admin.Cities.IndexModel
+@model SoccerScores.WebUI.Pages.Admin.Competitions.IndexModel
 @{
 }
 
 <div id="app">
-    <div class="basic-message">Cities Panel</div>
-    <a href="cities/create" class="btn-confirm" style="font-size:0.9rem">
+    <div class="basic-message">Competitions Panel</div>
+    <a href="competitions/create" class="btn-confirm" style="font-size:0.9rem">
         Create New
     </a>
 
@@ -18,20 +18,20 @@
                 <div class="matches-comp-name">{{country.name}}</div>
             </div>
         </div>
-        <div v-for="(city, index) in country.cities" class="matches-container" style="margin-bottom:0">
+        <div v-for="(competition, index) in country.competitions" class="matches-container" style="margin-bottom:0">
             <div class="matches-comp" style="margin-top:0">
-                <a v-bind:href="'cities/edit/' + city.id" class="btn-edit" style="margin-left:1em">
+                <a v-bind:href="'competitions/edit/' + competition.id" class="btn-edit" style="margin-left:1em">
                     Edit
                 </a>
                 <a class="btn-disabled" style="margin-left:1em">
                     Delete
                 </a>
-                <div style="margin-left:1em">{{city.name}}</div>
+                <div style="margin-left:1em">{{competition.name}}</div>
             </div>
         </div>
     </template>
 </div>
 
 @section Scripts {
-    <script src="~/js/admin/cities.js"></script>
+    <script src="~/js/admin/competitions.js"></script>
 }
