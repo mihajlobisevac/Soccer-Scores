@@ -1,0 +1,95 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Competitions.CreateModel
+@{
+}
+
+<div id="app">
+    <div v-if="created === false" class="input-form">
+        <h5>Create Competition</h5>
+        <div>Name</div>
+        <input v-model="competition.name" />
+        <div>Type</div>
+        <select v-model="competition.type">
+            <option disabled>Please select one</option>
+            <option v-for="(type, index) in types" v-bind:value="type">
+                {{type}}
+            </option>
+        </select>
+        <div>Country</div>
+        <select v-model="competition.countryId">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in countries" v-bind:value="country.id">
+                {{country.name}}
+            </option>
+        </select>
+        <div class="confirm-discard">
+            <button v-on:click="createCompetition()" class="btn-confirm">Confirm</button>
+            <button v-on:click="discardCompetition()" class="btn-discard">Discard</button>
+        </div>
+    </div>
+    <div v-if="created === true">
+        <div class="basic-message">Successfully created {{competition.name}}</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                created: false,
+                competition: {
+                    name: "",
+                    type: "",
+                    countryId: 0,
+                },
+                countries: null,
+                types: @Html.Raw(Json.Serialize(Model.CompetitionTypes)),
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries() {
+                    this.loading = true;
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                createCompetition() {
+                    axios.post('/api/competitions/', this.competition)
+                        .then(res => {
+                            this.created = true
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                discardCompetition() {
+                    this.competition = {
+                        name: "",
+                        type: "",
+                        countryId: 0,
+                    }
+                },
+                createNew() {
+                    this.discardCompetition()
+                    this.created = false
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
