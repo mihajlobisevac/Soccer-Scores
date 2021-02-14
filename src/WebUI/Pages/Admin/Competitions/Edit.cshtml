@@ -15,6 +15,26 @@
             <button v-on:click="updateCompetition(competitionId)" class="btn-confirm">Confirm</button>
             <button v-on:click="getCompetition(competitionId)" class="btn-discard">Discard</button>
         </div>
+
+        <template v-if="seasons">
+            <h5>Edit Season</h5>
+            <select v-model="seasonId">
+                <option disabled>Please select one</option>
+                <option v-for="(season, index) in seasons" v-bind:value="season.id">
+                    {{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}
+                </option>
+            </select>
+            <template v-if="season">
+                <div>Start</div>
+                <input v-model="season.start" />
+                <div>End</div>
+                <input v-model="season.end" />
+                <div class="confirm-discard">
+                    <button v-on:click="updateSeason(seasonId)" class="btn-confirm">Confirm</button>
+                    <button v-on:click="discardSeason()" class="btn-discard">Discard</button>
+                </div>
+            </template>
+        </template>
     </div>
 </div>
 
@@ -26,9 +46,12 @@
                 competitionId: @Model.CompetitionId,
                 loading: true,
                 competition: null,
+                seasons: null,
+                seasonId: 0,
             },
             mounted() {
                 this.getCompetition(this.competitionId)
+                this.getSeasons(this.competitionId)
             },
             methods: {
                 getCompetition(id) {
@@ -36,6 +59,19 @@
                     axios.get('/api/competitions/' + id)
                         .then(res => {
                             this.competition = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getSeasons(id) {
+                    this.loading = true;
+                    axios.get('/api/seasons/competition/' + id)
+                        .then(res => {
+                            this.seasons = res.data
                         })
                         .catch(err => {
                             console.log(err);
@@ -57,8 +93,27 @@
                             this.loading = false;
                         });
                 },
+                updateSeason(id) {
+                    this.loading = true;
+                    axios.put('/api/seasons/' + id, this.season)
+                        .then(res => {
+                            console.log(res);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                discardSeason() {
+                    this.getSeasons(this.competitionId)
+                },
             },
             computed: {
+                season: function () {
+                    return this.seasons.find(x => x.id === this.seasonId)
+                },
             }
         });
     </script>
