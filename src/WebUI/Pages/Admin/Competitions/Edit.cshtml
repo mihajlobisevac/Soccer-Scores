@@ -1,0 +1,65 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Competitions.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <h5>Edit Competition {{competition.id}}</h5>
+        <div>Name</div>
+        <input v-model="competition.name" />
+        <div class="confirm-discard">
+            <button v-on:click="updateCompetition(competitionId)" class="btn-confirm">Confirm</button>
+            <button v-on:click="getCompetition(competitionId)" class="btn-discard">Discard</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                competitionId: @Model.CompetitionId,
+                loading: true,
+                competition: null,
+            },
+            mounted() {
+                this.getCompetition(this.competitionId)
+            },
+            methods: {
+                getCompetition(id) {
+                    this.loading = true;
+                    axios.get('/api/competitions/' + id)
+                        .then(res => {
+                            this.competition = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                updateCompetition(id) {
+                    this.loading = true;
+                    axios.put('/api/competitions/' + id, this.competition)
+                        .then(res => {
+                            console.log(res);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
