@@ -556,12 +556,20 @@ nav {
     width: calc(100% - 2em - 2px);
 }
 
+.input-form select {
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border: 1px solid var(--clr-dwhite);
+    width: 100%;
+}
+
 .confirm-discard {
     display: flex;
     justify-content: flex-end;
 }
 
 .btn-confirm, .btn-discard {
+    display: inline-block;
     padding: 0.5em 1em;
     margin: 0 0.5em 0 0;
 }
@@ -577,6 +585,7 @@ nav {
 }
 
 .btn-edit, .btn-delete, .btn-disabled {
+    display: inline-block;
     border-radius: 4px;
     padding: 0.25em 0.5em;
     font-weight: 600;
@@ -605,4 +614,10 @@ nav {
 .btn-disabled {
     color: var(--clr-dwhite);
     border: 1px solid var(--clr-dwhite);
+}
+
+.basic-message {
+    font-size: 1.1rem;
+    color: var(--clr-lgray);
+    margin: 1em 0 1em 0;
 }

@@ -1,0 +1,85 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Cities.CreateModel
+@{
+}
+
+<div id="app">
+    <div v-if="created === false" class="input-form">
+        <h5>Create City</h5>
+        <div>Name</div>
+        <input v-model="city.name" />
+        <div>Country</div>
+        <select v-model="city.countryId">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in countries" v-bind:value="country.id">
+                {{country.name}}
+            </option>
+        </select>
+        <div class="confirm-discard">
+            <button v-on:click="createCity()" class="btn-confirm">Confirm</button>
+            <button v-on:click="discardCity()" class="btn-discard">Discard</button>
+        </div>
+    </div>
+    <div v-if="created === true">
+        <div class="basic-message">Successfully created {{city.name}}</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                created: false,
+                city: {
+                    name: "",
+                    countryId: 0,
+                },
+                countries: null,
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries() {
+                    this.loading = true;
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                createCity() {
+                    axios.post('/api/cities/', this.city)
+                        .then(res => {
+                            this.created = true
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                discardCity() {
+                    this.city = {
+                        name: "",
+                        countryId: 0,
+                    }
+                },
+                createNew() {
+                    this.discardCity()
+                    this.created = false
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}

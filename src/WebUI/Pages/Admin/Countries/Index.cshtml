@@ -4,20 +4,25 @@
 }
 
 <div id="app">
-    <div>Countries panel</div>
-    
-    <div v-for="(c, index) in countries" class="matches-container">
-        <div class="matches-comp">
-            <div class="matches-comp-flag">
-                <img v-bind:src="c.flag" alt="flag" />
+    <div class="basic-message">Countries Panel</div>
+    <a href="countries/create" class="btn-confirm" style="font-size:0.9rem">
+        Create New
+    </a>
+
+    <div style="margin-top:2em">
+        <div v-for="(c, index) in countries" class="matches-container" style="margin-bottom:0">
+            <div class="matches-comp">
+                <div class="matches-comp-flag">
+                    <img v-bind:src="c.flag" alt="flag" />
+                </div>
+                <a v-bind:href="'countries/edit/' + c.id" class="btn-edit" style="margin-right:1em">
+                    Edit
+                </a>
+                <a class="btn-disabled" style="margin-right:1em">
+                    Delete
+                </a>
+                <div class="matches-comp-name" style="cursor:auto">{{c.id}} | {{c.name}}</div>
             </div>
-            <a v-bind:href="'countries/edit/' + c.id" class="btn-edit" style="margin-right:1em">
-                Edit
-            </a>
-            <a class="btn-disabled" style="margin-right:1em">
-                Delete
-            </a>
-            <div class="matches-comp-name">{{c.id}} | {{c.name}}</div>
         </div>
     </div>
 </div>
