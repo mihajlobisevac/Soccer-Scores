@@ -3,4 +3,94 @@
 @{
 }
 
-<div>Clubs panel</div>
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <div>Clubs panel</div>
+
+        <div>Select Country</div>
+        <select v-model="selectedCountry">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in countries" v-bind:value="country">
+                {{country.name}}
+            </option>
+        </select>
+
+        <template v-if="selectedCountry !== null">
+            <div>Select Competition</div>
+            <select v-model="selectedCompetition">
+                <option disabled>Please select one</option>
+                <option v-for="(competition, index) in selectedCountry.competitions" v-bind:value="competition">
+                    {{competition.name}}
+                </option>
+            </select>
+        </template>
+
+        <template v-if="selectedCompetition !== null">
+            <div>Clubs</div>
+            <template v-if="clubs !== null">
+                <div v-for="(club, index) in clubs" class="matches-container" style="margin-bottom:0">
+                    <div class="matches-comp" style="margin-top:0">
+                        <a v-bind:href="'clubs/edit/' + club.id" class="btn-edit btn-small" style="margin-left:1em">
+                            Edit
+                        </a>
+                        <a class="btn-disabled btn-small" style="margin-left:0.5em">
+                            Delete
+                        </a>
+                        <div style="margin-left:1em">{{club.name}}</div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                countries: null,
+                selectedCountry: null,
+                selectedCompetition: null,
+                clubs: null,
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries(id) {
+                    this.loading = true;
+                    axios.get('/api/competitions/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getClubs(competitionId) {
+                    this.loading = true;
+                    axios.get('/api/competitions/' + competitionId + '/clubs')
+                        .then(res => {
+                            this.clubs = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
