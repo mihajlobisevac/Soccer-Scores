@@ -574,6 +574,10 @@ nav {
     margin: 0 0.5em 0 0;
 }
 
+    .btn-confirm:last-child, .btn-discard:last-child {
+        margin: 0;
+    }
+
 .btn-confirm {
     color: var(--clr-dwhite);
     background: var(--clr-gray);
@@ -584,7 +588,7 @@ nav {
     background: var(--clr-dwhite);
 }
 
-.btn-edit, .btn-delete, .btn-disabled {
+.btn-small {
     display: inline-block;
     border-radius: 4px;
     padding: 0.25em 0.5em;
@@ -612,12 +616,38 @@ nav {
     }
 
 .btn-disabled {
-    color: var(--clr-dwhite);
-    border: 1px solid var(--clr-dwhite);
+    color: var(--clr-lgray);
+    cursor: auto;
 }
+    .btn-disabled:focus {
+        outline: none;
+    }
 
 .basic-message {
     font-size: 1.1rem;
     color: var(--clr-lgray);
     margin: 1em 0 1em 0;
+}
+
+.tabs {
+    font-size: 0;
+}
+
+.tab, .tab-selected {
+    color: var(--clr-gray);
+    padding: 0.5em 1em;
+    font-size: 1rem;
+}
+
+.tab {
+    color: var(--clr-lgray);
+    border-bottom: 1px solid var(--clr-dwhite);
+}
+
+.tab-selected {
+    border-bottom: 1px solid var(--clr-gray);
+}
+
+.tab:focus, .tab-selected:focus {
+    outline: none;
 }

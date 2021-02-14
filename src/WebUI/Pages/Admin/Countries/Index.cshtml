@@ -15,10 +15,10 @@
                 <div class="matches-comp-flag">
                     <img v-bind:src="c.flag" alt="flag" />
                 </div>
-                <a v-bind:href="'countries/edit/' + c.id" class="btn-edit" style="margin-right:1em">
+                <a v-bind:href="'countries/edit/' + c.id" class="btn-edit btn-small" style="margin-right:0.5em">
                     Edit
                 </a>
-                <a class="btn-disabled" style="margin-right:1em">
+                <a class="btn-disabled btn-small" style="margin-right:0.5em">
                     Delete
                 </a>
                 <div class="matches-comp-name" style="cursor:auto">{{c.id}} | {{c.name}}</div>

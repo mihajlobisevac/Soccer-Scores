@@ -5,13 +5,14 @@ using SoccerScores.Application.Leagues.Queries.Models;
 using SoccerScores.Application.Leagues.Queries.GetLeagueTable;
 using SoccerScores.Application.Seasons.Commands.CreateSeason;
 using SoccerScores.Application.Seasons.Commands.DeleteSeason;
+using System.Collections.Generic;
 
 namespace SoccerScores.WebUI.Controllers
 {
     public class SeasonsController : ApiControllerBase
     {
         [HttpGet("competition/{id}")]
-        public async Task<ActionResult<SeasonsVm>> GetByCompetition(int id)
+        public async Task<IEnumerable<SeasonDto>> GetByCompetition(int id)
         {
             return await Mediator.Send(new GetSeasonsByCompetitionQuery { CompetitionId = id });
         }
