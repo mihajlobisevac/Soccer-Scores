@@ -16,24 +16,45 @@
             <button v-on:click="getCompetition(competitionId)" class="btn-discard">Discard</button>
         </div>
 
-        <template v-if="seasons">
-            <h5>Edit Season</h5>
-            <select v-model="seasonId">
-                <option disabled>Please select one</option>
-                <option v-for="(season, index) in seasons" v-bind:value="season.id">
-                    {{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}
-                </option>
-            </select>
-            <template v-if="season">
-                <div>Start</div>
-                <input v-model="season.start" />
-                <div>End</div>
-                <input v-model="season.end" />
-                <div class="confirm-discard">
-                    <button v-on:click="updateSeason(seasonId)" class="btn-confirm">Confirm</button>
-                    <button v-on:click="discardSeason()" class="btn-discard">Discard</button>
-                </div>
+        <h5>Manage Seasons</h5>
+        <div class="tabs">
+            <button v-on:click="seasonEditing(true)"
+                    v-bind:class="[ editingSeason ? 'tab-selected' : 'tab' ]">
+                Edit
+            </button>
+            <button v-on:click="seasonEditing(false)"
+                    v-bind:class="[ editingSeason ? 'tab' : 'tab-selected' ]">
+                Create
+            </button>
+        </div>
+        <template v-if="editingSeason == true">
+            <template v-if="seasons && seasons.length > 0">
+                <select v-model="seasonId">
+                    <option disabled>Please select one</option>
+                    <option v-for="(season, index) in seasons" v-bind:value="season.id">
+                        {{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}
+                    </option>
+                </select>
+                <template v-if="season">
+                    <div>Start</div>
+                    <input v-model="season.start" />
+                    <div>End</div>
+                    <input v-model="season.end" />
+                    <div class="confirm-discard">
+                        <button class="btn-discard btn-disabled">Confirm</button>
+                        <button class="btn-discard btn-disabled">Discard</button>
+                    </div>
+                </template>
             </template>
+        </template>
+        <template v-else>
+            <div>Start</div>
+            <input v-model="seasonModel.start" />
+            <div>End</div>
+            <input v-model="seasonModel.end" />
+            <div class="confirm-discard">
+                <button v-on:click="createSeason()" class="btn-confirm">Create</button>
+            </div>
         </template>
     </div>
 </div>
@@ -48,6 +69,12 @@
                 competition: null,
                 seasons: null,
                 seasonId: 0,
+                editingSeason: true,
+                seasonModel: {
+                    start: "2020-01-01",
+                    end: "2020-01-01",
+                    competitionId: @Model.CompetitionId,
+                },
             },
             mounted() {
                 this.getCompetition(this.competitionId)
@@ -61,7 +88,7 @@
                             this.competition = res.data
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
@@ -74,7 +101,7 @@
                             this.seasons = res.data
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
@@ -84,10 +111,10 @@
                     this.loading = true;
                     axios.put('/api/competitions/' + id, this.competition)
                         .then(res => {
-                            console.log(res);
+                            console.log(res)
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
@@ -97,10 +124,24 @@
                     this.loading = true;
                     axios.put('/api/seasons/' + id, this.season)
                         .then(res => {
-                            console.log(res);
+                            console.log(res)
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                createSeason(id) {
+                    this.loading = true;
+                    axios.post('/api/seasons/', this.seasonModel)
+                        .then(res => {
+                            this.getSeasons(this.competitionId)
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
@@ -108,6 +149,9 @@
                 },
                 discardSeason() {
                     this.getSeasons(this.competitionId)
+                },
+                seasonEditing(state) {
+                    this.editingSeason = state
                 },
             },
             computed: {

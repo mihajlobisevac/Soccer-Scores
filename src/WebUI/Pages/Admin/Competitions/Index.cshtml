@@ -20,10 +20,10 @@
         </div>
         <div v-for="(competition, index) in country.competitions" class="matches-container" style="margin-bottom:0">
             <div class="matches-comp" style="margin-top:0">
-                <a v-bind:href="'competitions/edit/' + competition.id" class="btn-edit" style="margin-left:1em">
+                <a v-bind:href="'competitions/edit/' + competition.id" class="btn-edit btn-small" style="margin-left:1em">
                     Edit
                 </a>
-                <a class="btn-disabled" style="margin-left:1em">
+                <a class="btn-disabled btn-small" style="margin-left:0.5em">
                     Delete
                 </a>
                 <div style="margin-left:1em">{{competition.name}}</div>
