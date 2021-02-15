@@ -9,6 +9,9 @@
     </div>
     <div v-else class="input-form">
         <div>Clubs panel</div>
+        <a href="clubs/create" class="btn-confirm" style="font-size:0.9rem;margin-bottom:1em">
+            Create New
+        </a>
 
         <div>Select Country</div>
         <select v-model="selectedCountry" v-on:change="getClubs()">
@@ -18,22 +21,20 @@
             </option>
         </select>
 
-        <template v-if="selectedCompetition !== null">
-            <div>Clubs</div>
-            <template v-if="clubs !== null">
-                <div v-for="(club, index) in clubs" class="matches-container" style="margin-bottom:0">
-                    <div class="matches-comp" style="margin-top:0">
-                        <a v-bind:href="'clubs/edit/' + club.id" class="btn-edit btn-small" style="margin-left:1em">
-                            Edit
-                        </a>
-                        <a class="btn-disabled btn-small" style="margin-left:0.5em">
-                            Delete
-                        </a>
-                        <img v-bind:src="club.crest" style="max-height:2em;margin-left:0.5em" />
-                        <div style="margin-left:1em">{{club.name}}</div>
-                    </div>
+        <div>Clubs</div>
+        <template v-if="clubs !== null">
+            <div v-for="(club, index) in clubs" class="matches-container" style="margin-bottom:0">
+                <div class="matches-comp" style="margin-top:0">
+                    <a v-bind:href="'clubs/edit/' + club.id" class="btn-edit btn-small" style="margin-left:1em">
+                        Edit
+                    </a>
+                    <a class="btn-disabled btn-small" style="margin-left:0.5em">
+                        Delete
+                    </a>
+                    <img v-bind:src="club.crest" style="max-height:2em;margin-left:0.5em" />
+                    <div style="margin-left:1em">{{club.name}}</div>
                 </div>
-            </template>
+            </div>
         </template>
     </div>
 </div>

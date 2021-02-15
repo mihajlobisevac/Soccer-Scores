@@ -1,0 +1,123 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Clubs.CreateModel
+@{
+}
+
+<div id="app">
+    <div v-if="created === false" class="input-form">
+        <h5>Create Club</h5>
+        <div>Name</div>
+        <input v-model="club.name" />
+        <div>Crest</div>
+        <input v-model="club.crest" />
+        <div>Venue</div>
+        <input v-model="club.venue" />
+        <div>Year Founded</div>
+        <input v-model="club.yearFounded" />
+        <div>Country</div>
+        <select v-model="countryId" v-on:change="getCities()">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in countries" v-bind:value="country.id">
+                {{country.name}}
+            </option>
+        </select>
+        <template v-if="cities !== null">
+            <div>City</div>
+            <select v-model="club.cityId">
+                <option disabled>Please select one</option>
+                <option v-for="(city, index) in cities" v-bind:value="city.id">
+                    {{city.name}}
+                </option>
+            </select>
+        </template>
+        <div class="confirm-discard">
+            <button v-on:click="createClub()" class="btn-confirm">Confirm</button>
+            <button v-on:click="discardClub()" class="btn-discard">Discard</button>
+        </div>
+    </div>
+    <div v-else>
+        <div class="basic-message">Successfully created {{club.name}}</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                created: false,
+                club: {
+                    name: "",
+                    crest: "",
+                    venue: "",
+                    yearFounded: "",
+                    cityId: 0,
+                },
+                countries: null,
+                countryId: null,
+                cities: null,
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries() {
+                    this.loading = true
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getCities() {
+                    if (this.countryId) {
+                        this.loading = true
+                        axios.get('/api/cities/country/' + this.countryId)
+                            .then(res => {
+                                this.cities = res.data
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            .then(() => {
+                                this.loading = false
+                            })
+                    }
+                },
+                createClub() {
+                    axios.post('/api/clubs/', this.club)
+                        .then(res => {
+                            this.created = true
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                discardClub() {
+                    this.club = {
+                        name: "",
+                        crest: "",
+                        venue: "",
+                        yearFounded: "",
+                        cityId: 0,
+                    }
+                },
+                createNew() {
+                    this.discardClub()
+                    this.created = false
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
