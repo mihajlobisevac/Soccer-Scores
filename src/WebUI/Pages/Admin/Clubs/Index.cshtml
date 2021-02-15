@@ -11,22 +11,12 @@
         <div>Clubs panel</div>
 
         <div>Select Country</div>
-        <select v-model="selectedCountry">
+        <select v-model="selectedCountry" v-on:change="getClubs()">
             <option disabled>Please select one</option>
             <option v-for="(country, index) in countries" v-bind:value="country">
                 {{country.name}}
             </option>
         </select>
-
-        <template v-if="selectedCountry !== null">
-            <div>Select Competition</div>
-            <select v-model="selectedCompetition">
-                <option disabled>Please select one</option>
-                <option v-for="(competition, index) in selectedCountry.competitions" v-bind:value="competition">
-                    {{competition.name}}
-                </option>
-            </select>
-        </template>
 
         <template v-if="selectedCompetition !== null">
             <div>Clubs</div>
@@ -39,6 +29,7 @@
                         <a class="btn-disabled btn-small" style="margin-left:0.5em">
                             Delete
                         </a>
+                        <img v-bind:src="club.crest" style="max-height:2em;margin-left:0.5em" />
                         <div style="margin-left:1em">{{club.name}}</div>
                     </div>
                 </div>
@@ -55,7 +46,6 @@
                 loading: true,
                 countries: null,
                 selectedCountry: null,
-                selectedCompetition: null,
                 clubs: null,
             },
             mounted() {
@@ -75,18 +65,20 @@
                             this.loading = false;
                         });
                 },
-                getClubs(competitionId) {
-                    this.loading = true;
-                    axios.get('/api/competitions/' + competitionId + '/clubs')
-                        .then(res => {
-                            this.clubs = res.data
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
-                        .then(() => {
-                            this.loading = false;
-                        });
+                getClubs() {
+                    if (this.selectedCountry) {
+                        this.loading = true
+                        axios.get('/api/clubs/country/' + this.selectedCountry.id)
+                            .then(res => {
+                                this.clubs = res.data
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            .then(() => {
+                                this.loading = false
+                            })
+                    }
                 },
             },
             computed: {

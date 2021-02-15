@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SoccerScores.Application.Countries.Queries;
 using SoccerScores.Application.Countries.Commands.CreateCountry;
 using SoccerScores.Application.Countries.Commands.DeleteCountry;
 using SoccerScores.Application.Countries.Commands.UpdateCountry;
-using System.Collections.Generic;
 
 namespace SoccerScores.WebUI.Controllers
 {
