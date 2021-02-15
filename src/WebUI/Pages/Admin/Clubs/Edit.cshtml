@@ -1,0 +1,71 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Clubs.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <h5>Edit Club {{club.id}}</h5>
+        <div>Name</div>
+        <input v-model="club.name" />
+        <div>Crest</div>
+        <input v-model="club.crest" />
+        <div>Venue</div>
+        <input v-model="club.venue" />
+        <div>Year Founded</div>
+        <input v-model="club.yearFounded" />
+        <div class="confirm-discard">
+            <button v-on:click="updateClub(clubId)" class="btn-confirm">Confirm</button>
+            <button v-on:click="getClub(clubId)" class="btn-discard">Discard</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                clubId: @Model.ClubId,
+                loading: true,
+                club: null,
+            },
+            mounted() {
+                this.getClub(this.clubId)
+            },
+            methods: {
+                getClub(id) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + id)
+                        .then(res => {
+                            this.club = res.data
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                updateClub(id) {
+                    this.loading = true;
+                    axios.put('/api/clubs/' + id, this.club)
+                        .then(res => {
+                            console.log(res);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}

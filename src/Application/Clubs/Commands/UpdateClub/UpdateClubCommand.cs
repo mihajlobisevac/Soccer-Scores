@@ -34,7 +34,11 @@ namespace SoccerScores.Application.Clubs.Commands.UpdateClub
             club.Crest = request.Crest;
             club.Venue = request.Venue;
             club.YearFounded = request.YearFounded;
-            club.City = await GetCity(request.CityId);
+
+            if (request.CityId > 0)
+            {
+                club.City = await GetCity(request.CityId);
+            }
 
             await context.SaveChangesAsync(cancellationToken);
 

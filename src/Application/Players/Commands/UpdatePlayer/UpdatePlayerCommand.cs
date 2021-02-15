@@ -122,11 +122,11 @@ namespace SoccerScores.Application.Players.Commands.UpdatePlayer
         private void AddPlayerToClub(Player player, Club club, UpdatePlayerCommand request)
         {
             context.ClubPlayers.Add(new ClubPlayer
-                {
-                    ShirtNumber = request.ShirtNumber,
-                    Player = player,
-                    Club = club,
-                });
+            {
+                ShirtNumber = request.ShirtNumber,
+                Player = player,
+                Club = club,
+            });
         }
     }
 }
