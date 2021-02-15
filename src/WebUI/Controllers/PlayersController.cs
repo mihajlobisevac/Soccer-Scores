@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using SoccerScores.Application.Common.Models;
 using SoccerScores.Application.Players.Commands.CreatePlayer;
 using SoccerScores.Application.Players.Commands.DeletePlayer;
 using SoccerScores.Application.Players.Commands.UpdatePlayer;
 using SoccerScores.Application.Players.Queries.GetPlayer;
 using SoccerScores.Application.Players.Queries.GetPlayerMatches;
-using SoccerScores.Application.Players.Queries.GetPlayersByClub;
-using System.Threading.Tasks;
+using Club = SoccerScores.Application.Players.Queries.GetPlayersByClub;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -24,10 +25,10 @@ namespace SoccerScores.WebUI.Controllers
             return await Mediator.Send(new GetPlayerMatchesQuery { PlayerId = playerId, PageNumber = index });
         }
 
-        [HttpGet("club/{id}")]
-        public async Task<ActionResult<PlayersVm>> GetWithPlayers(int id)
+        [HttpGet("club/{clubId}")]
+        public async Task<IEnumerable<Club.PlayerDto>> GetWithPlayers(int clubId)
         {
-            return await Mediator.Send(new GetPlayersByClubQuery { Id = id });
+            return await Mediator.Send(new Club.GetPlayersByClubQuery { ClubId = clubId });
         }
 
         [HttpPost]

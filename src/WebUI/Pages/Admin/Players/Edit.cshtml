@@ -1,0 +1,147 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Players.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <template v-if="player !== null">
+            <h5>Edit Player {{playerId}}</h5>
+            <div>First Name</div>
+            <input v-model="player.firstName" />
+            <div>Last Name</div>
+            <input v-model="player.lastName" />
+            <div>Date of Birth</div>
+            <input v-model="player.dateOfBirth" />
+            <div>Position</div>
+            <select v-model="player.position">
+                <option disabled>Please select one</option>
+                <option v-for="(position, index) in positions" v-bind:value="position">
+                    {{position}}
+                </option>
+            </select>
+            <div>Foot</div>
+            <select v-model="player.foot">
+                <option disabled>Please select one</option>
+                <option v-for="(foot, index) in foots" v-bind:value="foot">
+                    {{foot}}
+                </option>
+            </select>
+            <div>Height</div>
+            <input v-model="player.height" />
+            <div>Weight</div>
+            <input v-model="player.weight" />
+            <div>Nationality</div>
+            <select v-model="nationalityId">
+                <option disabled>Please select one</option>
+                <option v-for="(country, index) in countries" v-bind:value="country.id">
+                    {{country.name}}
+                </option>
+            </select>
+            <div>Place of Birth</div>
+            <input v-model="placeOfBirthId" />
+            @*<select v-model="placeOfBirthId">
+            <option disabled>Please select one</option>
+            <option v-for="(city, index) in cities" v-bind:value="city.id">
+                {{city.name}}
+            </option>
+            </select>*@
+            <div>Club</div>
+            <input v-model="clubId" />
+            @*<select v-model="clubId">
+            <option disabled>Please select one</option>
+            <option v-for="(club, index) in clubs" v-bind:value="club.id">
+                {{club.name}}
+            </option>
+            </select>*@
+            <div>Shirt Number</div>
+            <input v-model="player.shirtNumber" />
+            <div class="confirm-discard">
+                <button v-on:click="updatePlayer(playerId)" class="btn-confirm">Confirm</button>
+                <button v-on:click="getPlayer(playerId)" class="btn-discard">Discard</button>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                playerId: @Model.PlayerId,
+                loading: true,
+                player: null,
+                nationalityId: 0,
+                placeOfBirthId: 0,
+                clubId: 0,
+                positions: @Html.Raw(Json.Serialize(Model.Positions)),
+                foots: @Html.Raw(Json.Serialize(Model.Foots)),
+                countries: null,
+            },
+            mounted() {
+                this.getPlayer(this.playerId)
+                this.getCountries()
+            },
+            methods: {
+                getPlayer(id) {
+                    this.loading = true;
+                    axios.get('/api/players/' + id)
+                        .then(res => {
+                            this.player = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                updatePlayer(id) {
+                    this.loading = true;
+                    axios.put('/api/players/' + id, {
+                        id: this.player.id,
+                        firstName: this.player.firstName,
+                        lastName: this.player.lastName,
+                        dateOfBirth: this.player.dateOfBirth,
+                        position: this.player.position,
+                        foot: this.player.foot,
+                        height: this.player.height,
+                        weight: this.player.weight,
+                        nationalityId: this.nationalityId,
+                        placeOfBirthId: this.placeOfBirthId,
+                        clubId: this.clubId,
+                        shirtNumber: this.player.shirtNumber,
+                    })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                getCountries() {
+                    this.loading = true
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}

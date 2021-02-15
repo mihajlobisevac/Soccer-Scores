@@ -3,19 +3,19 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static SoccerScores.Application.Players.Queries.GetPlayersByClub.PlayersVm;
 
 namespace SoccerScores.Application.Players.Queries.GetPlayersByClub
 {
-    public class GetPlayersByClubQuery : IRequest<PlayersVm>
+    public class GetPlayersByClubQuery : IRequest<IEnumerable<PlayerDto>>
     {
-        public int Id { get; set; }
+        public int ClubId { get; set; }
     }
 
-    public class GetPlayersByClubQueryHandler : IRequestHandler<GetPlayersByClubQuery, PlayersVm>
+    public class GetPlayersByClubQueryHandler : IRequestHandler<GetPlayersByClubQuery, IEnumerable<PlayerDto>>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -26,15 +26,13 @@ namespace SoccerScores.Application.Players.Queries.GetPlayersByClub
             this.mapper = mapper;
         }
 
-        public async Task<PlayersVm> Handle(GetPlayersByClubQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PlayerDto>> Handle(GetPlayersByClubQuery request, CancellationToken cancellationToken)
         {
-            var players = await context.ClubPlayers
+            return await context.ClubPlayers
                 .Include(x => x.Club)
-                .Where(x => x.Club.Id == request.Id)
-                .ProjectTo<PlayerViewModel>(mapper.ConfigurationProvider)
+                .Where(x => x.Club.Id == request.ClubId)
+                .ProjectTo<PlayerDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
-
-            return new PlayersVm { Players = players };
         }
     }
 }
