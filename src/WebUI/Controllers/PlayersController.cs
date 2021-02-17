@@ -9,6 +9,7 @@ using SoccerScores.Application.Players.Queries.GetPlayer;
 using SoccerScores.Application.Players.Queries.GetPlayerMatches;
 using Club = SoccerScores.Application.Players.Queries.GetPlayersByClub;
 using SoccerScores.Application.Players.Queries.GetRawPlayer;
+using SoccerScores.Application.Players.Commands.RemoveFromClub;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -61,6 +62,14 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             await Mediator.Send(new DeletePlayerCommand { Id = id });
+
+            return NoContent();
+        }
+
+        [HttpDelete("{playerId}/remove-from-club")]
+        public async Task<ActionResult> RemoveFromClub(int playerId)
+        {
+            await Mediator.Send(new RemoveFromClubCommand { Id = playerId });
 
             return NoContent();
         }
