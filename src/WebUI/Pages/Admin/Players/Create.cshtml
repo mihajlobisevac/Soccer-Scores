@@ -1,15 +1,12 @@
-﻿@page "{id}"
-@model SoccerScores.WebUI.Pages.Admin.Players.EditModel
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Players.CreateModel
 @{
 }
 
 <div id="app">
-    <div v-if="loading === true">
-        Loading...
-    </div>
-    <div v-else class="input-form">
-        <template v-if="player !== null">
-            <h5>Edit Player {{playerModel.id}}</h5>
+    <div v-if="created === false" class="input-form">
+        <div class="input-form">
+            <h5>Create Player</h5>
             <div class="input-section">
                 <div class="input-title">First Name</div>
                 <input v-model="playerModel.firstName" />
@@ -86,13 +83,14 @@
                 </template>
             </div>
             <div class="confirm-discard">
-                <button v-on:click="updatePlayer(playerId)" class="btn-confirm">Confirm</button>
-                <button v-on:click="getPlayer(playerId)" class="btn-discard">Discard</button>
+                <button v-on:click="createPlayer()" class="btn-confirm">Confirm</button>
+                <button v-on:click="discardPlayer()" class="btn-discard">Discard</button>
             </div>
-        </template>
-        <template v-else>
-            <h5>Player not found</h5>
-        </template>
+        </div>
+    </div>
+    <div v-else>
+        <div class="basic-message">Successfully created {{playerModel.name}}</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
     </div>
 </div>
 
@@ -101,23 +99,22 @@
         var app = new Vue({
             el: '#app',
             data: {
-                playerId: @Model.PlayerId,
+                created: false,
                 loading: true,
                 assignedClub: false,
-                player: null,
                 playerModel: {
-                    id: null,
-                    firstName: null,
-                    lastName: null,
-                    dateOfBirth: null,
+                    id: 0,
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
                     position: null,
                     foot: null,
-                    height: null,
-                    weight: null,
+                    height: 0,
+                    weight: 0,
                     nationalityId: null,
                     placeOfBirthId: null,
-                    clubId: null,
-                    shirtNumber: null,
+                    clubId: 0,
+                    shirtNumber: 0,
                 },
                 rel: {
                     positions: @Html.Raw(Json.Serialize(Model.Positions)),
@@ -130,59 +127,17 @@
                 },
             },
             mounted() {
-                this.getPlayer(this.playerId)
                 this.getCountries()
             },
             methods: {
-                getPlayer(id) {
-                    this.loading = true;
-                    axios.get('/api/players/' + id + '/raw')
-                        .then(res => {
-                            this.player = res.data
-
-                            this.playerModel.id = this.player.id
-                            this.playerModel.firstName = this.player.firstName
-                            this.playerModel.lastName = this.player.lastName
-                            this.playerModel.dateOfBirth = this.player.dateOfBirth
-                            this.playerModel.position = this.player.position
-                            this.playerModel.foot = this.player.foot
-                            this.playerModel.height = this.player.height
-                            this.playerModel.weight = this.player.weight
-
-                            this.playerModel.nationalityId = this.player.nationality.id
-                            this.playerModel.placeOfBirthId = this.player.placeOfBirth.id
-                            this.rel.pobCountryId = this.player.placeOfBirth.country.id
-
-                            this.getCities(this.rel.pobCountryId)
-
-                            if (this.player.club !== null) {
-                                this.rel.clubCountryId = this.player.club.country.id
-                                this.getClubs(this.rel.clubCountryId)
-                                this.playerModel.clubId = this.player.club.id
-                                this.playerModel.shirtNumber = this.player.shirtNumber
-                                this.assignedClub = true
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
-                        .then(() => {
-                            this.loading = false
-                        });
-                },
-                updatePlayer(id) {
+                createPlayer() {
                     this.loading = true
-
-                    if (this.assignedClub === false) {
-                        this.playerModel.clubId = 0
-                    }
-
-                    axios.put('/api/players/' + id, this.playerModel)
+                    axios.post('/api/players/', this.playerModel)
                         .then(res => {
-                            console.log(res)
+                            this.created = true
                         })
                         .catch(err => {
-                            console.log(err)
+                            console.log(err);
                         })
                         .then(() => {
                             this.loading = false
@@ -226,6 +181,24 @@
                         .then(() => {
                             this.loading = false
                         })
+                },
+                discardPlayer() {
+                    this.playerModel.id = 0,
+                    this.playerModel.firstName = ""
+                    this.playerModel.lastName = ""
+                    this.playerModel.dateOfBirth = ""
+                    this.playerModel.position = null
+                    this.playerModel.foot = null
+                    this.playerModel.height = 0
+                    this.playerModel.weight = 0
+                    this.playerModel.nationalityId = null
+                    this.playerModel.placeOfBirthId = null
+                    this.playerModel.clubId = 0
+                    this.playerModel.shirtNumber = 0
+                },
+                createNew() {
+                    this.discardPlayer()
+                    this.created = false
                 },
             },
             computed: {
