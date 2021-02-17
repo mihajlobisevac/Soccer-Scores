@@ -101,11 +101,17 @@ namespace SoccerScores.Application.Players.Commands.UpdatePlayer
 
         private async Task UpdateClubPlayer(UpdatePlayerCommand request, Player player)
         {
+            if (request.ClubId == 0)
+            {
+                context.ClubPlayers.Remove(await GetClubPlayer(player.Id));
+                return;
+            }
+
             var club = await GetClub(request.ClubId);
 
             if (club is not null)
             {
-                var clubPlayer = await GetClubPlayer(request.Id);
+                var clubPlayer = await GetClubPlayer(player.Id);
 
                 if (clubPlayer is not null)
                 {
@@ -122,11 +128,11 @@ namespace SoccerScores.Application.Players.Commands.UpdatePlayer
         private void AddPlayerToClub(Player player, Club club, UpdatePlayerCommand request)
         {
             context.ClubPlayers.Add(new ClubPlayer
-                {
-                    ShirtNumber = request.ShirtNumber,
-                    Player = player,
-                    Club = club,
-                });
+            {
+                ShirtNumber = request.ShirtNumber,
+                Player = player,
+                Club = club,
+            });
         }
     }
 }

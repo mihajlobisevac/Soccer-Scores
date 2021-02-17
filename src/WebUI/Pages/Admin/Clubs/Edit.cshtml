@@ -1,0 +1,115 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Clubs.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <template v-else>
+        <div class="input-form">
+            <h5>Edit Club {{club.id}}</h5>
+            <div>Name</div>
+            <input v-model="club.name" />
+            <div>Crest</div>
+            <input v-model="club.crest" />
+            <div>Venue</div>
+            <input v-model="club.venue" />
+            <div>Year Founded</div>
+            <input v-model="club.yearFounded" />
+            <div class="confirm-discard">
+                <button v-on:click="updateClub(clubId)" class="btn-confirm">Confirm</button>
+                <button v-on:click="getClub(clubId)" class="btn-discard">Discard</button>
+            </div>
+            <h5>Players</h5>
+            <template v-if="players !== null">
+                <div v-for="(player, index) in players" class="matches-container" style="margin-bottom:0">
+                    <div class="matches-comp" style="margin-top:0">
+                        <a v-bind:href="'/admin/players/edit/' + player.id" class="btn-edit btn-small" style="margin-left:1em">
+                            Edit
+                        </a>
+                        <button v-on:click="removePlayer(player.id)" class="btn-edit btn-small" style="margin-left:0.5em">
+                            Remove
+                        </button>
+                        <div style="margin-left:1em">{{player.firstName}} {{player.lastName}}</div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                clubId: @Model.ClubId,
+                loading: true,
+                club: null,
+                players: null,
+            },
+            mounted() {
+                this.getClub(this.clubId)
+                this.getPlayers(this.clubId)
+            },
+            methods: {
+                getClub(id) {
+                    this.loading = true;
+                    axios.get('/api/clubs/' + id)
+                        .then(res => {
+                            this.club = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        })
+                },
+                updateClub(id) {
+                    this.loading = true;
+                    axios.put('/api/clubs/' + id, this.club)
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        })
+                },
+                getPlayers(id) {
+                    this.loading = true;
+                    axios.get('/api/players/club/' + id)
+                        .then(res => {
+                            this.players = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        })
+                },
+                removePlayer(id) {
+                    this.loading = true;
+                    axios.delete('/api/players/' + id + '/remove-from-club')
+                        .then(res => {
+                            this.getPlayers(this.clubId)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}

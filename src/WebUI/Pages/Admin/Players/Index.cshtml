@@ -1,0 +1,121 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Players.IndexModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <h5>Select Club</h5>
+        <div class="input-form">
+            <div class="input-section">
+                <div class="input-title">Country</div>
+                <select v-model="rel.clubCountryId" v-on:change="getClubs(rel.clubCountryId)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(country, index) in rel.countries" v-bind:value="country.id">
+                        {{country.name}}
+                    </option>
+                </select>
+                <div class="input-title">Club</div>
+                <select v-model="rel.clubId" v-on:change="getPlayers(rel.clubId)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(club, index) in rel.clubs" v-bind:value="club.id">
+                        {{club.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <h5>Players</h5>
+        <template v-if="players !== null">
+            <div v-for="(player, index) in players" class="matches-container" style="margin-bottom:0">
+                <div class="matches-comp" style="margin-top:0">
+                    <a v-bind:href="'/admin/players/edit/' + player.id" class="btn-edit btn-small" style="margin-left:1em">
+                        Edit
+                    </a>
+                    <div style="margin-left:1em">{{player.firstName}} {{player.lastName}}</div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                players: null,
+                rel: {
+                    countries: null,
+                    cities: null,
+                    clubs: null,
+                    pobCountryId: 0,
+                    clubCountryId: 0,
+                    clubId: 0,
+                },
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries() {
+                    this.loading = true
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.rel.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getCities(countryId) {
+                    this.loading = true
+                    axios.get('/api/cities/country/' + countryId)
+                        .then(res => {
+                            this.rel.cities = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getClubs(countryId) {
+                    this.loading = true
+                    axios.get('/api/clubs/country/' + countryId)
+                        .then(res => {
+                            this.rel.clubs = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getPlayers(clubId) {
+                    this.loading = true
+                    axios.get('/api/players/club/' + clubId)
+                        .then(res => {
+                            this.players = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+            },
+            computed: {
+            }
+        })
+    </script>
+}

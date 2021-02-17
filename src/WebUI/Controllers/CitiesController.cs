@@ -6,6 +6,7 @@ using SoccerScores.Application.Cities.Commands.CreateCity;
 using SoccerScores.Application.Cities.Commands.UpdateCity;
 using SoccerScores.Application.Cities.Commands.DeleteCity;
 using System.Collections.Generic;
+using Country = SoccerScores.Application.Cities.Queries.GetCitiesByCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -21,6 +22,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<CityDto>> Get(int id)
         {
             return await Mediator.Send(new GetCityQuery { Id = id });
+        }
+
+        [HttpGet("country/{countryId}")]
+        public async Task<IEnumerable<Country.CityDto>> GetByCountry(int countryId)
+        {
+            return await Mediator.Send(new Country.GetCitiesByCountryQuery { CountryId = countryId });
         }
 
         [HttpPost]

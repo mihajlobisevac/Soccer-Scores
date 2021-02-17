@@ -544,13 +544,25 @@ nav {
     margin: 0 0 1em 0;
 }
 
+.input-form .input-section {
+    background: var(--clr-white);
+    padding: 1em;
+    border-radius: 4px;
+    border: 1px solid var(--clr-lgray);
+}
+
 .input-form h5 {
     margin: 1em 0 1em 0;
     font-weight: 500;
     color: var(--clr-gray);
 }
 
+.input-form .input-title {
+    color: var(--clr-gray);
+}
+
 .input-form input {
+    background: var(--clr-white);
     padding: 0.5em 1em;
     border: 1px solid var(--clr-dwhite);
     width: calc(100% - 2em - 2px);
@@ -561,6 +573,11 @@ nav {
     padding: 0.5em 1em;
     border: 1px solid var(--clr-dwhite);
     width: 100%;
+}
+
+.input-form input[type=checkbox] {
+    width: auto;
+    margin: 0;
 }
 
 .confirm-discard {

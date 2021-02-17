@@ -3,4 +3,87 @@
 @{
 }
 
-<div>Clubs panel</div>
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <div>Clubs panel</div>
+        <a href="clubs/create" class="btn-confirm" style="font-size:0.9rem;margin-bottom:1em">
+            Create New
+        </a>
+
+        <div>Select Country</div>
+        <select v-model="selectedCountry" v-on:change="getClubs()">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in countries" v-bind:value="country">
+                {{country.name}}
+            </option>
+        </select>
+
+        <div>Clubs</div>
+        <template v-if="clubs !== null">
+            <div v-for="(club, index) in clubs" class="matches-container" style="margin-bottom:0">
+                <div class="matches-comp" style="margin-top:0">
+                    <a v-bind:href="'clubs/edit/' + club.id" class="btn-edit btn-small" style="margin-left:1em">
+                        Edit
+                    </a>
+                    <a class="btn-disabled btn-small" style="margin-left:0.5em">
+                        Delete
+                    </a>
+                    <img v-bind:src="club.crest" style="max-height:2em;margin-left:0.5em" />
+                    <div style="margin-left:1em">{{club.name}}</div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                countries: null,
+                selectedCountry: null,
+                clubs: null,
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries(id) {
+                    this.loading = true;
+                    axios.get('/api/competitions/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false;
+                        });
+                },
+                getClubs() {
+                    if (this.selectedCountry) {
+                        this.loading = true
+                        axios.get('/api/clubs/country/' + this.selectedCountry.id)
+                            .then(res => {
+                                this.clubs = res.data
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            .then(() => {
+                                this.loading = false
+                            })
+                    }
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}

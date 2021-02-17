@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using SoccerScores.Application.Clubs.Queries.GetClub;
 using SoccerScores.Application.Clubs.Queries.GetClubPlayers;
 using SoccerScores.Application.Clubs.Commands.CreateClub;
 using SoccerScores.Application.Clubs.Commands.UpdateClub;
 using SoccerScores.Application.Clubs.Commands.DeleteClub;
-using System.Collections.Generic;
+using Country = SoccerScores.Application.Clubs.Queries.GetClubsByCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -21,6 +22,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<IEnumerable<ClubPlayerDto>> GetClubPlayers(int clubId)
         {
             return await Mediator.Send(new GetClubPlayersQuery { ClubId = clubId });
+        }
+
+        [HttpGet("country/{countryId}")]
+        public async Task<IEnumerable<Country.ClubDto>> GetClubsByCountry(int countryId)
+        {
+            return await Mediator.Send(new Country.GetClubsByCountryQuery { CountryId = countryId });
         }
 
         [HttpPost]
