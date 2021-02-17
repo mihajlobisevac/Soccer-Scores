@@ -29,9 +29,9 @@
                         <a v-bind:href="'/admin/players/edit/' + player.id" class="btn-edit btn-small" style="margin-left:1em">
                             Edit
                         </a>
-                        <a class="btn-disabled btn-small" style="margin-left:0.5em">
+                        <button v-on:click="removePlayer(player.id)" class="btn-edit btn-small" style="margin-left:0.5em">
                             Remove
-                        </a>
+                        </button>
                         <div style="margin-left:1em">{{player.firstName}} {{player.lastName}}</div>
                     </div>
                 </div>
@@ -62,24 +62,24 @@
                             this.club = res.data
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
-                        });
+                        })
                 },
                 updateClub(id) {
                     this.loading = true;
                     axios.put('/api/clubs/' + id, this.club)
                         .then(res => {
-                            console.log(res);
+                            console.log(res)
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
-                        });
+                        })
                 },
                 getPlayers(id) {
                     this.loading = true;
@@ -88,11 +88,24 @@
                             this.players = res.data
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log(err)
                         })
                         .then(() => {
                             this.loading = false;
-                        });
+                        })
+                },
+                removePlayer(id) {
+                    this.loading = true;
+                    axios.delete('/api/players/' + id + '/remove-from-club')
+                        .then(res => {
+                            this.getPlayers(this.clubId)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
                 },
             },
             computed: {
