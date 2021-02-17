@@ -8,6 +8,7 @@ using SoccerScores.Application.Players.Commands.UpdatePlayer;
 using SoccerScores.Application.Players.Queries.GetPlayer;
 using SoccerScores.Application.Players.Queries.GetPlayerMatches;
 using Club = SoccerScores.Application.Players.Queries.GetPlayersByClub;
+using SoccerScores.Application.Players.Queries.GetRawPlayer;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -17,6 +18,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<PlayerDto>> Get(int id)
         {
             return await Mediator.Send(new GetPlayerQuery { Id = id });
+        }
+
+        [HttpGet("{id}/raw")]
+        public async Task<ActionResult<RawPlayerDto>> GetRaw(int id)
+        {
+            return await Mediator.Send(new GetRawPlayerQuery { Id = id });
         }
 
         [HttpGet("{playerId}/matches")]
