@@ -28,5 +28,33 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/admin/countries.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: false,
+                countries: []
+            },
+            mounted() {
+                this.getCountries();
+            },
+            methods: {
+                getCountries() {
+                    this.loading = true;
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                }
+            },
+            computed: {
+            }
+        })
+    </script>
 }
