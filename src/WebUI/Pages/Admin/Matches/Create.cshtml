@@ -1,0 +1,195 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Matches.CreateModel
+@{
+}
+
+<div id="app">
+    <div v-if="created === false" class="input-form">
+        <div class="input-form">
+            <h5>Create Match</h5>
+            <div class="input-section">
+                <div class="input-title">Kick Off</div>
+                <input v-model="matchModel.kickOff" />
+                <div class="input-title">Game Week</div>
+                <input v-model="matchModel.gameWeek" />
+            </div>
+            <div class="input-section">
+                <div class="input-title">Home Team Country</div>
+                <select v-model="rel.htCountryId" v-on:change="getClubs(rel.htCountryId, true)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(country, index) in rel.countries" v-bind:value="country.id">
+                        {{country.name}}
+                    </option>
+                </select>
+                <div class="input-title">Home Team</div>
+                <select v-model="matchModel.homeTeamId">
+                    <option disabled>Please select one</option>
+                    <option v-for="(club, index) in rel.htClubs" v-bind:value="club.id">
+                        {{club.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="input-section">
+                <div class="input-title">Away Team Country</div>
+                <select v-model="rel.atCountryId" v-on:change="getClubs(rel.atCountryId, false)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(country, index) in rel.countries" v-bind:value="country.id">
+                        {{country.name}}
+                    </option>
+                </select>
+                <div class="input-title">Away Team</div>
+                <select v-model="matchModel.awayTeamId">
+                    <option disabled>Please select one</option>
+                    <option v-for="(club, index) in rel.atClubs" v-bind:value="club.id">
+                        {{club.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="input-section">
+                <div class="input-title">Competition Country</div>
+                <select v-model="rel.compCountryId" v-on:change="getCompetitions(rel.compCountryId)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(country, index) in rel.countries" v-bind:value="country.id">
+                        {{country.name}}
+                    </option>
+                </select>
+                <div class="input-title">Competition</div>
+                <select v-model="rel.competitionId" v-on:change="getSeasons(rel.competitionId)">
+                    <option disabled>Please select one</option>
+                    <option v-for="(competition, index) in rel.competitions" v-bind:value="competition.id">
+                        {{competition.name}}
+                    </option>
+                </select>
+                <div class="input-title">Competition Season</div>
+                <select v-model="matchModel.seasonId">
+                    <option disabled>Please select one</option>
+                    <option v-for="(season, index) in rel.seasons" v-bind:value="season.id">
+                        {{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}
+                    </option>
+                </select>
+            </div>
+            <div class="confirm-discard">
+                <button v-on:click="createMatch()" class="btn-confirm">Confirm</button>
+                <button v-on:click="discardMatch()" class="btn-discard">Discard</button>
+            </div>
+        </div>
+    </div>
+    <div v-else>
+        <div class="basic-message">Successfully created match</div>
+        <button v-on:click="createNew()" class="btn-confirm">Create New</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                created: false,
+                loading: true,
+                matchModel: {
+                    id: 0,
+                    kickOff: "",
+                    gameWeek: 1,
+                    homeTeamId: 0,
+                    awayTeamId: 0,
+                    seasonId: 0,
+                },
+                rel: {
+                    countries: null,
+                    htClubs: null,
+                    atClubs: null,
+                    competitions: null,
+                    seasons: null,
+                },
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                createMatch() {
+                    this.loading = true
+                    axios.post('/api/matches/', this.matchModel)
+                        .then(res => {
+                            this.created = true
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                getCountries() {
+                    this.loading = true
+                    axios.get('/api/countries/all')
+                        .then(res => {
+                            this.rel.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getClubs(countryId, isHome) {
+                    this.loading = true
+                    axios.get('/api/clubs/country/' + countryId)
+                        .then(res => {
+                            if (isHome === true) {
+                                this.rel.htClubs = res.data
+                            } else {
+                                this.rel.atClubs = res.data
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getCompetitions(countryId) {
+                    this.loading = true
+                    axios.get('/api/competitions/country/' + countryId)
+                        .then(res => {
+                            this.rel.competitions = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getSeasons(competitionId) {
+                    this.loading = true
+                    axios.get('/api/seasons/competition/' + competitionId)
+                        .then(res => {
+                            this.rel.seasons = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                discardMatch() {
+                    this.matchModel.id = 0,
+                        this.matchModel.kickOff = ""
+                    this.matchModel.homeTeamId = 0
+                    this.matchModel.awayTeamId = 0
+                    this.matchModel.seasonId = 0
+                },
+                createNew() {
+                    this.discardMatch()
+                    this.created = false
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
