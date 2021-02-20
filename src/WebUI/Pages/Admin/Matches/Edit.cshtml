@@ -23,21 +23,21 @@
             <h5>Match {{match.id}} Incidents</h5>
             <div v-for="(incident, index) in incidents" class="input-section">
                 <div class="input-title">Home Score</div>
-                <input v-model="match.kickOff" />
+                <input v-model="incident.homeScore" />
                 <div class="input-title">Away Score</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.awayScore" />
                 <div class="input-title">Minute</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.minute" />
                 <div class="input-title">Type</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.type" />
                 <div class="input-title">Class</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.class" />
                 <div class="input-title">Is Home</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.isHome" />
                 <div class="input-title">Primary Player</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.primaryPlayerId" />
                 <div class="input-title">Secondary Player</div>
-                <input v-model="match.gameWeek" />
+                <input v-model="incident.secondaryPlayerId" />
             </div>
             <div class="confirm-discard">
                 <button v-on:click="updateIncidents()" class="btn-confirm">Confirm</button>
@@ -55,6 +55,7 @@
                 loading: true,
                 matchId: @Model.MatchId,
                 match: null,
+                incidents: null,
             },
             mounted() {
                 this.getMatch()
@@ -65,6 +66,20 @@
                     axios.get('/api/matches/' + this.matchId)
                         .then(res => {
                             this.match = res.data
+                            this.getIncidents()
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getIncidents() {
+                    this.loading = true
+                    axios.get('/api/incidents/' + this.matchId)
+                        .then(res => {
+                            this.incidents = res.data
                         })
                         .catch(err => {
                             console.log(err)
