@@ -1,0 +1,78 @@
+﻿@page "{id}"
+@model SoccerScores.WebUI.Pages.Admin.Matches.EditModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <template v-if="match !== null">
+            <h5>Edit Match {{match.id}}</h5>
+            <div class="input-section">
+                <div class="input-title">Kick Off</div>
+                <input v-model="match.kickOff" />
+                <div class="input-title">Game Week</div>
+                <input v-model="match.gameWeek" />
+            </div>
+            <div class="confirm-discard">
+                <button v-on:click="updateMatch()" class="btn-confirm">Confirm</button>
+                <button v-on:click="discardMatch()" class="btn-discard">Discard</button>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                matchId: @Model.MatchId,
+                match: null,
+            },
+            mounted() {
+                this.getMatch()
+            },
+            methods: {
+                getMatch() {
+                    this.loading = true
+                    axios.get('/api/matches/' + this.matchId)
+                        .then(res => {
+                            this.match = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                updateMatch() {
+                    this.loading = true
+                    axios.put('/api/matches/' + this.matchId, {
+                        id: this.matchId,
+                        kickOff: this.match.kickOff,
+                        gameWeek: this.match.gameWeek,
+                    })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                discardMatch() {
+                    this.getMatch()
+                },
+            },
+            computed: {
+            }
+        });
+    </script>
+}
