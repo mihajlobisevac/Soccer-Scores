@@ -20,6 +20,29 @@
                 <button v-on:click="updateMatch()" class="btn-confirm">Confirm</button>
                 <button v-on:click="discardMatch()" class="btn-discard">Discard</button>
             </div>
+            <h5>Match {{match.id}} Incidents</h5>
+            <div v-for="(incident, index) in incidents" class="input-section">
+                <div class="input-title">Home Score</div>
+                <input v-model="match.kickOff" />
+                <div class="input-title">Away Score</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Minute</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Type</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Class</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Is Home</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Primary Player</div>
+                <input v-model="match.gameWeek" />
+                <div class="input-title">Secondary Player</div>
+                <input v-model="match.gameWeek" />
+            </div>
+            <div class="confirm-discard">
+                <button v-on:click="updateIncidents()" class="btn-confirm">Confirm</button>
+                <button v-on:click="discardIncidents()" class="btn-discard">Discard</button>
+            </div>
         </template>
     </div>
 </div>
