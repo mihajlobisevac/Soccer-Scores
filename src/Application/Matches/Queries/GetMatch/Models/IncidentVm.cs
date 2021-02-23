@@ -6,6 +6,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatch.Models
 {
     public class IncidentVm : IMapFrom<Incident>
     {
+        public int Id { get; set; }
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
         public int Minute { get; set; }

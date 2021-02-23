@@ -21,27 +21,55 @@
                 <button v-on:click="discardMatch()" class="btn-discard">Discard</button>
             </div>
             <h5>Match {{match.id}} Incidents</h5>
-            <div v-for="(incident, index) in incidents" class="input-section">
+            <div v-for="(incident, index) in match.incidents" class="input-section">
                 <div class="input-title">Home Score</div>
-                <input v-model="incident.homeScore" />
+                <input type="number" v-model="incident.homeScore" />
                 <div class="input-title">Away Score</div>
-                <input v-model="incident.awayScore" />
+                <input type="number" v-model="incident.awayScore" />
                 <div class="input-title">Minute</div>
-                <input v-model="incident.minute" />
+                <input type="number" v-model="incident.minute" />
+
                 <div class="input-title">Type</div>
-                <input v-model="incident.type" />
+                <select v-model="incident.type">
+                    <option disabled>Please select one</option>
+                    <option v-for="(incidentType, index) in rel.types" v-bind:value="incidentType">
+                        {{incidentType}}
+                    </option>
+                </select>
+
                 <div class="input-title">Class</div>
-                <input v-model="incident.class" />
-                <div class="input-title">Is Home</div>
-                <input v-model="incident.isHome" />
+                <select v-model="incident.class">
+                    <option disabled>Please select one</option>
+                    <option v-for="(incidentClass, index) in rel.classes" v-bind:value="incidentClass">
+                        {{incidentClass}}
+                    </option>
+                </select>
+
                 <div class="input-title">Primary Player</div>
-                <input v-model="incident.primaryPlayerId" />
+                <select v-model="incident.primaryPlayer">
+                    <option disabled>Please select one</option>
+                    <option v-bind:value="null">None</option>
+                    <option v-for="(player, index) in match.players" v-bind:value="player">
+                        {{player.player.firstName}} {{player.player.lastName}}
+                    </option>
+                </select>
+
                 <div class="input-title">Secondary Player</div>
-                <input v-model="incident.secondaryPlayerId" />
-            </div>
-            <div class="confirm-discard">
-                <button v-on:click="updateIncidents()" class="btn-confirm">Confirm</button>
-                <button v-on:click="discardIncidents()" class="btn-discard">Discard</button>
+                <select v-model="incident.secondaryPlayer">
+                    <option disabled>Please select one</option>
+                    <option v-bind:value="null">None</option>
+                    <option v-for="(player, index) in match.players" v-bind:value="player">
+                        {{player.player.firstName}} {{player.player.lastName}}
+                    </option>
+                </select>
+
+                <label for="isHomeCheckbox" style="display:inline-block;margin-bottom:1em">Is Home Team</label>
+                <input type="checkbox" id="isHomeCheckbox" v-model="incident.isHome">
+
+                <div class="confirm-discard">
+                    <button v-on:click="updateIncident(incident.id)" class="btn-confirm">Save</button>
+                    <button disabled class="btn-discard btn-disabled">Discard</button>
+                </div>
             </div>
         </template>
     </div>
@@ -55,7 +83,10 @@
                 loading: true,
                 matchId: @Model.MatchId,
                 match: null,
-                incidents: null,
+                rel: {
+                    types: @Html.Raw(Json.Serialize(Model.IncidentTypes)),
+                    classes: @Html.Raw(Json.Serialize(Model.IncidentClasses)),
+                },
             },
             mounted() {
                 this.getMatch()
@@ -66,20 +97,6 @@
                     axios.get('/api/matches/' + this.matchId)
                         .then(res => {
                             this.match = res.data
-                            this.getIncidents()
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
-                        .then(() => {
-                            this.loading = false
-                        })
-                },
-                getIncidents() {
-                    this.loading = true
-                    axios.get('/api/incidents/' + this.matchId)
-                        .then(res => {
-                            this.incidents = res.data
                         })
                         .catch(err => {
                             console.log(err)
@@ -107,6 +124,34 @@
                 },
                 discardMatch() {
                     this.getMatch()
+                },
+                updateIncident(id) {
+                    this.loading = true
+                    const incidentModel = this.match.incidents.find(i => i.id === id)
+
+                    axios.put('/api/incidents/' + id, {
+                        id: id,
+                        incident: {
+                            homeScore: incidentModel.homeScore,
+                            awayScore: incidentModel.awayScore,
+                            minute: incidentModel.minute,
+                            type: incidentModel.type,
+                            class: incidentModel.class,
+                            isHome: incidentModel.isHome,
+                            matchId: this.matchId,
+                            primaryPlayerId: incidentModel.primaryPlayer.id,
+                            secondaryPlayerId: incidentModel.secondaryPlayer.id,
+                        },
+                    })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
                 },
             },
             computed: {
