@@ -127,22 +127,9 @@
                 },
                 updateIncident(id) {
                     this.loading = true
-                    const incidentModel = this.match.incidents.find(i => i.id === id)
+                    const incidentModel = this.incidentToUpdate(id)
 
-                    axios.put('/api/incidents/' + id, {
-                        id: id,
-                        incident: {
-                            homeScore: incidentModel.homeScore,
-                            awayScore: incidentModel.awayScore,
-                            minute: incidentModel.minute,
-                            type: incidentModel.type,
-                            class: incidentModel.class,
-                            isHome: incidentModel.isHome,
-                            matchId: this.matchId,
-                            primaryPlayerId: incidentModel.primaryPlayer.id,
-                            secondaryPlayerId: incidentModel.secondaryPlayer.id,
-                        },
-                    })
+                    axios.put('/api/incidents/' + id, incidentModel)
                         .then(res => {
                             console.log(res)
                         })
@@ -152,6 +139,22 @@
                         .then(() => {
                             this.loading = false
                         });
+                },
+                incidentToUpdate(id) {
+                    const incidentModel = this.match.incidents.find(i => i.id === id)
+
+                    return {
+                        id: id,
+                        homeScore: incidentModel.homeScore,
+                        awayScore: incidentModel.awayScore,
+                        minute: incidentModel.minute,
+                        type: incidentModel.type,
+                        class: incidentModel.class,
+                        isHome: incidentModel.isHome,
+                        matchId: this.matchId,
+                        primaryPlayerId: incidentModel.primaryPlayer ? incidentModel.primaryPlayer.id : 0,
+                        secondaryPlayerId: incidentModel.secondaryPlayer ? incidentModel.secondaryPlayer.id : 0,
+                    }
                 },
             },
             computed: {
