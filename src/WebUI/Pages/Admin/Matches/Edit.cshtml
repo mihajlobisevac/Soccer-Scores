@@ -20,57 +20,102 @@
                 <button v-on:click="updateMatch()" class="btn-confirm">Confirm</button>
                 <button v-on:click="discardMatch()" class="btn-discard">Discard</button>
             </div>
-            <h5>Match {{match.id}} Incidents</h5>
-            <div v-for="(incident, index) in match.incidents" class="input-section">
-                <div class="input-title">Home Score</div>
-                <input type="number" v-model="incident.homeScore" />
-                <div class="input-title">Away Score</div>
-                <input type="number" v-model="incident.awayScore" />
-                <div class="input-title">Minute</div>
-                <input type="number" v-model="incident.minute" />
 
-                <div class="input-title">Type</div>
-                <select v-model="incident.type">
-                    <option disabled>Please select one</option>
-                    <option v-for="(incidentType, index) in rel.types" v-bind:value="incidentType">
-                        {{incidentType}}
-                    </option>
-                </select>
-
-                <div class="input-title">Class</div>
-                <select v-model="incident.class">
-                    <option disabled>Please select one</option>
-                    <option v-for="(incidentClass, index) in rel.classes" v-bind:value="incidentClass">
-                        {{incidentClass}}
-                    </option>
-                </select>
-
-                <div class="input-title">Primary Player</div>
-                <select v-model="incident.primaryPlayer">
-                    <option disabled>Please select one</option>
-                    <option v-bind:value="null">None</option>
-                    <option v-for="(player, index) in match.players" v-bind:value="player">
-                        {{player.player.firstName}} {{player.player.lastName}}
-                    </option>
-                </select>
-
-                <div class="input-title">Secondary Player</div>
-                <select v-model="incident.secondaryPlayer">
-                    <option disabled>Please select one</option>
-                    <option v-bind:value="null">None</option>
-                    <option v-for="(player, index) in match.players" v-bind:value="player">
-                        {{player.player.firstName}} {{player.player.lastName}}
-                    </option>
-                </select>
-
-                <label for="isHomeCheckbox" style="display:inline-block;margin-bottom:1em">Is Home Team</label>
-                <input type="checkbox" id="isHomeCheckbox" v-model="incident.isHome">
-
-                <div class="confirm-discard">
-                    <button v-on:click="updateIncident(incident.id)" class="btn-confirm">Save</button>
-                    <button disabled class="btn-discard btn-disabled">Discard</button>
-                </div>
+            <div class="tabs">
+                <button v-on:click="managePlayers(true)"
+                        v-bind:class="[ managingPlayers ? 'tab-selected' : 'tab' ]">
+                    Players
+                </button>
+                <button v-on:click="managePlayers(false)"
+                        v-bind:class="[ managingPlayers ? 'tab' : 'tab-selected' ]">
+                    Incidents
+                </button>
             </div>
+
+            <template v-if="managingPlayers == true">
+                <div v-for="(matchPlayer, index) in match.players" class="input-section">
+                    <label for="isHomePlayer" style="display:inline-block;margin-bottom:1em">Is Home Player</label>
+                    <input type="checkbox" id="isHomeCheckbox" v-model="matchPlayer.isHome" style="margin-right:1em">
+
+                    <label for="isSubCheckbox" style="display:inline-block;margin-bottom:1em">Is Substitute</label>
+                    <input type="checkbox" id="isSubCheckbox" v-model="matchPlayer.isSubstitute" style="margin-right:1em">
+
+                    <div class="input-title">Player</div>
+                    <select v-if="matchPlayer.isHome" v-model="matchPlayer.player">
+                        <option disabled>Please select one</option>
+                        <option v-for="(player, index) in rel.homePlayers" v-bind:value="player">
+                            {{player.firstName}} {{player.lastName}}
+                        </option>
+                    </select>
+                    <select v-else v-model="matchPlayer.player">
+                        <option disabled>Please select one</option>
+                        <option v-for="(player, index) in rel.awayPlayers" v-bind:value="player">
+                            {{player.firstName}} {{player.lastName}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Shirt Number</div>
+                    <input type="number" v-model="matchPlayer.shirtNumber" />
+
+                    <div class="confirm-discard">
+                        <button v-on:click="updateMatchPlayer(matchPlayer.id)" class="btn-confirm">Save</button>
+                        <button disabled class="btn-discard btn-disabled">Discard</button>
+                    </div>
+                </div>
+            </template>
+
+            <template v-else>
+                <div v-for="(incident, index) in match.incidents" class="input-section">
+                    <div class="input-title">Home Score</div>
+                    <input type="number" v-model="incident.homeScore" />
+                    <div class="input-title">Away Score</div>
+                    <input type="number" v-model="incident.awayScore" />
+                    <div class="input-title">Minute</div>
+                    <input type="number" v-model="incident.minute" />
+
+                    <div class="input-title">Type</div>
+                    <select v-model="incident.type">
+                        <option disabled>Please select one</option>
+                        <option v-for="(incidentType, index) in rel.types" v-bind:value="incidentType">
+                            {{incidentType}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Class</div>
+                    <select v-model="incident.class">
+                        <option disabled>Please select one</option>
+                        <option v-for="(incidentClass, index) in rel.classes" v-bind:value="incidentClass">
+                            {{incidentClass}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Primary Player</div>
+                    <select v-model="incident.primaryPlayer">
+                        <option disabled>Please select one</option>
+                        <option v-bind:value="null">None</option>
+                        <option v-for="(player, index) in match.players" v-bind:value="player">
+                            {{player.player.firstName}} {{player.player.lastName}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Secondary Player</div>
+                    <select v-model="incident.secondaryPlayer">
+                        <option disabled>Please select one</option>
+                        <option v-bind:value="null">None</option>
+                        <option v-for="(player, index) in match.players" v-bind:value="player">
+                            {{player.player.firstName}} {{player.player.lastName}}
+                        </option>
+                    </select>
+
+                    <label for="isHomeIncident" style="display:inline-block;margin-bottom:1em">Is Home Team</label>
+                    <input type="checkbox" id="isHomeIncident" v-model="incident.isHome">
+
+                    <div class="confirm-discard">
+                        <button v-on:click="updateIncident(incident.id)" class="btn-confirm">Save</button>
+                        <button disabled class="btn-discard btn-disabled">Discard</button>
+                    </div>
+                </div>
+            </template>
         </template>
     </div>
 </div>
@@ -83,7 +128,10 @@
                 loading: true,
                 matchId: @Model.MatchId,
                 match: null,
+                managingPlayers: true,
                 rel: {
+                    homePlayers: null,
+                    awayPlayers: null,
                     types: @Html.Raw(Json.Serialize(Model.IncidentTypes)),
                     classes: @Html.Raw(Json.Serialize(Model.IncidentClasses)),
                 },
@@ -97,6 +145,8 @@
                     axios.get('/api/matches/' + this.matchId)
                         .then(res => {
                             this.match = res.data
+                            this.getHomePlayers()
+                            this.getAwayPlayers()
                         })
                         .catch(err => {
                             console.log(err)
@@ -124,6 +174,73 @@
                 },
                 discardMatch() {
                     this.getMatch()
+                },
+                managePlayers(state) {
+                    this.managingPlayers = state
+                },
+                getHomePlayers() {
+                    this.loading = true
+                    axios.get('/api/players/club/' + this.match.homeTeam.id)
+                        .then(res => {
+                            this.rel.homePlayers = res.data.map(function (p) {
+                                return {
+                                    id: p.id,
+                                    firstName: p.firstName,
+                                    lastName: p.lastName,
+                                };
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                getAwayPlayers() {
+                    this.loading = true
+                    axios.get('/api/players/club/' + this.match.awayTeam.id)
+                        .then(res => {
+                            this.rel.awayPlayers = res.data.map(function (p) {
+                                return {
+                                    id: p.id,
+                                    firstName: p.firstName,
+                                    lastName: p.lastName,
+                                };
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        })
+                },
+                updateMatchPlayer(id) {
+                    this.loading = true
+                    const matchPlayerModel = this.matchPlayerToUpdate(id)
+
+                    axios.put('/api/match/players/' + id, matchPlayerModel)
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                matchPlayerToUpdate(id) {
+                    const mpModel = this.match.players.find(i => i.id === id)
+
+                    return {
+                        id: id,
+                        isHome: mpModel.isHome,
+                        isSubstitute: mpModel.isHome,
+                        playerId: mpModel.player.id,
+                        shirtNumber: mpModel.shirtNumber,
+                    }
                 },
                 updateIncident(id) {
                     this.loading = true
