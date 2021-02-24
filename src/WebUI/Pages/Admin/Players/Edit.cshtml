@@ -16,7 +16,7 @@
                 <div class="input-title">Last Name</div>
                 <input v-model="playerModel.lastName" />
                 <div class="input-title">Date of Birth</div>
-                <input v-model="playerModel.dateOfBirth" />
+                <input type="datetime-local" v-model="playerModel.dateOfBirth" />
                 <div class="input-title">Position</div>
                 <select v-model="playerModel.position">
                     <option disabled>Please select one</option>
@@ -35,7 +35,7 @@
                     </option>
                 </select>
                 <div type="number" class="input-title">Height (cm)</div>
-                <input v-model="playerModel.height" />
+                <input type="number" v-model="playerModel.height" />
                 <div class="input-title">Weight (kg)</div>
                 <input type="number" v-model="playerModel.weight" />
             </div>

@@ -38,9 +38,9 @@
                 </select>
                 <template v-if="season">
                     <div>Start</div>
-                    <input type="date" v-model="season.start" />
+                    <input type="datetime-local" v-model="season.start" />
                     <div>End</div>
-                    <input type="date" v-model="season.end" />
+                    <input type="datetime-local" v-model="season.end" />
                     <div class="confirm-discard">
                         <button class="btn-discard btn-disabled">Confirm</button>
                         <button class="btn-discard btn-disabled">Discard</button>
@@ -50,9 +50,9 @@
         </template>
         <template v-else>
             <div>Start</div>
-            <input type="date" v-model="seasonModel.start" />
+            <input type="datetime-local" v-model="seasonModel.start" />
             <div>End</div>
-            <input type="date" v-model="seasonModel.end" />
+            <input type="datetime-local" v-model="seasonModel.end" />
             <div class="confirm-discard">
                 <button v-on:click="createSeason()" class="btn-confirm">Create</button>
             </div>
