@@ -32,9 +32,9 @@
                 </button>
             </div>
 
-            <template v-if="managingPlayers == true">
+            <template v-if="managingPlayers === true">
                 <h5>Create New</h5>
-                <div class="input-section">
+                <div v-if="matchPlayerCreated === false" class="input-section">
                     <label for="isNewHomePlayer" style="display:inline-block;margin-bottom:1em">Is Home Player</label>
                     <input type="checkbox" id="isNewHomePlayer" v-model="newMatchPlayer.isHome" style="margin-right:1em">
 
@@ -60,6 +60,14 @@
 
                     <div class="confirm-discard">
                         <button v-on:click="createMatchPlayer()" class="btn-confirm">Add New</button>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="basic-message">
+                        Successfully added {{newMatchPlayer.player.firstName}} {{newMatchPlayer.player.lastName}} to {{matchId}}
+                        <button v-on:click="createNewMatchPlayer()" class="btn-confirm btn-small">
+                            Add New
+                        </button>
                     </div>
                 </div>
                 <h5>Manage Existing</h5>
@@ -165,8 +173,8 @@
                     types: @Html.Raw(Json.Serialize(Model.IncidentTypes)),
                     classes: @Html.Raw(Json.Serialize(Model.IncidentClasses)),
                 },
+                matchPlayerCreated: false,
                 newMatchPlayer: {
-                    id: 0,
                     isHome: true,
                     isSubstitute: false,
                     player: null,
@@ -253,17 +261,24 @@
                             this.loading = false
                         })
                 },
+                createNewMatchPlayer() {
+                    this.matchPlayerCreated = false
+                    this.newMatchPlayer.isHome = true
+                    this.newMatchPlayer.isSubstitute = false
+                    this.newMatchPlayer.player = null
+                    this.newMatchPlayer.shirtNumber = 1
+                },
                 createMatchPlayer() {
                     this.loading = true
                     axios.post('/api/lineups/player/', {
-                        id: 0,
                         isHome: this.newMatchPlayer.isHome,
                         isSubstitute: this.newMatchPlayer.isSubstitute,
-                        playerId: this.newMatchPlayer.player.id,
                         shirtNumber: this.newMatchPlayer.shirtNumber,
+                        playerId: this.newMatchPlayer.player.id,
+                        matchId: this.matchId,
                     })
                         .then(res => {
-                            console.log(res)
+                            this.matchPlayerCreated = true
                         })
                         .catch(err => {
                             console.log(err)
