@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SoccerScores.WebUI.Pages.Admin
+namespace SoccerScores.WebUI.Pages.Admin.Matches
 {
-    public class MatchesModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

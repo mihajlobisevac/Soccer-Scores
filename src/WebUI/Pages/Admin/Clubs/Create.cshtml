@@ -13,7 +13,7 @@
         <div>Venue</div>
         <input v-model="club.venue" />
         <div>Year Founded</div>
-        <input v-model="club.yearFounded" />
+        <input type="number" v-model="club.yearFounded" />
         <div>Country</div>
         <select v-model="countryId" v-on:change="getCities()">
             <option disabled>Please select one</option>

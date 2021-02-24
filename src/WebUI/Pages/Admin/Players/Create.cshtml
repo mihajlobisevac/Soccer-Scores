@@ -12,7 +12,7 @@
                 <input v-model="playerModel.firstName" />
                 <div class="input-title">Last Name</div>
                 <input v-model="playerModel.lastName" />
-                <div class="input-title">Date of Birth</div>
+                <div type="date" class="input-title">Date of Birth</div>
                 <input v-model="playerModel.dateOfBirth" />
                 <div class="input-title">Position</div>
                 <select v-model="playerModel.position">
@@ -22,6 +22,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="input-section">
                 <div class="input-title">Foot</div>
                 <select v-model="playerModel.foot">
@@ -30,11 +31,12 @@
                         {{foot}}
                     </option>
                 </select>
-                <div class="input-title">Height</div>
+                <div type="number" class="input-title">Height (cm)</div>
                 <input v-model="playerModel.height" />
-                <div class="input-title">Weight</div>
+                <div type="number" class="input-title">Weight (kg)</div>
                 <input v-model="playerModel.weight" />
             </div>
+
             <div class="input-section">
                 <div class="input-title">Nationality</div>
                 <select v-model="playerModel.nationalityId">
@@ -44,6 +46,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="input-section">
                 <div class="input-title">Place of Birth Country</div>
                 <select v-model="rel.pobCountryId" v-on:change="getCities(rel.pobCountryId)">
@@ -60,6 +63,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="input-section">
                 <label for="clubCheckbox">Assign Club</label>
                 <input type="checkbox" id="clubCheckbox" v-model="assignedClub">
@@ -79,9 +83,10 @@
                         </option>
                     </select>
                     <div class="input-title">Shirt Number</div>
-                    <input v-model="playerModel.shirtNumber" />
+                    <input type="number" v-model="playerModel.shirtNumber" />
                 </template>
             </div>
+
             <div class="confirm-discard">
                 <button v-on:click="createPlayer()" class="btn-confirm">Confirm</button>
                 <button v-on:click="discardPlayer()" class="btn-discard">Discard</button>

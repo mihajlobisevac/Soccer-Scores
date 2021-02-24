@@ -2,6 +2,7 @@
 using SoccerScores.Application.Matches.Commands.Incidents.CreateIncident;
 using SoccerScores.Application.Matches.Commands.Incidents.DeleteIncident;
 using SoccerScores.Application.Matches.Commands.Incidents.UpdateIncident;
+using SoccerScores.Application.Matches.Queries.Incidents;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,12 @@ namespace SoccerScores.WebUI.Controllers
 {
     public class IncidentsController : ApiControllerBase
     {
+        [HttpGet("{matchId}")]
+        public async Task<IEnumerable<IncidentDto>> Get(int matchId)
+        {
+            return await Mediator.Send(new GetMatchIncidentsQuery { MatchId = matchId });
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateIncidentCommand command)
         {

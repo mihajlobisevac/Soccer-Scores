@@ -6,6 +6,7 @@ using SoccerScores.Application.Competitions.Commands.CreateCompetition;
 using SoccerScores.Application.Competitions.Commands.DeleteCompetition;
 using SoccerScores.Application.Competitions.Queries.GetCompetition;
 using SoccerScores.Application.Competitions.Queries.GetCompetitions;
+using Country = SoccerScores.Application.Competitions.Queries.GetCompetitionsByCountry;
 
 namespace SoccerScores.WebUI.Controllers
 {
@@ -21,6 +22,12 @@ namespace SoccerScores.WebUI.Controllers
         public async Task<ActionResult<CompetitionDto>> Get(int id)
         {
             return await Mediator.Send(new GetCompetitionQuery { Id = id });
+        }
+
+        [HttpGet("country/{id}")]
+        public async Task<IEnumerable<Country.CompetitionDto>> GetByCountry(int id)
+        {
+            return await Mediator.Send(new Country.GetCompetitionsByCountryQuery { CountryId = id });
         }
 
         [HttpPost]

@@ -17,7 +17,7 @@
             <div>Venue</div>
             <input v-model="club.venue" />
             <div>Year Founded</div>
-            <input v-model="club.yearFounded" />
+            <input type="number" v-model="club.yearFounded" />
             <div class="confirm-discard">
                 <button v-on:click="updateClub(clubId)" class="btn-confirm">Confirm</button>
                 <button v-on:click="getClub(clubId)" class="btn-discard">Discard</button>

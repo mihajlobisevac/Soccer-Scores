@@ -166,6 +166,7 @@ namespace SoccerScores.Infrastructure.Data
                     new Match { KickOff = dates_b[7], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[2], },
                     new Match { KickOff = dates_b[8], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[1], },
                     new Match { KickOff = dates_b[9], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[3], },
+                    //new Match { KickOff = dates_b[9], GameWeek = 1, HomeTeam = clubs[1], AwayTeam = clubs[0], Season = seasons[6], },
                 };
 
                 context.Matches.AddRange(matches);

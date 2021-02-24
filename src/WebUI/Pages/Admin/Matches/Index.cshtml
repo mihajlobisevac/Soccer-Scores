@@ -1,0 +1,186 @@
+﻿@page
+@model SoccerScores.WebUI.Pages.Admin.Matches.IndexModel
+@{
+}
+
+<div id="app">
+    <div v-if="loading === true">
+        Loading...
+    </div>
+    <div v-else class="input-form">
+        <div>Matches panel</div>
+        <a href="matches/create" class="btn-confirm" style="font-size:0.9rem;margin-bottom:1em">
+            Create New
+        </a>
+
+        <div>Select Country</div>
+        <select v-model="rel.selectedCountry" v-on:change="getCompetitions()">
+            <option disabled>Please select one</option>
+            <option v-for="(country, index) in rel.countries" v-bind:value="country">
+                {{country.name}}
+            </option>
+        </select>
+
+        <template v-if="rel.competitions !== null">
+            <div>Select Competition</div>
+            <select v-model="rel.selectedCompetition" v-on:change="getSeasons()">
+                <option disabled>Please select one</option>
+                <option v-for="(competition, index) in rel.competitions" v-bind:value="competition">
+                    {{competition.name}}
+                </option>
+            </select>
+        </template>
+
+        <template v-if="rel.seasons !== null">
+            <div>Select Season</div>
+            <select v-model="rel.selectedSeason" v-on:change="getMatches(rel.selectedSeason.id)">
+                <option disabled>Please select one</option>
+                <option v-for="(season, index) in rel.seasons" v-bind:value="season">
+                    {{season.start.substring(0,4)}}/{{season.end.substring(0,4)}}
+                </option>
+            </select>
+        </template>
+
+        <template v-if="matches !== null">
+            <h5>Matches</h5>
+            <div class="game-week">
+                Game Week {{matches.gameWeek}}
+            </div>
+            <div class="btn-prev-next">
+                <button v-if="hasPreviousWeek"
+                        v-on:click="getMatches(rel.selectedSeason.id, pageDown)">
+                    Previous
+                </button>
+                <button v-else disabled>
+                    Previous
+                </button>
+                <button v-if="hasNextWeek"
+                        v-on:click="getMatches(rel.selectedSeason.id, pageUp)">
+                    Next
+                </button>
+                <button v-else disabled>
+                    Next
+                </button>
+            </div>
+            <div v-for="(m, index) in matches.matches" class="match-container">
+                <a class="match-home-team" v-bind:href="'/club/'+ m.homeTeam.id" style="margin-bottom:0">
+                    {{m.homeTeam.name}}
+                </a>
+
+                <a v-if="m.result === null"
+                    class="match-result" v-bind:href="'matches/edit/'+ m.id">
+                    {{m.kickOff.substring(11, 16)}}
+                </a>
+                <a v-else="" class="match-result" v-bind:href="'matches/edit/'+ m.id">
+                    {{m.result.homeScore}}:{{m.result.awayScore}}
+                </a>
+
+                <a class="match-away-team" v-bind:href="'/club/'+ m.awayTeam.id" style="margin-bottom:0">
+                    {{m.awayTeam.name}}
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                matches: null,
+                rel: {
+                    countries: null,
+                    competitions: null,
+                    seasons: null,
+                    selectedCountry: 0,
+                    selectedCompetition: 0,
+                    selectedSeason: 0,
+                },
+            },
+            mounted() {
+                this.getCountries()
+            },
+            methods: {
+                getCountries(id) {
+                    this.loading = true;
+                    axios.get('/api/competitions/all')
+                        .then(res => {
+                            this.rel.countries = res.data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+                getCompetitions() {
+                    if (this.rel.selectedCountry) {
+                        this.loading = true
+                        axios.get('/api/competitions/country/' + this.rel.selectedCountry.id)
+                            .then(res => {
+                                this.rel.competitions = res.data
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            .then(() => {
+                                this.loading = false
+                            })
+                    }
+                },
+                getSeasons() {
+                    if (this.rel.selectedCompetition) {
+                        this.loading = true
+                        axios.get('/api/seasons/competition/' + this.rel.selectedCompetition.id)
+                            .then(res => {
+                                this.rel.seasons = res.data
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            .then(() => {
+                                this.loading = false
+                            })
+                    }
+                },
+                getMatches(seasonId, gw) {
+                    this.loading = true;
+                    axios.get('/api/matches/season/' + seasonId, {
+                        params: {
+                            gameWeek: gw,
+                        },
+                    })
+                        .then(res => {
+                            this.matches = res.data
+                            if (this.matches && !gw) {
+                                this.latestWeek = res.data.gameWeek
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
+                },
+            },
+            computed: {
+                hasPreviousWeek: function () {
+                    return this.matches.gameWeek > 1
+                },
+                hasNextWeek: function () {
+                    return this.matches.gameWeek < this.latestWeek
+                },
+                pageDown: function () {
+                    return this.matches.gameWeek - 1
+                },
+                pageUp: function () {
+                    return this.matches.gameWeek + 1
+                },
+            }
+        });
+    </script>
+}

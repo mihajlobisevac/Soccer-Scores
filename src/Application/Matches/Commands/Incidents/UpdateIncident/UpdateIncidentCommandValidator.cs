@@ -14,24 +14,18 @@ namespace SoccerScores.Application.Matches.Commands.Incidents.UpdateIncident
                 .NotEmpty()
                 .Must(id => context.Incidents.Any(i => i.Id == id)).WithMessage("Chosen incident does not exist.");
 
-            RuleFor(x => x.Incident.HomeScore)
-                .NotEmpty();
-
-            RuleFor(x => x.Incident.AwayScore)
-                .NotEmpty();
-
-            RuleFor(x => x.Incident.Type)
+            RuleFor(x => x.Type)
                 .NotEmpty()
                 .Must(type => Enum.IsDefined(typeof(IncidentType), type)).WithMessage("Incident type is invalid.");
 
-            RuleFor(x => x.Incident.Class)
+            RuleFor(x => x.Class)
                 .NotEmpty()
                 .Must(incidentClass => Enum.IsDefined(typeof(IncidentClass), incidentClass)).WithMessage("Incident class is invalid.");
 
-            RuleFor(x => x.Incident.IsHome)
+            RuleFor(x => x.IsHome)
                 .NotNull();
 
-            RuleFor(x => x.Incident.MatchId)
+            RuleFor(x => x.MatchId)
                 .NotEmpty()
                 .Must(id => context.Matches.Any(m => m.Id == id)).WithMessage("Match does not exist.");
         }
