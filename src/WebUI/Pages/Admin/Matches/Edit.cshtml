@@ -33,9 +33,39 @@
             </div>
 
             <template v-if="managingPlayers == true">
+                <h5>Create New</h5>
+                <div class="input-section">
+                    <label for="isNewHomePlayer" style="display:inline-block;margin-bottom:1em">Is Home Player</label>
+                    <input type="checkbox" id="isNewHomePlayer" v-model="newMatchPlayer.isHome" style="margin-right:1em">
+
+                    <label for="isSubCheckbox" style="display:inline-block;margin-bottom:1em">Is Substitute</label>
+                    <input type="checkbox" id="isSubCheckbox" v-model="newMatchPlayer.isSubstitute" style="margin-right:1em">
+
+                    <div class="input-title">Player</div>
+                    <select v-if="newMatchPlayer.isHome" v-model="newMatchPlayer.player">
+                        <option disabled>Please select one</option>
+                        <option v-for="(player, index) in rel.homePlayers" v-bind:value="player">
+                            {{player.firstName}} {{player.lastName}}
+                        </option>
+                    </select>
+                    <select v-else v-model="newMatchPlayer.player">
+                        <option disabled>Please select one</option>
+                        <option v-for="(player, index) in rel.awayPlayers" v-bind:value="player">
+                            {{player.firstName}} {{player.lastName}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Shirt Number</div>
+                    <input type="number" v-model="newMatchPlayer.shirtNumber" />
+
+                    <div class="confirm-discard">
+                        <button v-on:click="createMatchPlayer()" class="btn-confirm">Add New</button>
+                    </div>
+                </div>
+                <h5>Manage Existing</h5>
                 <div v-for="(matchPlayer, index) in match.players" class="input-section">
                     <label for="isHomePlayer" style="display:inline-block;margin-bottom:1em">Is Home Player</label>
-                    <input type="checkbox" id="isHomeCheckbox" v-model="matchPlayer.isHome" style="margin-right:1em">
+                    <input type="checkbox" id="isHomePlayer" v-model="matchPlayer.isHome" style="margin-right:1em">
 
                     <label for="isSubCheckbox" style="display:inline-block;margin-bottom:1em">Is Substitute</label>
                     <input type="checkbox" id="isSubCheckbox" v-model="matchPlayer.isSubstitute" style="margin-right:1em">
@@ -135,6 +165,13 @@
                     types: @Html.Raw(Json.Serialize(Model.IncidentTypes)),
                     classes: @Html.Raw(Json.Serialize(Model.IncidentClasses)),
                 },
+                newMatchPlayer: {
+                    id: 0,
+                    isHome: true,
+                    isSubstitute: false,
+                    player: null,
+                    shirtNumber: 1,
+                },
             },
             mounted() {
                 this.getMatch()
@@ -215,6 +252,25 @@
                         .then(() => {
                             this.loading = false
                         })
+                },
+                createMatchPlayer() {
+                    this.loading = true
+                    axios.post('/api/lineups/player/', {
+                        id: 0,
+                        isHome: this.newMatchPlayer.isHome,
+                        isSubstitute: this.newMatchPlayer.isSubstitute,
+                        playerId: this.newMatchPlayer.player.id,
+                        shirtNumber: this.newMatchPlayer.shirtNumber,
+                    })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
                 },
                 updateMatchPlayer(id) {
                     this.loading = true
