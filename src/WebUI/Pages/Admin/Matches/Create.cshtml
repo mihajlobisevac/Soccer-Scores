@@ -9,10 +9,11 @@
             <h5>Create Match</h5>
             <div class="input-section">
                 <div class="input-title">Kick Off</div>
-                <input v-model="matchModel.kickOff" />
+                <input type="datetime-local" v-model="matchModel.kickOff" />
                 <div class="input-title">Game Week</div>
-                <input v-model="matchModel.gameWeek" />
+                <input type="number" v-model="matchModel.gameWeek" />
             </div>
+
             <div class="input-section">
                 <div class="input-title">Home Team Country</div>
                 <select v-model="rel.htCountryId" v-on:change="getClubs(rel.htCountryId, true)">
@@ -29,6 +30,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="input-section">
                 <div class="input-title">Away Team Country</div>
                 <select v-model="rel.atCountryId" v-on:change="getClubs(rel.atCountryId, false)">
@@ -45,6 +47,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="input-section">
                 <div class="input-title">Competition Country</div>
                 <select v-model="rel.compCountryId" v-on:change="getCompetitions(rel.compCountryId)">
@@ -68,6 +71,7 @@
                     </option>
                 </select>
             </div>
+
             <div class="confirm-discard">
                 <button v-on:click="createMatch()" class="btn-confirm">Confirm</button>
                 <button v-on:click="discardMatch()" class="btn-discard">Discard</button>

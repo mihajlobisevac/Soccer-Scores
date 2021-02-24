@@ -12,9 +12,9 @@
             <h5>Edit Match {{match.id}}</h5>
             <div class="input-section">
                 <div class="input-title">Kick Off</div>
-                <input v-model="match.kickOff" />
+                <input type="datetime-local" v-model="match.kickOff" />
                 <div class="input-title">Game Week</div>
-                <input v-model="match.gameWeek" />
+                <input type="number" v-model="match.gameWeek" />
             </div>
             <div class="confirm-discard">
                 <button v-on:click="updateMatch()" class="btn-confirm">Confirm</button>
@@ -237,7 +237,7 @@
                     return {
                         id: id,
                         isHome: mpModel.isHome,
-                        isSubstitute: mpModel.isHome,
+                        isSubstitute: mpModel.isSubstitute,
                         playerId: mpModel.player.id,
                         shirtNumber: mpModel.shirtNumber,
                     }
