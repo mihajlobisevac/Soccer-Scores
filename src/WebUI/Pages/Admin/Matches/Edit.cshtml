@@ -64,7 +64,7 @@
                 </div>
                 <div v-else>
                     <div class="basic-message">
-                        Successfully added {{newMatchPlayer.player.firstName}} {{newMatchPlayer.player.lastName}} to {{matchId}}
+                        Successfully added {{newMatchPlayer.player.firstName}} {{newMatchPlayer.player.lastName}} to match {{matchId}}
                         <button v-on:click="createNewMatchPlayer()" class="btn-confirm btn-small">
                             Add New
                         </button>
@@ -104,7 +104,7 @@
 
             <template v-else>
                 <h5>Create New</h5>
-                <div v-if="matchPlayerCreated === false" class="input-section">
+                <div v-if="incidentCreated === false" class="input-section">
                     <div class="input-title">Home Score</div>
                     <input type="number" v-model="newIncident.homeScore" />
                     <div class="input-title">Away Score</div>
@@ -155,7 +155,7 @@
                 </div>
                 <div v-else>
                     <div class="basic-message">
-                        Successfully added incident to {{matchId}}
+                        Successfully added incident to match {{matchId}}
                         <button v-on:click="createNewIncident()" class="btn-confirm btn-small">
                             Add New
                         </button>
@@ -409,7 +409,7 @@
                         secondaryPlayerId: this.newIncident.secondaryPlayer ? this.newIncident.secondaryPlayer.id : 0,
                     })
                         .then(res => {
-                            this.matchPlayerCreated = true
+                            this.incidentCreated = true
                         })
                         .catch(err => {
                             console.log(err)
