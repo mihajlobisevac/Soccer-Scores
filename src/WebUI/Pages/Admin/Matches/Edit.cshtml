@@ -103,6 +103,66 @@
             </template>
 
             <template v-else>
+                <h5>Create New</h5>
+                <div v-if="matchPlayerCreated === false" class="input-section">
+                    <div class="input-title">Home Score</div>
+                    <input type="number" v-model="newIncident.homeScore" />
+                    <div class="input-title">Away Score</div>
+                    <input type="number" v-model="newIncident.awayScore" />
+                    <div class="input-title">Minute</div>
+                    <input type="number" v-model="newIncident.minute" />
+
+                    <div class="input-title">Type</div>
+                    <select v-model="newIncident.type">
+                        <option disabled>Please select one</option>
+                        <option v-for="(incidentType, index) in rel.types" v-bind:value="incidentType">
+                            {{incidentType}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Class</div>
+                    <select v-model="newIncident.class">
+                        <option disabled>Please select one</option>
+                        <option v-for="(incidentClass, index) in rel.classes" v-bind:value="incidentClass">
+                            {{incidentClass}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Primary Player</div>
+                    <select v-model="newIncident.primaryPlayer">
+                        <option disabled>Please select one</option>
+                        <option v-bind:value="null">None</option>
+                        <option v-for="(player, index) in match.players" v-bind:value="player">
+                            {{player.player.firstName}} {{player.player.lastName}}
+                        </option>
+                    </select>
+
+                    <div class="input-title">Secondary Player</div>
+                    <select v-model="newIncident.secondaryPlayer">
+                        <option disabled>Please select one</option>
+                        <option v-bind:value="null">None</option>
+                        <option v-for="(player, index) in match.players" v-bind:value="player">
+                            {{player.player.firstName}} {{player.player.lastName}}
+                        </option>
+                    </select>
+
+                    <label for="isHomeIncident" style="display:inline-block;margin-bottom:1em">Is Home Team</label>
+                    <input type="checkbox" id="isHomeIncident" v-model="newIncident.isHome">
+
+                    <div class="confirm-discard">
+                        <button v-on:click="createIncident()" class="btn-confirm">Add New</button>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="basic-message">
+                        Successfully added incident to {{matchId}}
+                        <button v-on:click="createNewIncident()" class="btn-confirm btn-small">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+
+                <h5>Manage Existing</h5>
                 <div v-for="(incident, index) in match.incidents" class="input-section">
                     <div class="input-title">Home Score</div>
                     <input type="number" v-model="incident.homeScore" />
@@ -179,6 +239,17 @@
                     isSubstitute: false,
                     player: null,
                     shirtNumber: 1,
+                },
+                incidentCreated: false,
+                newIncident: {
+                    homeScore: 0,
+                    awayScore: 0,
+                    minute: 0,
+                    type: "",
+                    class: "",
+                    isHome: true,
+                    primaryPlayer: null,
+                    secondaryPlayer: null,
                 },
             },
             mounted() {
@@ -312,6 +383,40 @@
                         playerId: mpModel.player.id,
                         shirtNumber: mpModel.shirtNumber,
                     }
+                },
+                createNewIncident() {
+                    this.incidentCreated = false
+                    this.newIncident.homeScore = 0
+                    this.newIncident.awayScore = 0
+                    this.newIncident.minute = 0
+                    this.newIncident.type = ""
+                    this.newIncident.class = ""
+                    this.newIncident.isHome = true
+                    this.newIncident.primaryPlayer = null
+                    this.newIncident.secondaryPlayer = null
+                },
+                createIncident() {
+                    this.loading = true
+                    axios.post('/api/incidents/', {
+                        homeScore: this.newIncident.homeScore,
+                        awayScore: this.newIncident.awayScore,
+                        minute: this.newIncident.minute,
+                        type: this.newIncident.type,
+                        class: this.newIncident.class,
+                        isHome: this.newIncident.isHome,
+                        matchId: this.matchId,
+                        primaryPlayerId: this.newIncident.primaryPlayer ? this.newIncident.primaryPlayer.id : 0,
+                        secondaryPlayerId: this.newIncident.secondaryPlayer ? this.newIncident.secondaryPlayer.id : 0,
+                    })
+                        .then(res => {
+                            this.matchPlayerCreated = true
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        .then(() => {
+                            this.loading = false
+                        });
                 },
                 updateIncident(id) {
                     this.loading = true
