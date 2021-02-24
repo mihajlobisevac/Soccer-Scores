@@ -3,7 +3,7 @@ using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System;
 
-namespace SoccerScores.Application.Seasons.Queries
+namespace SoccerScores.Application.Seasons.Queries.GetSeasonsByCompetition
 {
     public class SeasonDto : IMapFrom<Season>
     {

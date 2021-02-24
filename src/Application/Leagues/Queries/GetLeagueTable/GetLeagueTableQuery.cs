@@ -4,7 +4,6 @@ using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
-using SoccerScores.Application.Leagues.Queries.Models;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

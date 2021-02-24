@@ -13,9 +13,9 @@ namespace SoccerScores.Application.Fixtures
                 .Select(group => group.ToList())
                 .ToList();
 
-        internal static IEnumerable<CompetitionVm> ToCompetitionVm(this List<List<Match>> groupedMatches, IMapper mapper)
+        internal static IEnumerable<SeasonWithMatches> ToSeasonWithMatches(this List<List<Match>> groupedMatches, IMapper mapper)
         {
-            var compList = new List<CompetitionVm>();
+            var compList = new List<SeasonWithMatches>();
             int uniqueCompetition = -1;
 
             for (int i = 0; i < groupedMatches.Count; i++)
@@ -26,7 +26,7 @@ namespace SoccerScores.Application.Fixtures
                     {
                         uniqueCompetition = match.Season.Competition.Id;
 
-                        compList.Add(mapper.Map<CompetitionVm>(match.Season));
+                        compList.Add(mapper.Map<SeasonWithMatches>(match.Season));
                     }
 
                     compList[i].Matches.Add(mapper.Map<MatchViewModel>(match));

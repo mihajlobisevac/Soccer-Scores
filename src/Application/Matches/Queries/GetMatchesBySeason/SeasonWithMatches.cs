@@ -3,9 +3,9 @@ using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System.Collections.Generic;
 
-namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models
+namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
 {
-    public class SeasonWithMatchesVm : IMapFrom<Season>
+    public class SeasonWithMatches : IMapFrom<Season>
     {
         public IEnumerable<MatchBySeasonDto> Matches { get; set; }
 
@@ -16,7 +16,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Season, SeasonWithMatchesVm>()
+            profile.CreateMap<Season, SeasonWithMatches>()
                 .ForMember(dest => dest.Matches, opt => opt.Ignore())
                 .ForMember(dest => dest.CompetitionId, opt => opt.MapFrom(src => src.Competition.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Competition.Name));

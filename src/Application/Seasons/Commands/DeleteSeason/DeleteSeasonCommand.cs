@@ -23,9 +23,9 @@ namespace SoccerScores.Application.Seasons.Commands.DeleteSeason
 
         public async Task<Unit> Handle(DeleteSeasonCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetSeason(request.Id);
+            var season = await GetSeason(request.Id);
 
-            context.Seasons.Remove(entity);
+            context.Seasons.Remove(season);
 
             await context.SaveChangesAsync(cancellationToken);
 

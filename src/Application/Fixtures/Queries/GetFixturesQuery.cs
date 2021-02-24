@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace SoccerScores.Application.Fixtures.Queries
 {
-    public class GetFixturesQuery : IRequest<IEnumerable<CompetitionVm>>
+    public class GetFixturesQuery : IRequest<IEnumerable<SeasonWithMatches>>
     {
         public string Date { get; set; } = "2017/10/5"; //datetime.now
     }
 
-    public class GetFixturesQueryHandler : IRequestHandler<GetFixturesQuery, IEnumerable<CompetitionVm>>
+    public class GetFixturesQueryHandler : IRequestHandler<GetFixturesQuery, IEnumerable<SeasonWithMatches>>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -28,13 +28,13 @@ namespace SoccerScores.Application.Fixtures.Queries
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<CompetitionVm>> Handle(GetFixturesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<SeasonWithMatches>> Handle(GetFixturesQuery request, CancellationToken cancellationToken)
         {
             var matches = await GetMatches(request);
 
             return matches
                 .GroupByCompetition()
-                .ToCompetitionVm(mapper);
+                .ToSeasonWithMatches(mapper);
         }
 
         private async Task<IEnumerable<Match>> GetMatches(GetFixturesQuery request)

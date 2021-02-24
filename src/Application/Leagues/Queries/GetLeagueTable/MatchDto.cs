@@ -4,7 +4,7 @@ using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System.Linq;
 
-namespace SoccerScores.Application.Leagues.Queries.Models
+namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
 {
     public class MatchDto : IMapFrom<Match>
     {

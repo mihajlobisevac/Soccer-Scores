@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SoccerScores.Application.Countries.Queries;
+using SoccerScores.Application.Countries.Queries.GetCountry;
+using Countries = SoccerScores.Application.Countries.Queries.GetCountries;
 using SoccerScores.Application.Countries.Commands.CreateCountry;
 using SoccerScores.Application.Countries.Commands.DeleteCountry;
 using SoccerScores.Application.Countries.Commands.UpdateCountry;
@@ -11,9 +12,9 @@ namespace SoccerScores.WebUI.Controllers
     public class CountriesController : ApiControllerBase
     {
         [HttpGet("all")]
-        public async Task<IEnumerable<CountryDto>> Get()
+        public async Task<IEnumerable<Countries.CountryDto>> Get()
         {
-            return await Mediator.Send(new GetCountriesQuery());
+            return await Mediator.Send(new Countries.GetCountriesQuery());
         }
 
         [HttpGet("{id}")]

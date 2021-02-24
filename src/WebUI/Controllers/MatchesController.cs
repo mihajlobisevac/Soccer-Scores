@@ -5,13 +5,9 @@ using SoccerScores.Application.Matches.Commands.CreateMatch;
 using SoccerScores.Application.Matches.Commands.DeleteMatch;
 using SoccerScores.Application.Matches.Commands.UpdateMatch;
 using SoccerScores.Application.Matches.Queries.GetMatch;
-using SoccerScores.Application.Matches.Queries.GetMatch.Models;
 using SoccerScores.Application.Matches.Queries.GetMatchesByClub;
-using SoccerScores.Application.Matches.Queries.GetMatchesByClub.Models;
 using SoccerScores.Application.Matches.Queries.GetMatchesByDate;
-using SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models;
 using SoccerScores.Application.Matches.Queries.GetMatchesBySeason;
-using SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,7 +16,7 @@ namespace SoccerScores.WebUI.Controllers
     public class MatchesController : ApiControllerBase
     {
         [HttpGet("fixtures")]
-        public async Task<IEnumerable<CompetitionVm>> GetFixtures()
+        public async Task<IEnumerable<Application.Fixtures.Queries.SeasonWithMatches>> GetFixtures()
         {
             return await Mediator.Send(new GetFixturesQuery());
         }
@@ -44,7 +40,7 @@ namespace SoccerScores.WebUI.Controllers
         }
 
         [HttpGet("season/{id}")]
-        public async Task<SeasonWithMatchesVm> GetBySeason(int id, int? gameWeek = null)
+        public async Task<Application.Matches.Queries.GetMatchesBySeason.SeasonWithMatches> GetBySeason(int id, int? gameWeek = null)
         {
             return await Mediator.Send(new GetMatchesBySeasonQuery { SeasonId = id, SpecifiedGameWeek = gameWeek });
         }

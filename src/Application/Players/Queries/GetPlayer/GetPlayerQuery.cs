@@ -30,21 +30,31 @@ namespace SoccerScores.Application.Players.Queries.GetPlayer
 
             if (playerHasClub)
             {
-                var playerWithClub = await context.ClubPlayers
-                    .Include(x => x.Club)
-                    .Include(x => x.Player).ThenInclude(y => y.Nationality)
-                    .Include(x => x.Player).ThenInclude(y => y.PlaceOfBirth)
-                    .FirstOrDefaultAsync(x => x.Player.Id == request.Id);
-
-                return mapper.Map<PlayerDto>(playerWithClub);
+                return await GetPlayerWithClub(request);
             }
 
+            return await GetPlayer(request);
+        }
+
+        private async Task<PlayerDto> GetPlayer(GetPlayerQuery request)
+        {
             var player = await context.Players
                 .Include(x => x.Nationality)
                 .Include(x => x.PlaceOfBirth)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             return mapper.Map<PlayerDto>(player);
+        }
+
+        private async Task<PlayerDto> GetPlayerWithClub(GetPlayerQuery request)
+        {
+            var playerWithClub = await context.ClubPlayers
+                .Include(x => x.Club)
+                .Include(x => x.Player).ThenInclude(y => y.Nationality)
+                .Include(x => x.Player).ThenInclude(y => y.PlaceOfBirth)
+                .FirstOrDefaultAsync(x => x.Player.Id == request.Id);
+
+            return mapper.Map<PlayerDto>(playerWithClub);
         }
     }
 }

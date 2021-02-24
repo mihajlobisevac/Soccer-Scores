@@ -23,9 +23,9 @@ namespace SoccerScores.Application.Countries.Commands.DeleteCountry
 
         public async Task<Unit> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetCountry(request.Id);
+            var country = await GetCountry(request.Id);
 
-            context.Countries.Remove(entity);
+            context.Countries.Remove(country);
 
             await context.SaveChangesAsync(cancellationToken);
 

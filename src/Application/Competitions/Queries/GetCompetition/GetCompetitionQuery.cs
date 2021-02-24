@@ -25,11 +25,11 @@ namespace SoccerScores.Application.Competitions.Queries.GetCompetition
 
         public async Task<CompetitionDto> Handle(GetCompetitionQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.Competitions
+            var competition = await context.Competitions
                 .Include(x => x.Country)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-            return mapper.Map<CompetitionDto>(entity);
+            return mapper.Map<CompetitionDto>(competition);
         }
     }
 }

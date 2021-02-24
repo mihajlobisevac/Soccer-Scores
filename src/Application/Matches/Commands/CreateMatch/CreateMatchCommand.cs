@@ -31,7 +31,7 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
 
         public async Task<int> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Match
+            var match = new Match
             {
                 KickOff = DateTime.Parse(request.KickOff),
                 GameWeek = request.GameWeek,
@@ -40,11 +40,11 @@ namespace SoccerScores.Application.Matches.Commands.CreateMatch
                 Season = await GetSeason(request.SeasonId),
             };
 
-            context.Matches.Add(entity);
+            context.Matches.Add(match);
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return entity.Id;
+            return match.Id;
         }
 
         private async Task<Club> GetClub(int id)

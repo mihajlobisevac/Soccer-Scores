@@ -1,8 +1,7 @@
-﻿using SoccerScores.Application.Leagues.Queries.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SoccerScores.Application.Leagues
+namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
 {
     internal static class LeagueTableExtensions
     {
