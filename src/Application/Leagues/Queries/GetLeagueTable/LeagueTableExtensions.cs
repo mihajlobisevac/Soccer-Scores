@@ -5,68 +5,41 @@ namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
 {
     internal static class LeagueTableExtensions
     {
-        internal static List<ClubInTable> GetClubs(this List<MatchDto> matches)
+        internal static List<ClubInTable> GetTableWithClubs(this List<MatchDto> matches)
         {
-            var clubs = new List<ClubInTable>();
+            var table = new List<ClubInTable>();
 
             foreach (var match in matches)
             {
-                if (clubs.HasNoClub(match.HomeTeam.Id))
+                if (table.HasNoClub(match.HomeTeam.Id))
                 {
-                    var newClub = matches.CalculateClub(match.HomeTeam);
+                    var newClub = matches.CreateClubWithStats(match.HomeTeam);
 
-                    clubs.Add(newClub);
+                    table.Add(newClub);
                 }
 
-                if (clubs.HasNoClub(match.AwayTeam.Id))
+                if (table.HasNoClub(match.AwayTeam.Id))
                 {
-                    var newClub = matches.CalculateClub(match.AwayTeam);
+                    var newClub = matches.CreateClubWithStats(match.AwayTeam);
 
-                    clubs.Add(newClub);
+                    table.Add(newClub);
                 }
             }
 
-            return clubs;
+            return table;
         }
 
-        internal static ClubInTable CalculateClub(this List<MatchDto> matches, ClubVm club)
+        private static ClubInTable CreateClubWithStats(this List<MatchDto> matches, ClubVm club)
         {
-            var clubInTable = new ClubInTable
+            var clubInTable = new ClubInTable(matches)
             {
                 Id = club.Id,
-                Name = club.Name,
-                Played = matches.PlayedMatches(club.Id),
-                Wins = matches.Wins(club.Id),
-                Draws = matches.Draws(club.Id),
-                Losses = matches.Losses(club.Id),
-                Points = 0,
+                Name = club.Name
             };
 
-            clubInTable.Points = (3 * clubInTable.Wins) + clubInTable.Draws;
+            clubInTable.CalculateStats();
 
             return clubInTable;
-        }
-
-        internal static int PlayedMatches(this List<MatchDto> matches, int clubId)
-        {
-            return matches.FindAll(x => x.HasClub(clubId)).Count;
-        }
-
-        internal static int Wins(this List<MatchDto> matches, int clubId)
-        {
-            return matches.FindAll(x => x.WonHome(clubId)).Count +
-                matches.FindAll(x => x.WonAway(clubId)).Count;
-        }
-
-        internal static int Draws(this List<MatchDto> matches, int clubId)
-        {
-            return matches.FindAll(x => x.Drew(clubId)).Count;
-        }
-
-        internal static int Losses(this List<MatchDto> matches, int clubId)
-        {
-            return matches.FindAll(x => x.LostHome(clubId)).Count +
-                matches.FindAll(x => x.LostAway(clubId)).Count;
         }
 
         internal static bool HasNoClub(this List<ClubInTable> table, int clubId) => !table.Any(x => x.Id == clubId);

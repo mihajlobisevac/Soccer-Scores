@@ -37,7 +37,7 @@ namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
                 .ProjectTo<MatchDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new LeagueTable(matches.GetClubs());
+            return new LeagueTable(matches.GetTableWithClubs());
         }
     }
 }
