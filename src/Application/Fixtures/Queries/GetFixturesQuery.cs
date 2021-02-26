@@ -34,7 +34,7 @@ namespace SoccerScores.Application.Fixtures.Queries
 
             return matches
                 .GroupByCompetition()
-                .ToSeasonWithMatches(mapper);
+                .ToSeasonsWithMatches(mapper);
         }
 
         private async Task<IEnumerable<Match>> GetMatches(GetFixturesQuery request)
