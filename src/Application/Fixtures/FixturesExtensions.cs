@@ -13,27 +13,29 @@ namespace SoccerScores.Application.Fixtures
                 .Select(group => group.ToList())
                 .ToList();
 
-        internal static IEnumerable<CompetitionVm> ToCompetitionVm(this List<List<Match>> groupedMatches, IMapper mapper)
+        internal static IEnumerable<SeasonWithMatches> ToSeasonsWithMatches(this List<List<Match>> groupedMatches, IMapper mapper)
         {
-            var compList = new List<CompetitionVm>();
-            int uniqueCompetition = -1;
+            int COMPETITION_ID = -1;
+
+            var seasons = new List<SeasonWithMatches>();
 
             for (int i = 0; i < groupedMatches.Count; i++)
             {
                 foreach (var match in groupedMatches[i])
                 {
-                    if (uniqueCompetition != match.Season.Competition.Id)
+                    if (COMPETITION_ID.IsNotEqual(match.Season.Competition.Id))
                     {
-                        uniqueCompetition = match.Season.Competition.Id;
-
-                        compList.Add(mapper.Map<CompetitionVm>(match.Season));
+                        COMPETITION_ID = match.Season.Competition.Id;
+                        seasons.Add(mapper.Map<SeasonWithMatches>(match.Season));
                     }
 
-                    compList[i].Matches.Add(mapper.Map<MatchViewModel>(match));
+                    seasons[i].Matches.Add(mapper.Map<MatchViewModel>(match));
                 }
             }
 
-            return compList;
+            return seasons;
         }
+
+        private static bool IsNotEqual(this int id, int newId) => id != newId;
     }
 }

@@ -4,7 +4,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Countries.Queries
+namespace SoccerScores.Application.Countries.Queries.GetCountry
 { 
     public class GetCountryQuery : IRequest<CountryDto>
     {
@@ -24,9 +24,9 @@ namespace SoccerScores.Application.Countries.Queries
 
         public async Task<CountryDto> Handle(GetCountryQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.Countries.FindAsync(request.Id);
+            var country = await context.Countries.FindAsync(request.Id);
 
-            return mapper.Map<CountryDto>(entity);
+            return mapper.Map<CountryDto>(country);
         }
     }
 }

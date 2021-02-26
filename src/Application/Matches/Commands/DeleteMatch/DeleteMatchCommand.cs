@@ -23,9 +23,9 @@ namespace SoccerScores.Application.Matches.Commands.DeleteMatch
 
         public async Task<Unit> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetMatch(request.Id);
+            var match = await GetMatch(request.Id);
 
-            context.Matches.Remove(entity);
+            context.Matches.Remove(match);
 
             await context.SaveChangesAsync(cancellationToken);
 

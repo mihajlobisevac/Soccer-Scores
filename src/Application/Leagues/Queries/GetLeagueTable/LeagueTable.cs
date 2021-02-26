@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SoccerScores.Application.Leagues.Queries.Models
+namespace SoccerScores.Application.Leagues.Queries.GetLeagueTable
 {
     public class LeagueTable
     {

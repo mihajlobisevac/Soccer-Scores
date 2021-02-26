@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using SoccerScores.Application.Seasons.Queries;
-using SoccerScores.Application.Leagues.Queries.Models;
 using SoccerScores.Application.Leagues.Queries.GetLeagueTable;
 using SoccerScores.Application.Seasons.Commands.CreateSeason;
 using SoccerScores.Application.Seasons.Commands.DeleteSeason;
+using SoccerScores.Application.Seasons.Queries.GetSeason;
+using Competition = SoccerScores.Application.Seasons.Queries.GetSeasonsByCompetition;
 using System.Collections.Generic;
 
 namespace SoccerScores.WebUI.Controllers
@@ -12,9 +12,9 @@ namespace SoccerScores.WebUI.Controllers
     public class SeasonsController : ApiControllerBase
     {
         [HttpGet("competition/{id}")]
-        public async Task<IEnumerable<SeasonDto>> GetByCompetition(int id)
+        public async Task<IEnumerable<Competition.SeasonDto>> GetByCompetition(int id)
         {
-            return await Mediator.Send(new GetSeasonsByCompetitionQuery { CompetitionId = id });
+            return await Mediator.Send(new Competition.GetSeasonsByCompetitionQuery { CompetitionId = id });
         }
 
         [HttpGet("{id}")]

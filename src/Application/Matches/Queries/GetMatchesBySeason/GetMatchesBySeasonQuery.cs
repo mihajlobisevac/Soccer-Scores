@@ -3,7 +3,6 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoccerScores.Application.Common.Interfaces;
-using SoccerScores.Application.Matches.Queries.GetMatchesBySeason.Models;
 using SoccerScores.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
 {
-    public class GetMatchesBySeasonQuery : IRequest<SeasonWithMatchesVm>
+    public class GetMatchesBySeasonQuery : IRequest<SeasonWithMatches>
     {
         public int SeasonId { get; set; }
         public int? SpecifiedGameWeek { get; set; }
@@ -20,7 +19,7 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
         internal bool HasSpecifiedGameWeek => SpecifiedGameWeek is not null;
     }
 
-    public class GetMatchesBySeasonQueryHandler : IRequestHandler<GetMatchesBySeasonQuery, SeasonWithMatchesVm>
+    public class GetMatchesBySeasonQueryHandler : IRequestHandler<GetMatchesBySeasonQuery, SeasonWithMatches>
     {
         private readonly IApplicationDbContext context;
         private readonly IMapper mapper;
@@ -31,22 +30,24 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesBySeason
             this.mapper = mapper;
         }
 
-        public async Task<SeasonWithMatchesVm> Handle(GetMatchesBySeasonQuery request, CancellationToken cancellationToken)
+        public async Task<SeasonWithMatches> Handle(GetMatchesBySeasonQuery request, CancellationToken cancellationToken)
         {
-            var season = mapper.Map<SeasonWithMatchesVm>(await GetSeason(request.SeasonId));
+            var season = mapper.Map<SeasonWithMatches>(await GetSeason(request.SeasonId));
 
-            if (request.HasSpecifiedGameWeek)
-            {
-                season.Matches = await GetMatchesByGameWeek(request);
-                season.GameWeek = (int)request.SpecifiedGameWeek;
-
-                return season;
-            }
-
-            season.Matches = await GetLatestMatches(request);
-            season.GameWeek = LatestGameWeek(request);
+            season.Matches = await GetMatches(request);
+            season.GameWeek = GetGameWeek(request);
 
             return season;
+        }
+
+        private int GetGameWeek(GetMatchesBySeasonQuery request)
+        {
+            return request.HasSpecifiedGameWeek ? (int)request.SpecifiedGameWeek : LatestGameWeek(request);
+        }
+
+        private async Task<List<MatchBySeasonDto>> GetMatches(GetMatchesBySeasonQuery request)
+        {
+            return request.HasSpecifiedGameWeek ? await GetMatchesByGameWeek(request) : await GetLatestMatches(request);
         }
 
         private async Task<List<MatchBySeasonDto>> GetMatchesByGameWeek(GetMatchesBySeasonQuery request)

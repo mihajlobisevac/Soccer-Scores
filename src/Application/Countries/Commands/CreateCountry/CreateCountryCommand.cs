@@ -23,17 +23,17 @@ namespace SoccerScores.Application.Countries.Commands.CreateCountry
 
         public async Task<int> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Country
+            var country = new Country
             {
                 Name = request.Name,
                 Flag = request.Flag
             };
 
-            context.Countries.Add(entity);
+            context.Countries.Add(country);
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return entity.Id;
+            return country.Id;
         }
     }
 }

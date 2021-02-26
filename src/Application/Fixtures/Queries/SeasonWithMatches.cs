@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SoccerScores.Application.Fixtures.Queries
 {
-    public class CompetitionVm : IMapFrom<Season>
+    public class SeasonWithMatches : IMapFrom<Season>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace SoccerScores.Application.Fixtures.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Season, CompetitionVm>()
+            profile.CreateMap<Season, SeasonWithMatches>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Competition.Name))
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Competition.Country.Name))
                 .ForMember(dest => dest.Flag, opt => opt.MapFrom(src => src.Competition.Country.Flag))
@@ -39,7 +39,7 @@ namespace SoccerScores.Application.Fixtures.Queries
         public ClubViewModel AwayTeam { get; set; }
 
         public ResultViewModel Result { get; set; }
-        public IEnumerable<PlayerViewModel> Players { get; set; }
+        public IEnumerable<MatchPlayerViewModel> Players { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -57,7 +57,7 @@ namespace SoccerScores.Application.Fixtures.Queries
         public string Crest { get; set; }
     }
 
-    public class PlayerViewModel : IMapFrom<MatchPlayer>
+    public class MatchPlayerViewModel : IMapFrom<MatchPlayer>
     {
         public int Id { get; set; }
         public bool IsHome { get; set; }
@@ -68,7 +68,7 @@ namespace SoccerScores.Application.Fixtures.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<MatchPlayer, PlayerViewModel>()
+            profile.CreateMap<MatchPlayer, MatchPlayerViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Player.Id))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Player.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Player.LastName));

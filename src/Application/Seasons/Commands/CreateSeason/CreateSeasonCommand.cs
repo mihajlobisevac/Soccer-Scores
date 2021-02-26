@@ -26,18 +26,18 @@ namespace SoccerScores.Application.Seasons.Commands.CreateSeason
 
         public async Task<int> Handle(CreateSeasonCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Season
+            var season = new Season
             {
                 Start = DateTime.Parse(request.Start),
                 End = DateTime.Parse(request.End),
                 Competition = await GetCompetition(request.CompetitionId)
             };
 
-            context.Seasons.Add(entity);
+            context.Seasons.Add(season);
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return entity.Id;
+            return season.Id;
         }
 
         private async Task<Competition> GetCompetition(int id)

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Countries.Queries
+namespace SoccerScores.Application.Countries.Queries.GetCountries
 {
     public class GetCountriesQuery : IRequest<IEnumerable<CountryDto>>
     {

@@ -24,9 +24,9 @@ namespace SoccerScores.Application.Players.Commands.RemoveFromClub
 
         public async Task<Unit> Handle(RemoveFromClubCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetClubPlayer(request.Id);
+            var clubPlayer = await GetClubPlayer(request.Id);
 
-            context.ClubPlayers.Remove(entity);
+            context.ClubPlayers.Remove(clubPlayer);
 
             await context.SaveChangesAsync(cancellationToken);
 

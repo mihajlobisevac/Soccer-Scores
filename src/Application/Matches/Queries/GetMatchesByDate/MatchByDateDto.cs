@@ -3,7 +3,7 @@ using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 using System;
 
-namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models
+namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate
 {
     public class MatchByDateDto : IMapFrom<Match>
     {
@@ -12,9 +12,9 @@ namespace SoccerScores.Application.Matches.Queries.GetMatchesByDate.Models
         public DateTime KickOff { get; set; }
         public int GameWeek { get; set; }
 
-        public ClubVm HomeTeam { get; set; }
-        public ClubVm AwayTeam { get; set; }
-        public SeasonVm Season { get; set; }
+        public ClubViewModel HomeTeam { get; set; }
+        public ClubViewModel AwayTeam { get; set; }
+        public SeasonViewModel Season { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Seasons.Queries
+namespace SoccerScores.Application.Seasons.Queries.GetSeasonsByCompetition
 {
     public class GetSeasonsByCompetitionQuery : IRequest<IEnumerable<SeasonDto>>
     {
@@ -29,11 +29,11 @@ namespace SoccerScores.Application.Seasons.Queries
         public async Task<IEnumerable<SeasonDto>> Handle(GetSeasonsByCompetitionQuery request, CancellationToken cancellationToken)
         {
             return await context.Seasons
-                    .Where(x => x.Competition.Id == request.CompetitionId)
-                    .Include(x => x.Competition)
-                    .OrderByDescending(x => x.End)
-                    .ProjectTo<SeasonDto>(mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                .Where(x => x.Competition.Id == request.CompetitionId)
+                .Include(x => x.Competition)
+                .OrderByDescending(x => x.End)
+                .ProjectTo<SeasonDto>(mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
         }
     }
 }

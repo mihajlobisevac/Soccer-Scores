@@ -12,7 +12,7 @@ namespace SoccerScores.WebUI.Pages
         private ISender _mediator;
         protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
 
-        public IEnumerable<CompetitionVm> Fixtures { get; set; } = new List<CompetitionVm>();
+        public IEnumerable<SeasonWithMatches> Fixtures { get; set; } = new List<SeasonWithMatches>();
 
         public async Task OnGetAsync()
         {

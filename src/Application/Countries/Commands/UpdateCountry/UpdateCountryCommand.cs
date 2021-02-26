@@ -26,10 +26,10 @@ namespace SoccerScores.Application.Countries.Commands.UpdateCountry
 
         public async Task<Unit> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetCountry(request.Id);
+            var country = await GetCountry(request.Id);
 
-            entity.Name = request.Name;
-            entity.Flag = request.Flag;
+            country.Name = request.Name;
+            country.Flag = request.Flag;
 
             await context.SaveChangesAsync(cancellationToken);
 

@@ -5,7 +5,7 @@ using SoccerScores.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoccerScores.Application.Seasons.Queries
+namespace SoccerScores.Application.Seasons.Queries.GetSeason
 {
     public class GetSeasonQuery : IRequest<SeasonDto>
     {
@@ -25,11 +25,11 @@ namespace SoccerScores.Application.Seasons.Queries
 
         public async Task<SeasonDto> Handle(GetSeasonQuery request, CancellationToken cancellationToken)
         {
-            var entity = await context.Seasons
+            var season = await context.Seasons
                 .Include(x => x.Competition).ThenInclude(y => y.Country)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-            return mapper.Map<SeasonDto>(entity);
+            return mapper.Map<SeasonDto>(season);
         }
     }
 }

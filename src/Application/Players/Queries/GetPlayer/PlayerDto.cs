@@ -21,13 +21,6 @@ namespace SoccerScores.Application.Players.Queries.GetPlayer
 
         public ClubViewModel Club { get; set; }
 
-        public class ClubViewModel : IMapFrom<Club>
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Crest { get; set; }
-        }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<ClubPlayer, PlayerDto>()
@@ -49,5 +42,12 @@ namespace SoccerScores.Application.Players.Queries.GetPlayer
                 .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => src.Nationality.Name))
                 .ForMember(dest => dest.PlaceOfBirth, opt => opt.MapFrom(src => src.PlaceOfBirth.Name));
         }
+    }
+
+    public class ClubViewModel : IMapFrom<Club>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Crest { get; set; }
     }
 }

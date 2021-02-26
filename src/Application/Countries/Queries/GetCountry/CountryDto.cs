@@ -1,7 +1,7 @@
 ﻿using SoccerScores.Application.Common.Mappings;
 using SoccerScores.Domain.Entities;
 
-namespace SoccerScores.Application.Countries.Queries
+namespace SoccerScores.Application.Countries.Queries.GetCountry
 {
     public class CountryDto : IMapFrom<Country>
     {

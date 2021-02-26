@@ -38,10 +38,7 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
 
         public async Task<int> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
         {
-            var nationality = await GetCountry(request.NationalityId);
-            var placeOfBirth = await GetCity(request.PlaceOfBirthId);
-
-            var entity = new Player
+            var player = new Player
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -50,16 +47,17 @@ namespace SoccerScores.Application.Players.Commands.CreatePlayer
                 Foot = request.Foot.ToEnum<Foot>(),
                 Height = request.Height,
                 Weight = request.Weight,
-                Nationality = nationality,
-                PlaceOfBirth = placeOfBirth,
+                Nationality = await GetCountry(request.NationalityId),
+                PlaceOfBirth = await GetCity(request.PlaceOfBirthId),
             };
 
-            context.Players.Add(entity);
+            context.Players.Add(player);
 
-            await HandleClubPlayer(entity, request);
+            await HandleClubPlayer(player, request);
+
             await context.SaveChangesAsync(cancellationToken);
 
-            return entity.Id;
+            return player.Id;
         }
 
         private async Task<Country> GetCountry(int id)
